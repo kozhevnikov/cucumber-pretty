@@ -5,5 +5,14 @@
   "main": "index.js",
   "repository": "https://github.com/kozhevnikov/cucumber-pretty",
   "author": "Ilya Kozhevnikov <git@kozhevnikov.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "files": [
+    "index.js"
+  ],
+  "scripts": {
+    "test": "cucumber-js test -f ."
+  },
+  "devDependencies": {
+    "cucumber": "^3.0.1"
+  }
 }
