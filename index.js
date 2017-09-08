@@ -1,4 +1,4 @@
-const { Formatter } = require('cucumber');
+const { Formatter, SummaryFormatter } = require('cucumber');
 const { EOL } = require('os');
 
 class PrettyFormatter extends Formatter {
@@ -14,10 +14,16 @@ class PrettyFormatter extends Formatter {
      * @property snippetBuilder - an object with a build method that should be called with {keywordType, pickleStep}
      * @property stream - the underlying stream the formatter is writing to
      * @property supportCodeLibrary
+     *
+     * @property pretty.summary - Log summary
+     *
      * @see https://docs.cucumber.io/event-protocol/
      * @see https://github.com/cucumber/cucumber-js/blob/master/docs/custom_formatters.md
      */
     this.options = options;
+
+    this.noptions = Object.create(options);
+    this.noptions.eventBroadcaster = { on: () => {} };
 
     options.eventBroadcaster.on('test-case-started', event => {
       const data = this.eventDataCollector.getTestCaseData(event.sourceLocation);
@@ -42,6 +48,26 @@ class PrettyFormatter extends Formatter {
     options.eventBroadcaster.on('test-case-finished', event => {
       this.log(EOL);
     });
+
+    options.eventBroadcaster.on('test-run-finished', event => {
+      if (this.get('summary', true)) {
+        new SummaryFormatter(this.noptions).logSummary(event);
+      }
+    });
+  }
+
+  /**
+   * Get format option
+   * @param key - Pretty key
+   * @param value - Default value
+   * @return {*} Pretty value or default value if key is undefined
+   * @example
+   * // --format-options '{ "pretty": { "foo": "baz" } }'
+   * this.get('foo', 'bar'); // === 'baz'
+   */
+  get(key, value) {
+    const pretty = this.options.pretty;
+    return pretty && pretty.hasOwnProperty(key) ? pretty[key] : value;
   }
 }
 

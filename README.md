@@ -10,3 +10,9 @@
 npm install cucumber-pretty --save-dev
 cucumber-js test --format node_modules/cucumber-pretty
 ```
+
+## References
+
+- https://github.com/cucumber/cucumber-js/blob/master/docs/cli.md#formats
+- https://github.com/cucumber/cucumber-js/blob/master/docs/custom_formatters.md
+- https://docs.cucumber.io/event-protocol/
