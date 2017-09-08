@@ -1,8 +1,6 @@
 # Cucumber.js Pretty Formatter
 
-*Cucumber.js 3 pretty formatter based on event protocol*
-
-# WORK IN PROGRESS
+*Cucumber.js 3 pretty formatter implementing event protocol*
 
 ## Usage
 
@@ -13,13 +11,13 @@ cucumber-js test --format node_modules/cucumber-pretty
 
 ## Options
 
-Pretty format options can be passed via `pretty` property in addition to global options such as `colorsEnabled`.
+Format options can be passed via `pretty` property in addition to global options such as `colorsEnabled`.
 
 ```bash
 --format-options '{ "pretty": { "summary": false } }'
 ```
 
-| Name | Default | Description|
+| Name | Default | Description |
 | --- | --- | --- |
 | passed | false | Log passed status after step is finished |
 | summary | true | Log summary after run is finished |
@@ -29,3 +27,14 @@ Pretty format options can be passed via `pretty` property in addition to global 
 - https://github.com/cucumber/cucumber-js/blob/master/docs/cli.md#formats
 - https://github.com/cucumber/cucumber-js/blob/master/docs/custom_formatters.md
 - https://docs.cucumber.io/event-protocol/
+
+## TODO
+
+- Log Feature
+- Log @tags
+- Log descriptions
+- Log data tables
+- Log doc strings
+- Support translations
+- Colour Gherkin keywords
+- Option to log step in started (logging order) or finished (result colour) event

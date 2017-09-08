@@ -28,7 +28,7 @@ class PrettyFormatter extends Formatter {
 
     options.eventBroadcaster.on('test-case-started', event => {
       const data = this.eventDataCollector.getTestCaseData(event.sourceLocation);
-      this.log(`  Scenario: ${data.pickle.name}${EOL}`);
+      this.log(`${EOL}  Scenario: ${data.pickle.name}${EOL}`);
     });
 
     options.eventBroadcaster.on('test-step-started', event => {
@@ -51,11 +51,11 @@ class PrettyFormatter extends Formatter {
     });
 
     options.eventBroadcaster.on('test-case-finished', event => {
-      this.log(EOL);
     });
 
     options.eventBroadcaster.on('test-run-finished', event => {
       if (this.option('summary', true)) {
+        this.log(EOL);
         new SummaryFormatter(this.noptions).logSummary(event);
       }
     });
