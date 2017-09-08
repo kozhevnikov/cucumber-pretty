@@ -15,7 +15,8 @@ class PrettyFormatter extends Formatter {
      * @property stream - the underlying stream the formatter is writing to
      * @property supportCodeLibrary
      *
-     * @property pretty.summary - Log summary
+     * @property {boolean} [pretty.passed=false] - Log passed status
+     * @property {boolean} [pretty.summary=true] - Log summary
      *
      * @see https://docs.cucumber.io/event-protocol/
      * @see https://github.com/cucumber/cucumber-js/blob/master/docs/custom_formatters.md
@@ -38,10 +39,14 @@ class PrettyFormatter extends Formatter {
     });
 
     options.eventBroadcaster.on('test-step-finished', event => {
+      const status = event.result.status;
+      if (status === 'passed' && !this.option('passed', false)) {
+        return;
+      }
+
       const data = this.eventDataCollector.getTestStepData(event);
       if (data.testStep.sourceLocation) {
-        const colorFn = this.colorFns[event.result.status];
-        this.log(colorFn(`      ${event.result.status}${EOL}`));
+        this.log(this.color(status, `      ${status}${EOL}`));
       }
     });
 
@@ -50,7 +55,7 @@ class PrettyFormatter extends Formatter {
     });
 
     options.eventBroadcaster.on('test-run-finished', event => {
-      if (this.get('summary', true)) {
+      if (this.option('summary', true)) {
         new SummaryFormatter(this.noptions).logSummary(event);
       }
     });
@@ -58,16 +63,26 @@ class PrettyFormatter extends Formatter {
 
   /**
    * Get format option
-   * @param key - Pretty key
-   * @param value - Default value
+   * @param {string} key - Pretty key
+   * @param {*} value - Default value
    * @return {*} Pretty value or default value if key is undefined
    * @example
    * // --format-options '{ "pretty": { "foo": "baz" } }'
    * this.get('foo', 'bar'); // === 'baz'
    */
-  get(key, value) {
+  option(key, value) {
     const pretty = this.options.pretty;
     return pretty && pretty.hasOwnProperty(key) ? pretty[key] : value;
+  }
+
+  /**
+   * Colour text respecting colorsEnabled option
+   * @param {string} key - colorFns key
+   * @param {string} value - Text to colour
+   * @return {string} Coloured text
+   */
+  color(key, value) {
+    return this.options.colorsEnabled ? this.colorFns[key](value) : value;
   }
 }
 
