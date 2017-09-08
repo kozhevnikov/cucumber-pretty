@@ -24,6 +24,21 @@ class PrettyFormatter extends Formatter {
       this.log(`  Scenario: ${data.pickle.name}${EOL}`);
     });
 
+    options.eventBroadcaster.on('test-step-started', event => {
+      const data = this.eventDataCollector.getTestStepData(event);
+      if (data.testStep.sourceLocation) {
+        this.log(`    ${data.gherkinKeyword}${data.pickleStep.text}${EOL}`);
+      }
+    });
+
+    options.eventBroadcaster.on('test-step-finished', event => {
+      const data = this.eventDataCollector.getTestStepData(event);
+      if (data.testStep.sourceLocation) {
+        const colorFn = this.colorFns[event.result.status];
+        this.log(colorFn(`      ${event.result.status}${EOL}`));
+      }
+    });
+
     options.eventBroadcaster.on('test-case-finished', event => {
       this.log(EOL);
     });

@@ -2,27 +2,47 @@ const { defineSupportCode } = require('cucumber');
 
 defineSupportCode(({ defineStep, BeforeAll, Before, After, AfterAll, registerHandler }) => {
   defineStep(/^step (.*)$/, function (step) {
-    console.log(step);
+    log('step', step);
   });
 
   defineStep(/^example "(.*)"$/, function (example) {
-    console.log('example', example);
+    log('example', example);
   });
 
   defineStep(/^table$/, function (table) {
-    console.log('table', table);
+    log('table', table);
   });
 
   defineStep(/^docstring$/, function (docstring) {
-    console.log('docstring', docstring);
+    log('docstring', docstring);
   });
 
-  Before(() => console.log(('before')));
-  After(() => console.log(('after')));
+  defineStep(/^passed$/, function () {
+    log('passed');
+  });
 
-  BeforeAll(() => console.log(('before all')));
-  AfterAll(() => console.log(('after all')));
+  defineStep(/^pending/, function () {
+    return 'pending'
+  });
 
-  // registerHandler('BeforeFeatures', () => console.log('before features'));
-  // registerHandler('AfterFeatures', () => console.log('after features'));
+  defineStep(/^error$/, function () {
+    throw new Error();
+  });
+
+  defineStep(/^ambiguous$/, function () { });
+  defineStep(/^ambiguous$/, function () { });
+
+  Before(() => log(('before')));
+  After(() => log(('after')));
+
+  BeforeAll(() => log(('before all')));
+  AfterAll(() => log(('after all')));
+
+  // registerHandler('BeforeFeatures', () => log('before features'));
+  // registerHandler('AfterFeatures', () => log('after features'));
+
+  function log(message, ...args) {
+    // console.log(message, ...args);
+    // console.log(`${new Date().toISOString()} DEBUG [steps] ${message}`, ...args);
+  }
 });

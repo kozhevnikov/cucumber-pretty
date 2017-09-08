@@ -1,4 +1,8 @@
+# WORK IN PROGRESS - DO NOT USE
+
 # Cucumber.js Pretty Formatter
+
+*Cucumber.js 3 pretty formatter based on event protocol*
 
 ## Usage
 

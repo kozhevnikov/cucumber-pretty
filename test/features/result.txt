@@ -1,0 +1,69 @@
+before features
+Feature: Result Feature
+
+  Scenario: Result Error Scenario
+before
+step passed
+  ✔ When step passed
+  ✖ Then error
+after
+
+  Scenario: Result Pending Scenario
+before
+step passed
+  ✔ When step passed
+  ? Then pending
+after
+
+  Scenario: Result Undefined Scenario
+before
+step passed
+  ✔ When step passed
+  ? Then undefined
+after
+
+  Scenario: Result Undefined Scenario
+before
+step passed
+  ✔ When step passed
+  ✖ Then ambiguous
+after
+
+Failures:
+
+1) Scenario: [1mResult Error Scenario - test/features/result.feature:3
+   Step: [1mThen error - test/features/result.feature:5
+   Step Definition: test/features/step_definitions/steps.js:28
+   Message:
+     Error
+         at World.<anonymous> (/Users/ilya.kozhevnikov/Desktop/cucumber-pretty/test/features/step_definitions/steps.js:29:11)
+
+2) Scenario: [1mResult Undefined Scenario - test/features/result.feature:15
+   Step: [1mThen ambiguous - test/features/result.feature:17
+   Message:
+     Multiple step definitions match:
+       /^ambiguous$/ - test/features/step_definitions/steps.js:32
+       /^ambiguous$/ - test/features/step_definitions/steps.js:35
+
+Warnings:
+
+1) Scenario: [1mResult Pending Scenario - test/features/result.feature:7
+   Step: [1mThen pending - test/features/result.feature:9
+   Step Definition: test/features/step_definitions/steps.js:24
+   Message:
+     Pending
+
+2) Scenario: [1mResult Undefined Scenario - test/features/result.feature:11
+   Step: [1mThen undefined - test/features/result.feature:13
+   Message:
+     Undefined. Implement with the following snippet:
+
+       Then('undefined', function (callback) {
+         // Write code here that turns the phrase above into concrete actions
+         callback(null, 'pending');
+       });
+
+4 scenarios (1 failed, 1 ambiguous, 1 undefined, 1 pending)
+8 steps (1 failed, 1 ambiguous, 1 undefined, 1 pending, 4 passed)
+0m00.001s
+after features
