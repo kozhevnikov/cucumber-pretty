@@ -1,0 +1,71 @@
+before features
+@complex-feature-tag
+Feature: Complex Feature
+
+    Complex Feature Description
+
+  @complex-feature-tag
+  Scenario: First Complex Scenario
+before
+given
+  ✔ Given step given
+when
+  ✔ When step when
+then
+  ✔ Then step then
+after
+
+  @complex-feature-tag @complex-scenario-tag @complex-examples-tag
+  Scenario: Second Complex Scenario Outline
+before
+given
+  ✔ Given step given
+example bar
+  ✔ Given example "bar"
+table DataTable {
+  rawTable: 
+   [ [ 'key', 'value' ],
+     [ 'Key 1', 'Value 1' ],
+     [ 'Key 2', 'Value 2' ] ] }
+  ✔ When table
+      | key   | value   |
+      | Key 1 | Value 1 |
+      | Key 2 | Value 2 |
+docstring Foo Doc String
+Bar Doc String
+  ✔ Then docstring
+      """
+      Foo Doc String
+      Bar Doc String
+      """
+after
+
+  @complex-feature-tag @complex-scenario-tag @complex-examples-tag
+  Scenario: Second Complex Scenario Outline
+before
+given
+  ✔ Given step given
+example baz
+  ✔ Given example "baz"
+table DataTable {
+  rawTable: 
+   [ [ 'key', 'value' ],
+     [ 'Key 1', 'Value 1' ],
+     [ 'Key 2', 'Value 2' ] ] }
+  ✔ When table
+      | key   | value   |
+      | Key 1 | Value 1 |
+      | Key 2 | Value 2 |
+docstring Foo Doc String
+Bar Doc String
+  ✔ Then docstring
+      """
+      Foo Doc String
+      Bar Doc String
+      """
+after
+
+3 scenarios (3 passed)
+11 steps (11 passed)
+0m00.003s
+after features

@@ -1,15 +1,28 @@
 const { defineSupportCode } = require('cucumber');
 
-defineSupportCode(({ Given, When, Then }) => {
-  Given('foo', function () {
-    console.log('foo');
+defineSupportCode(({ defineStep, BeforeAll, Before, After, AfterAll, registerHandler }) => {
+  defineStep(/^step (.*)$/, function (step) {
+    console.log(step);
   });
 
-  When('bar', function () {
-    console.log('bar');
+  defineStep(/^example "(.*)"$/, function (example) {
+    console.log('example', example);
   });
 
-  Then('baz', function () {
-    console.log('baz');
+  defineStep(/^table$/, function (table) {
+    console.log('table', table);
   });
+
+  defineStep(/^docstring$/, function (docstring) {
+    console.log('docstring', docstring);
+  });
+
+  Before(() => console.log(('before')));
+  After(() => console.log(('after')));
+
+  BeforeAll(() => console.log(('before all')));
+  AfterAll(() => console.log(('after all')));
+
+  // registerHandler('BeforeFeatures', () => console.log('before features'));
+  // registerHandler('AfterFeatures', () => console.log('after features'));
 });

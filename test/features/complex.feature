@@ -1,4 +1,4 @@
-@complex-feature
+@complex-feature-tag
 Feature: Complex Feature
 
   Complex Feature Description
@@ -7,31 +7,30 @@ Feature: Complex Feature
 
   Complex Background Description
 
-    Given foo
+    Given step given
 
-  Scenario: Simple Scenario
-    When bar
-    Then baz
+  Scenario: First Complex Scenario
+    When step when
+    Then step then
 
-  @complex-scenario
-  Scenario Outline: Complex Scenario Outline
+  @complex-scenario-tag
+  Scenario Outline: Second Complex Scenario Outline
 
   Complex Scenario Outline Description
 
     #Complex Comment
-    Given foo "<foo>"
-    When bar
-      | key | value |
-      | Bar | Table |
-      | Baz | Table |
-    Then baz
+    Given example "<foo>"
+    When table
+      | key   | value   |
+      | Key 1 | Value 1 |
+      | Key 2 | Value 2 |
+    Then docstring
       """
       Foo Doc String
       Bar Doc String
-      Baz Doc String
       """
 
-    @complex-examples
+  @complex-examples-tag
     Examples:
       | foo |
       | bar |

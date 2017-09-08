@@ -3,6 +3,6 @@
 ## Usage
 
 ```bash
-npm install cucumber-pretty
-cucumber-js test -f node_modules/cucumber-pretty
+npm install cucumber-pretty --save-dev
+cucumber-js test --format node_modules/cucumber-pretty
 ```
