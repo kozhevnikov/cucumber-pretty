@@ -26,8 +26,18 @@ class PrettyFormatter extends Formatter {
     this.noptions = Object.create(options);
     this.noptions.eventBroadcaster = { on: () => {} };
 
+    const features = [];
+
     options.eventBroadcaster.on('test-case-started', event => {
       const data = this.eventDataCollector.getTestCaseData(event.sourceLocation);
+
+      if (!features.includes(event.sourceLocation.uri)) {
+        features.push(event.sourceLocation.uri);
+        const feature = data.gherkinDocument.feature;
+        const keyword = this.color('blue', feature.keyword);
+        this.log(`${EOL}${keyword}: ${feature.name}${EOL}`);
+      }
+
       const keyword = this.color('blue', 'Scenario');
       this.log(`${EOL}  ${keyword}: ${data.pickle.name}${EOL}`);
     });
@@ -52,15 +62,15 @@ class PrettyFormatter extends Formatter {
       }
     });
 
-    options.eventBroadcaster.on('test-case-finished', event => {
-    });
+    // options.eventBroadcaster.on('test-case-finished', event => {
+    // });
 
-    options.eventBroadcaster.on('test-run-finished', event => {
-      if (this.option('summary', true)) {
+    if (this.option('summary', true)) {
+      options.eventBroadcaster.on('test-run-finished', event => {
         this.log(EOL);
         new SummaryFormatter(this.noptions).logSummary(event);
-      }
-    });
+      });
+    }
   }
 
   /**
