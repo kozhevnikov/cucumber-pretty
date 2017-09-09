@@ -30,11 +30,10 @@ Format options can be passed via `pretty` property in addition to global options
 
 ## TODO
 
-- Log Feature
-- Log @tags
-- Log descriptions
-- Log data tables
-- Log doc strings
-- Support translations
-- Colour Gherkin keywords
-- Option to log step in started (logging order) or finished (result colour) event
+- [ ] Log Feature
+- [ ] Log @tags
+- [ ] Log descriptions
+- [ ] Log data tables
+- [ ] Log doc strings
+- [ ] Support translations
+- [x] Colour Gherkin keywords (v0.0.4)

@@ -1,6 +1,6 @@
 {
   "name": "cucumber-pretty",
-  "version": "1.0.0",
+  "version": "0.0.4",
   "description": "Cucumber.js Pretty Formatter",
   "main": "index.js",
   "repository": "https://github.com/kozhevnikov/cucumber-pretty",

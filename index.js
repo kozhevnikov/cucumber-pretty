@@ -28,13 +28,15 @@ class PrettyFormatter extends Formatter {
 
     options.eventBroadcaster.on('test-case-started', event => {
       const data = this.eventDataCollector.getTestCaseData(event.sourceLocation);
-      this.log(`${EOL}  Scenario: ${data.pickle.name}${EOL}`);
+      const keyword = this.color('blue', 'Scenario');
+      this.log(`${EOL}  ${keyword}: ${data.pickle.name}${EOL}`);
     });
 
     options.eventBroadcaster.on('test-step-started', event => {
       const data = this.eventDataCollector.getTestStepData(event);
       if (data.testStep.sourceLocation) {
-        this.log(`    ${data.gherkinKeyword}${data.pickleStep.text}${EOL}`);
+        const keyword = this.color('blue', data.gherkinKeyword.trim());
+        this.log(`    ${keyword} ${data.pickleStep.text}${EOL}`);
       }
     });
 
