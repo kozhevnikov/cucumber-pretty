@@ -1,3 +1,4 @@
+@result
 Feature: Result Feature
 
   Scenario: Result Error Scenario

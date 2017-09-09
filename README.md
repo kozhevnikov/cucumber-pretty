@@ -31,7 +31,7 @@ Format options can be passed via `pretty` property in addition to global options
 ## TODO
 
 - [x] Log Feature (v0.0.5)
-- [ ] Log @tags
+- [x] Log @tags (v0.0.5)
 - [ ] Log descriptions
 - [ ] Log data tables
 - [ ] Log doc strings

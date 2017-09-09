@@ -32,14 +32,30 @@ class PrettyFormatter extends Formatter {
       const data = this.eventDataCollector.getTestCaseData(event.sourceLocation);
 
       if (!features.includes(event.sourceLocation.uri)) {
-        features.push(event.sourceLocation.uri);
         const feature = data.gherkinDocument.feature;
+
+        this.log(EOL);
+
+        if (feature.tags.length) {
+          const tags = this.color('tag', feature.tags.map(tag => tag.name).join(' '));
+          this.log(`${tags}${EOL}`);
+        }
+
         const keyword = this.color('blue', feature.keyword);
-        this.log(`${EOL}${keyword}: ${feature.name}${EOL}`);
+        this.log(`${keyword}: ${feature.name}${EOL}`);
+
+        features.push(event.sourceLocation.uri);
+      }
+
+      this.log(EOL);
+
+      if (data.pickle.tags.length) {
+        const tags = this.color('tag', data.pickle.tags.map(tag => tag.name).join(' '));
+        this.log(`  ${tags}${EOL}`);
       }
 
       const keyword = this.color('blue', 'Scenario');
-      this.log(`${EOL}  ${keyword}: ${data.pickle.name}${EOL}`);
+      this.log(`  ${keyword}: ${data.pickle.name}${EOL}`);
     });
 
     options.eventBroadcaster.on('test-step-started', event => {
