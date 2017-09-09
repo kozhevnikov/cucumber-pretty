@@ -34,35 +34,35 @@ class PrettyFormatter extends Formatter {
       if (!features.includes(event.sourceLocation.uri)) {
         const feature = data.gherkinDocument.feature;
 
-        this.log(EOL);
+        this.logln();
 
         if (feature.tags.length) {
-          const tags = this.color('tag', feature.tags.map(tag => tag.name).join(' '));
-          this.log(`${tags}${EOL}`);
+          const tags = feature.tags.map(tag => tag.name).join(' ');
+          this.logln(tags, 'tag');
         }
 
         const keyword = this.color('blue', feature.keyword);
-        this.log(`${keyword}: ${feature.name}${EOL}`);
+        this.logln(`${keyword}: ${feature.name}`);
 
         features.push(event.sourceLocation.uri);
       }
 
-      this.log(EOL);
+      this.logln();
 
       if (data.pickle.tags.length) {
-        const tags = this.color('tag', data.pickle.tags.map(tag => tag.name).join(' '));
-        this.log(`  ${tags}${EOL}`);
+        const tags = data.pickle.tags.map(tag => tag.name).join(' ');
+        this.logln(`  ${tags}`, 'tag');
       }
 
       const keyword = this.color('blue', 'Scenario');
-      this.log(`  ${keyword}: ${data.pickle.name}${EOL}`);
+      this.logln(`  ${keyword}: ${data.pickle.name}`);
     });
 
     options.eventBroadcaster.on('test-step-started', event => {
       const data = this.eventDataCollector.getTestStepData(event);
       if (data.testStep.sourceLocation) {
-        const keyword = this.color('blue', data.gherkinKeyword.trim());
-        this.log(`    ${keyword} ${data.pickleStep.text}${EOL}`);
+        const keyword = this.color('blue', data.gherkinKeyword);
+        this.logln(`    ${keyword}${data.pickleStep.text}`);
       }
     });
 
@@ -74,7 +74,7 @@ class PrettyFormatter extends Formatter {
 
       const data = this.eventDataCollector.getTestStepData(event);
       if (data.testStep.sourceLocation) {
-        this.log(this.color(status, `      ${status}${EOL}`));
+        this.logln(`      ${status}`, status);
       }
     });
 
@@ -83,7 +83,7 @@ class PrettyFormatter extends Formatter {
 
     if (this.option('summary', true)) {
       options.eventBroadcaster.on('test-run-finished', event => {
-        this.log(EOL);
+        this.logln();
         new SummaryFormatter(this.noptions).logSummary(event);
       });
     }
@@ -105,12 +105,22 @@ class PrettyFormatter extends Formatter {
 
   /**
    * Colour text respecting colorsEnabled option
-   * @param {string} key - colorFns key
+   * @param {string} color - colorFns key
    * @param {string} value - Text to colour
    * @return {string} Coloured text
    */
-  color(key, value) {
-    return this.options.colorsEnabled ? this.colorFns[key](value) : value;
+  color(color, value) {
+    return this.options.colorsEnabled ? this.colorFns[color](value) : value;
+  }
+
+  /**
+   * Log line
+   * @param {string} [value] - Text
+   * @param {string} [color] - Text colour
+   */
+  logln(value = '', color = '') {
+    if (color) value = this.color(color, value);
+    this.log(`${value}${EOL}`);
   }
 }
 
