@@ -1,8 +1,16 @@
 const { describe, it } = require('mocha');
-const should = require('should');
+require('should');
+
+const exec = require('./exec');
+
+const args = ['--format', '.'];
 
 describe('Summary', () => {
   it('empty summary', () => {
-    should.fail(); // TODO
+    exec('features', '--tag', '@empty', ...args).should.equal(
+      '0 scenarios\n' +
+      '0 steps\n' +
+      '0m00.000s\n'
+    );
   });
 });
