@@ -22,7 +22,12 @@ class PrettyFormatter extends SummaryFormatter {
 
     options.eventBroadcaster.on('test-case-started', ({ sourceLocation }) => {
       const { pickle } = options.eventDataCollector.getTestCaseData(sourceLocation);
-      options.log(`Scenario: ${pickle.name}${EOL}`);
+      options.log(`  Scenario: ${pickle.name}${EOL}`);
+    });
+
+    options.eventBroadcaster.on('test-step-started', (event) => {
+      const { gherkinKeyword, pickleStep } = options.eventDataCollector.getTestStepData(event);
+      options.log(`    ${gherkinKeyword}${pickleStep.text}${EOL}`);
     });
   }
 }
