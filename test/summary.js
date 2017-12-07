@@ -1,13 +1,11 @@
 const { describe, it } = require('mocha');
 require('should');
 
-const exec = require('./exec');
-
-const args = ['--format', '.'];
+const { exec, args } = require('./exec');
 
 describe('Summary', () => {
-  it('empty summary', () => {
-    exec('features', '--tag', '@empty', ...args).should.equal(
+  it('should log empty summary', () => {
+    exec('features', '--tags', '@empty', ...args).should.equal(
       '0 scenarios\n' +
       '0 steps\n' +
       '0m00.000s\n'
