@@ -1,0 +1,9 @@
+{
+  "name": "cucumber-pretty",
+  "version": "1.0.0",
+  "description": "Cucumber.js Pretty Formatter",
+  "main": "index.js",
+  "repository": "https://github.com/kozhevnikov/cucumber-pretty",
+  "author": "Ilya Kozhevnikov <git@kozhevnikov.com>",
+  "license": "MIT"
+}
