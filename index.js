@@ -20,8 +20,17 @@ class PrettyFormatter extends SummaryFormatter {
   constructor(options) {
     super(options);
 
+    this.features = [];
+
     options.eventBroadcaster.on('test-case-started', ({ sourceLocation }) => {
-      const { pickle } = options.eventDataCollector.getTestCaseData(sourceLocation);
+      const { gherkinDocument, pickle } = options.eventDataCollector.getTestCaseData(sourceLocation);
+
+      if (!this.features.includes(sourceLocation.uri)) {
+        this.features.push(sourceLocation.uri);
+        const { feature } = gherkinDocument;
+        options.log(`${feature.keyword}: ${feature.name}${EOL}`);
+      }
+
       options.log(`  Scenario: ${pickle.name}${EOL}`);
     });
 

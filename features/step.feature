@@ -1,6 +1,6 @@
-Feature: Step
+Feature: Step Name
 
-  Scenario: Step
+  Scenario: Step Name
     Given noop
     When noop
     Then noop
