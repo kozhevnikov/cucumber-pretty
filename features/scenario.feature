@@ -1,5 +1,5 @@
-Feature: Scenario Name
+Feature: Scenario
 
-  Scenario: Scenario Name
+  Scenario: Scenario name
     When noop
     Then noop

@@ -1,4 +1,5 @@
 const { SummaryFormatter } = require('cucumber');
+const { cross, tick } = require('figures');
 const { EOL } = require('os');
 
 /**
@@ -14,6 +15,16 @@ const { EOL } = require('os');
  * @property supportCodeLibrary
  * @see https://github.com/cucumber/cucumber-js/blob/master/docs/custom_formatters.md
  */
+
+/** @see https://github.com/cucumber/cucumber-js/blob/master/src/formatter/helpers/issue_helpers.js */
+const CHARACTERS = {
+  ambiguous: cross,
+  failed: cross,
+  passed: tick,
+  pending: '?',
+  skipped: '-',
+  undefined: '?'
+};
 
 class PrettyFormatter extends SummaryFormatter {
   /** @param {Options} options */
@@ -37,6 +48,13 @@ class PrettyFormatter extends SummaryFormatter {
     options.eventBroadcaster.on('test-step-started', (event) => {
       const { gherkinKeyword, pickleStep } = options.eventDataCollector.getTestStepData(event);
       options.log(`    ${gherkinKeyword}${pickleStep.text}${EOL}`);
+    });
+
+    options.eventBroadcaster.on('test-step-finished', (event) => {
+      const { testStep: { result: { status } } } = options.eventDataCollector.getTestStepData(event);
+      if (status !== 'passed') {
+        options.log(`    ${CHARACTERS[status]} ${status}${EOL}`);
+      }
     });
   }
 }

@@ -11,7 +11,8 @@
     "test": "mocha"
   },
   "dependencies": {
-    "cucumber": "^3.0.0"
+    "cucumber": "^3.0.0",
+    "figures": "^2.0.0"
   },
   "devDependencies": {
     "eslint": "^4.12.1",
