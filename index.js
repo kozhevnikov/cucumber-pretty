@@ -7,9 +7,9 @@ const { EOL } = require('os');
  * @property colorsEnabled
  * @property cwd - the current working directory
  * @property {EventEmitter} eventBroadcaster - an event emitter that emits the event protocol
- * @property {EventDataCollector} eventDataCollector - handles grouping the data for related events
+ * @property {EventDataCollector} eventDataCollector - an instance of EventDataCollector which handles the complexity of grouping the data for related events
  * @property log - function which will write the passed string to the the designated stream
- * @property snippetBuilder - a build method that should be called with {keywordType, pickleStep}
+ * @property snippetBuilder - an object with a build method that should be called with {keywordType, pickleStep}
  * @property stream - the underlying stream the formatter is writing to
  * @property supportCodeLibrary
  * @see https://github.com/cucumber/cucumber-js/blob/master/docs/custom_formatters.md

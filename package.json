@@ -24,7 +24,8 @@
     "extends": "airbnb-base",
     "rules": {
       "comma-dangle": "off",
-      "function-paren-newline": "off"
+      "function-paren-newline": "off",
+      "max-len": "off"
     }
   }
 }
