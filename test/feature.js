@@ -10,13 +10,13 @@ describe('Feature', () => {
 
   it('should log new lines', () => {
     exec('features/', '--name', 'Feature \\d', ...args).should.containEql(
-      'Feature: Feature' +
+      'Feature: Feature\n' +
       '\n' +
       '  Scenario: Feature 1\n' +
       '    When noop\n' +
       '    Then noop\n' +
       '\n' +
-      'Feature: Feature' +
+      'Feature: Feature\n' +
       '\n' +
       '  Scenario: Feature 2\n' +
       '    When noop\n' +

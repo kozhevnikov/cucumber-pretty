@@ -37,16 +37,15 @@ class PrettyFormatter extends SummaryFormatter {
       const { gherkinDocument, pickle } = options.eventDataCollector.getTestCaseData(sourceLocation);
 
       if (!this.features.includes(sourceLocation.uri)) {
-        if (this.features.length > 0) options.log(EOL);
+        this.features.push(sourceLocation.uri);
+
+        if (this.features.length > 1) options.log(EOL);
 
         const { feature } = gherkinDocument;
         options.log(`${feature.keyword}: ${feature.name}${EOL}`);
-
-        this.features.push(sourceLocation.uri);
-      } else {
-        options.log(EOL);
       }
 
+      options.log(EOL);
       options.log(`  Scenario: ${pickle.name}${EOL}`);
     });
 

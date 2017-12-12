@@ -3,6 +3,8 @@ const { defineSupportCode } = require('cucumber');
 defineSupportCode(({ defineStep }) => {
   defineStep('noop', () => {});
 
+  defineStep('noop {string}', (noop) => {}); // eslint-disable-line no-unused-vars
+
   defineStep('ambiguous', () => {});
   defineStep('ambiguous', () => {});
 
