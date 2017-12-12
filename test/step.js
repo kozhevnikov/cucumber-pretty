@@ -54,4 +54,13 @@ describe('Step', () => {
       '    \\? undefined\n'
     ));
   });
+
+  it('should log error', () => {
+    (() => exec('features/step.feature', '--name', 'Failed step', ...args)).should.throw(new RegExp(
+      '    When failed\n' +
+      '    ✖ failed\n' +
+      '      Error: FAILED\n' +
+      '          at World'
+    ));
+  });
 });

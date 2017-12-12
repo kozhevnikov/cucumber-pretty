@@ -6,7 +6,7 @@ defineSupportCode(({ defineStep }) => {
   defineStep('ambiguous', () => {});
   defineStep('ambiguous', () => {});
 
-  defineStep('failed', () => { throw new Error(); });
+  defineStep('failed', () => { throw new Error('FAILED'); });
 
   defineStep('passed', () => {});
 

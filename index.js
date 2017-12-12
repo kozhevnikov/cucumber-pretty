@@ -1,4 +1,4 @@
-const { SummaryFormatter } = require('cucumber');
+const { SummaryFormatter, formatterHelpers } = require('cucumber');
 const { cross, tick } = require('figures');
 const { EOL } = require('os');
 
@@ -51,9 +51,15 @@ class PrettyFormatter extends SummaryFormatter {
     });
 
     options.eventBroadcaster.on('test-step-finished', (event) => {
-      const { testStep: { result: { status } } } = options.eventDataCollector.getTestStepData(event);
+      const { testStep: { result: { status, exception } } } = options.eventDataCollector.getTestStepData(event);
+
       if (status !== 'passed') {
         options.log(`    ${CHARACTERS[status]} ${status}${EOL}`);
+      }
+
+      if (exception) {
+        const error = formatterHelpers.formatError(exception, options.colorFns).replace(/^/gm, '      ');
+        options.log(`${error}${EOL}`);
       }
     });
   }
