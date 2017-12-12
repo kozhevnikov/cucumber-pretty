@@ -11,11 +11,10 @@ exports.exec = (...args) => {
   let stdout;
   try {
     stdout = execFileSync(cmd, args).toString();
-    return stdout;
   } catch (error) {
     stdout = error.stdout.toString();
-    throw new Error(stdout);
-  } finally {
-    console.log(stdout);
   }
+
+  console.log(stdout);
+  return stdout;
 };

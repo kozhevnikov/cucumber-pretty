@@ -15,17 +15,17 @@ describe('Step', () => {
   });
 
   it('should log ambiguous step', () => {
-    (() => exec('features/step.feature', '--name', 'Ambiguous step', ...args)).should.throw(new RegExp(
+    exec('features/step.feature', '--name', 'Ambiguous step', ...args).should.containEql(
       '    When ambiguous\n' +
       '    ✖ ambiguous\n'
-    ));
+    );
   });
 
   it('should log failed step', () => {
-    (() => exec('features/step.feature', '--name', 'Failed step', ...args)).should.throw(new RegExp(
+    exec('features/step.feature', '--name', 'Failed step', ...args).should.containEql(
       '    When failed\n' +
       '    ✖ failed\n'
-    ));
+    );
   });
 
   it('should log passed step', () => {
@@ -35,10 +35,10 @@ describe('Step', () => {
   });
 
   it('should log pending step', () => {
-    (() => exec('features/step.feature', '--name', 'Pending step', ...args)).should.throw(new RegExp(
+    exec('features/step.feature', '--name', 'Pending step', ...args).should.containEql(
       '    When pending\n' +
-      '    \\? pending\n'
-    ));
+      '    ? pending\n'
+    );
   });
 
   it('should log skipped step', () => {
@@ -49,18 +49,18 @@ describe('Step', () => {
   });
 
   it('should log undefined step', () => {
-    (() => exec('features/step.feature', '--name', 'Undefined step', ...args)).should.throw(new RegExp(
+    exec('features/step.feature', '--name', 'Undefined step', ...args).should.containEql(
       '    When undefined\n' +
-      '    \\? undefined\n'
-    ));
+      '    ? undefined\n'
+    );
   });
 
   it('should log error', () => {
-    (() => exec('features/step.feature', '--name', 'Failed step', ...args)).should.throw(new RegExp(
+    exec('features/step.feature', '--name', 'Failed step', ...args).should.containEql(
       '    When failed\n' +
       '    ✖ failed\n' +
       '      Error: FAILED\n' +
       '          at World'
-    ));
+    );
   });
 });

@@ -30,4 +30,40 @@ describe('Color', () => {
       '    \u001b[34mThen\u001b[39m noop\n'
     );
   });
+
+  it('should color ambiguous step', () => {
+    exec('features/step.feature', '--name', 'Ambiguous step', ...args).should.containEql(
+      '    \u001b[31m✖ ambiguous\u001b[39m\n'
+    );
+  });
+
+  it('should color failed step', () => {
+    exec('features/step.feature', '--name', 'Failed step', ...args).should.containEql(
+      '    \u001b[31m✖ failed\u001b[39m\n'
+    );
+  });
+
+  it('should color pending step', () => {
+    exec('features/step.feature', '--name', 'Pending step', ...args).should.containEql(
+      '    \u001b[33m? pending\u001b[39m\n'
+    );
+  });
+
+  it('should color skipped step', () => {
+    exec('features/step.feature', '--name', 'Skipped step', ...args).should.containEql(
+      '    \u001b[36m- skipped\u001b[39m\n'
+    );
+  });
+
+  it('should color undefined step', () => {
+    exec('features/step.feature', '--name', 'Undefined step', ...args).should.containEql(
+      '    \u001b[33m? undefined\u001b[39m\n'
+    );
+  });
+
+  it('should color error', () => {
+    exec('features/step.feature', '--name', 'Failed step', ...args).should.containEql(
+      '    \u001b[31mError: FAILED'
+    );
+  });
 });

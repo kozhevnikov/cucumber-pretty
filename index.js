@@ -64,7 +64,7 @@ class PrettyFormatter extends SummaryFormatter {
       const { testStep: { result: { status, exception } } } = options.eventDataCollector.getTestStepData(event);
 
       if (status !== 'passed') {
-        options.log(`    ${CHARACTERS[status]} ${status}${EOL}`);
+        options.log(`    ${options.colorFns[status](`${CHARACTERS[status]} ${status}`)}${EOL}`);
       }
 
       if (exception) {
