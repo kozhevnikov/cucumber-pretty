@@ -31,6 +31,12 @@ class PrettyFormatter extends SummaryFormatter {
   constructor(options) {
     super(options);
 
+    options.colorFns.setTheme({
+      feature: ['magenta', 'bold'],
+      scenario: ['magenta', 'bold'],
+      step: 'blue'
+    });
+
     this.features = [];
 
     options.eventBroadcaster.on('test-case-started', ({ sourceLocation }) => {
@@ -42,16 +48,16 @@ class PrettyFormatter extends SummaryFormatter {
         if (this.features.length > 1) options.log(EOL);
 
         const { feature } = gherkinDocument;
-        options.log(`${feature.keyword}: ${feature.name}${EOL}`);
+        options.log(`${options.colorFns.feature(feature.keyword)}: ${feature.name}${EOL}`);
       }
 
       options.log(EOL);
-      options.log(`  Scenario: ${pickle.name}${EOL}`);
+      options.log(`  ${options.colorFns.scenario('Scenario')}: ${pickle.name}${EOL}`);
     });
 
     options.eventBroadcaster.on('test-step-started', (event) => {
       const { gherkinKeyword, pickleStep } = options.eventDataCollector.getTestStepData(event);
-      options.log(`    ${gherkinKeyword}${pickleStep.text}${EOL}`);
+      options.log(`    ${options.colorFns.step(gherkinKeyword.trim())} ${pickleStep.text}${EOL}`);
     });
 
     options.eventBroadcaster.on('test-step-finished', (event) => {
