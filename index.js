@@ -49,6 +49,9 @@ class PrettyFormatter extends Formatter {
         if (tags) options.log(`${options.colorFns.tag(tags)}${EOL}`);
 
         options.log(`${location ? EOL : ''}${options.colorFns.feature(feature.keyword)}: ${feature.name}${EOL}`);
+
+        if (feature.description) options.log(`${EOL}${feature.description}${EOL}`);
+
         location = sourceLocation.uri;
       }
 
