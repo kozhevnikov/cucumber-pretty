@@ -62,6 +62,7 @@ class PrettyFormatter extends Formatter {
 
     options.eventBroadcaster.on('test-step-started', (event) => {
       const { gherkinKeyword, pickleStep } = options.eventDataCollector.getTestStepData(event);
+      if (!gherkinKeyword) return; // hook
       options.log(`    ${options.colorFns.step(gherkinKeyword.trim())} ${pickleStep.text}${EOL}`);
     });
 

@@ -29,7 +29,8 @@
     "rules": {
       "comma-dangle": "off",
       "function-paren-newline": "off",
-      "max-len": "off"
+      "max-len": "off",
+      "object-curly-newline": "off"
     }
   }
 }
