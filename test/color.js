@@ -66,4 +66,10 @@ describe('Color', () => {
       '    \u001b[31mError: FAILED'
     );
   });
+
+  it('should color feature tag', () => {
+    exec('features/tag.feature', '--name', 'Tag', ...args).should.containEql(
+      '\u001b[36m@feature @tag\u001b[39m\n'
+    );
+  });
 });

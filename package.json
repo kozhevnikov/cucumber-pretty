@@ -6,6 +6,9 @@
   "repository": "https://github.com/kozhevnikov/cucumber-pretty",
   "author": "Ilya Kozhevnikov <git@kozhevnikov.com>",
   "license": "MIT",
+  "files": [
+    "index.js"
+  ],
   "scripts": {
     "lint": "eslint .",
     "test": "mocha"
