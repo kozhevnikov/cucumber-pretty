@@ -1,4 +1,4 @@
-const { SummaryFormatter, formatterHelpers } = require('cucumber');
+const { Formatter, SummaryFormatter, formatterHelpers } = require('cucumber');
 const { cross, tick } = require('figures');
 const { EOL } = require('os');
 
@@ -26,7 +26,7 @@ const CHARACTERS = {
   undefined: '?'
 };
 
-class PrettyFormatter extends SummaryFormatter {
+class PrettyFormatter extends Formatter {
   /** @param {Options} options */
   constructor(options) {
     super(options);
@@ -67,6 +67,13 @@ class PrettyFormatter extends SummaryFormatter {
         const error = formatterHelpers.formatError(exception, options.colorFns).replace(/^/gm, '      ');
         options.log(`${error}${EOL}`);
       }
+    });
+
+    options.eventBroadcaster.on('test-run-finished', (event) => {
+      const noptions = Object.create(options, { eventBroadcaster: { value: { on: () => {} } } });
+      const formatter = new SummaryFormatter(noptions);
+      if (location) options.log(EOL);
+      formatter.logSummary(event);
     });
   }
 }
