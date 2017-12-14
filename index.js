@@ -52,7 +52,12 @@ class PrettyFormatter extends Formatter {
         location = sourceLocation.uri;
       }
 
-      options.log(`${EOL}  ${options.colorFns.scenario('Scenario')}: ${pickle.name}${EOL}`);
+      options.log(EOL);
+
+      const tags = pickle.tags.map(tag => tag.name).join(' ');
+      if (tags) options.log(`  ${options.colorFns.tag(tags)}${EOL}`);
+
+      options.log(`  ${options.colorFns.scenario('Scenario')}: ${pickle.name}${EOL}`);
     });
 
     options.eventBroadcaster.on('test-step-started', (event) => {
