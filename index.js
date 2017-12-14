@@ -37,22 +37,18 @@ class PrettyFormatter extends SummaryFormatter {
       step: 'blue'
     });
 
-    this.features = [];
+    let location;
 
     options.eventBroadcaster.on('test-case-started', ({ sourceLocation }) => {
       const { gherkinDocument, pickle } = options.eventDataCollector.getTestCaseData(sourceLocation);
 
-      if (!this.features.includes(sourceLocation.uri)) {
-        this.features.push(sourceLocation.uri);
-
-        if (this.features.length > 1) options.log(EOL);
-
+      if (location !== sourceLocation.uri) {
         const { feature } = gherkinDocument;
-        options.log(`${options.colorFns.feature(feature.keyword)}: ${feature.name}${EOL}`);
+        options.log(`${location ? EOL : ''}${options.colorFns.feature(feature.keyword)}: ${feature.name}${EOL}`);
+        location = sourceLocation.uri;
       }
 
-      options.log(EOL);
-      options.log(`  ${options.colorFns.scenario('Scenario')}: ${pickle.name}${EOL}`);
+      options.log(`${EOL}  ${options.colorFns.scenario('Scenario')}: ${pickle.name}${EOL}`);
     });
 
     options.eventBroadcaster.on('test-step-started', (event) => {

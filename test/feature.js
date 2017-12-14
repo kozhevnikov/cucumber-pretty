@@ -9,7 +9,7 @@ describe('Feature', () => {
   });
 
   it('should log new lines', () => {
-    exec('features/', '--name', 'Feature \\d', ...args).should.containEql(
+    exec('features/', '--name', 'Feature \\d', ...args).should.startWith(
       'Feature: Feature\n' +
       '\n' +
       '  Scenario: Feature 1\n' +
