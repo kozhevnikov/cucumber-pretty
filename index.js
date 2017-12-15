@@ -59,10 +59,12 @@ class PrettyFormatter extends Formatter {
       if (source !== sourceLocation.uri) {
         const { feature } = gherkinDocument;
 
+        if (source) options.log(EOL);
+
         const tags = feature.tags.map(tag => tag.name).join(' ');
         if (tags) options.log(`${options.colorFns.tag(tags)}${EOL}`);
 
-        options.log(`${source ? EOL : ''}${options.colorFns.feature(feature.keyword)}: ${feature.name}${EOL}`);
+        options.log(`${options.colorFns.feature(feature.keyword)}: ${feature.name}${EOL}`);
 
         if (feature.description) options.log(`${EOL}${feature.description}${EOL}`);
 

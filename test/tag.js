@@ -11,6 +11,14 @@ describe('Tag', () => {
     );
   });
 
+  it('should log new line', () => {
+    exec('features/', '--name', 'Feature .*', ...args).should.containEql(
+      '\n' +
+      '@feature @tag\n' +
+      'Feature: Tag\n'
+    );
+  });
+
   it('should log scenario tag', () => {
     exec('features/tag.feature', '--name', 'Scenario tag', ...args).should.containEql(
       '  @feature @tag @scenario\n' +
