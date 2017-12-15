@@ -15,4 +15,6 @@ defineSupportCode(({ defineStep }) => {
   defineStep('pending', () => 'pending');
 
   defineStep('skipped', () => 'skipped');
+
+  defineStep('doc string', (noop) => {}); // eslint-disable-line no-unused-vars
 });
