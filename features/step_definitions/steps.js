@@ -17,4 +17,6 @@ defineSupportCode(({ defineStep }) => {
   defineStep('skipped', () => 'skipped');
 
   defineStep('doc string', (noop) => {}); // eslint-disable-line no-unused-vars
+
+  defineStep('data table', (noop) => {}); // eslint-disable-line no-unused-vars
 });

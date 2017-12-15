@@ -1,4 +1,5 @@
 const { Formatter, SummaryFormatter, formatterHelpers } = require('cucumber');
+const Table = require('cli-table');
 const { cross, tick } = require('figures');
 const { EOL } = require('os');
 
@@ -17,7 +18,7 @@ const { EOL } = require('os');
  */
 
 /** @see https://github.com/cucumber/cucumber-js/blob/master/src/formatter/helpers/issue_helpers.js */
-const CHARACTERS = {
+const marks = {
   ambiguous: cross,
   failed: cross,
   passed: tick,
@@ -26,16 +27,29 @@ const CHARACTERS = {
   undefined: '?'
 };
 
+const theme = {
+  feature: ['magenta', 'bold'],
+  scenario: ['magenta', 'bold'],
+  step: 'blue'
+};
+
+const table = {
+  chars: {
+    bottom: '', 'bottom-left': '', 'bottom-mid': '', 'bottom-right': '',
+    left: '|', 'left-mid': '',
+    mid: '', 'mid-mid': '', middle: '|',
+    right: '|', 'right-mid': '',
+    top: '', 'top-left': '', 'top-mid': '', 'top-right': '',
+  },
+  style: { 'padding-left': 1, 'padding-right': 1 }
+};
+
 class PrettyFormatter extends Formatter {
   /** @param {Options} options */
   constructor(options) {
     super(options);
 
-    options.colorFns.setTheme({
-      feature: ['magenta', 'bold'],
-      scenario: ['magenta', 'bold'],
-      step: 'blue'
-    });
+    options.colorFns.setTheme(theme);
 
     let source;
 
@@ -73,8 +87,16 @@ class PrettyFormatter extends Formatter {
       options.log(`    ${options.colorFns.step(gherkinKeyword.trim())} ${pickleStep.text}${EOL}`);
 
       pickleStep.arguments.forEach((argument) => {
-        const docstring = `"""${EOL}${argument.content}${EOL}"""`.replace(/^/gm, '      ');
-        options.log(`${docstring}${EOL}`);
+        if (argument.content) {
+          const docstring = `"""${EOL}${argument.content}${EOL}"""`.replace(/^/gm, '      ');
+          options.log(`${docstring}${EOL}`);
+        }
+
+        if (argument.rows) {
+          const datatable = new Table(table);
+          datatable.push(...argument.rows.map(row => row.cells.map(cell => cell.value)));
+          options.log(`${datatable.toString().replace(/^/gm, '      ')}${EOL}`);
+        }
       });
     });
 
@@ -82,7 +104,7 @@ class PrettyFormatter extends Formatter {
       const { testStep: { result: { status, exception } } } = options.eventDataCollector.getTestStepData(event);
 
       if (status !== 'passed') {
-        options.log(`    ${options.colorFns[status](`${CHARACTERS[status]} ${status}`)}${EOL}`);
+        options.log(`    ${options.colorFns[status](`${marks[status]} ${status}`)}${EOL}`);
       }
 
       if (exception) {
