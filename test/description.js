@@ -21,11 +21,11 @@ describe('Description', () => {
       '    When noop\n' +
       '    Then noop\n' +
       '\n' +
-      '  Scenario: Description scenario outline\n' +
+      '  Scenario Outline: Description scenario outline\n' +
       '    When noop "bar"\n' +
       '    Then noop\n' +
       '\n' +
-      '  Scenario: Description scenario outline\n' +
+      '  Scenario Outline: Description scenario outline\n' +
       '    When noop "baz"\n' +
       '    Then noop'
     );

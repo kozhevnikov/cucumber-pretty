@@ -37,22 +37,22 @@ class PrettyFormatter extends Formatter {
       step: 'blue'
     });
 
-    let location;
+    let source;
 
     options.eventBroadcaster.on('test-case-started', ({ sourceLocation }) => {
       const { gherkinDocument, pickle } = options.eventDataCollector.getTestCaseData(sourceLocation);
 
-      if (location !== sourceLocation.uri) {
+      if (source !== sourceLocation.uri) {
         const { feature } = gherkinDocument;
 
         const tags = feature.tags.map(tag => tag.name).join(' ');
         if (tags) options.log(`${options.colorFns.tag(tags)}${EOL}`);
 
-        options.log(`${location ? EOL : ''}${options.colorFns.feature(feature.keyword)}: ${feature.name}${EOL}`);
+        options.log(`${source ? EOL : ''}${options.colorFns.feature(feature.keyword)}: ${feature.name}${EOL}`);
 
         if (feature.description) options.log(`${EOL}${feature.description}${EOL}`);
 
-        location = sourceLocation.uri;
+        source = sourceLocation.uri;
       }
 
       options.log(EOL);
@@ -60,7 +60,10 @@ class PrettyFormatter extends Formatter {
       const tags = pickle.tags.map(tag => tag.name).join(' ');
       if (tags) options.log(`  ${options.colorFns.tag(tags)}${EOL}`);
 
-      options.log(`  ${options.colorFns.scenario('Scenario')}: ${pickle.name}${EOL}`);
+      const line = Math.min(...pickle.locations.map(location => location.line));
+      const { keyword } = gherkinDocument.feature.children.find(child => child.location.line === line);
+
+      options.log(`  ${options.colorFns.scenario(keyword)}: ${pickle.name}${EOL}`);
     });
 
     options.eventBroadcaster.on('test-step-started', (event) => {
@@ -85,7 +88,7 @@ class PrettyFormatter extends Formatter {
     options.eventBroadcaster.on('test-run-finished', (event) => {
       const noptions = Object.create(options, { eventBroadcaster: { value: { on: () => {} } } });
       const formatter = new SummaryFormatter(noptions);
-      if (location) options.log(EOL);
+      if (source) options.log(EOL);
       formatter.logSummary(event);
     });
   }

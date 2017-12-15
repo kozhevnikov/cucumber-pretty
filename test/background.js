@@ -13,12 +13,12 @@ describe('Background', () => {
       '    When noop\n' +
       '    Then noop\n' +
       '\n' +
-      '  Scenario: Background scenario outline\n' +
+      '  Scenario Outline: Background scenario outline\n' +
       '    Given noop\n' +
       '    When noop "bar"\n' +
       '    Then noop\n' +
       '\n' +
-      '  Scenario: Background scenario outline\n' +
+      '  Scenario Outline: Background scenario outline\n' +
       '    Given noop\n' +
       '    When noop "baz"\n' +
       '    Then noop'

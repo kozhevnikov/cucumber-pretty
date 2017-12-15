@@ -8,10 +8,10 @@ describe('Scenario Outline', () => {
     exec('features/scenario-outline.feature', '--name', 'Scenario outline', ...args).should.containEql(
       'Feature: Scenario Outline\n' +
       '\n' +
-      '  Scenario: Scenario outline\n' +
+      '  Scenario Outline: Scenario outline\n' +
       '    When noop "bar"\n' +
       '\n' +
-      '  Scenario: Scenario outline\n' +
+      '  Scenario Outline: Scenario outline\n' +
       '    When noop "baz"'
     );
   });

@@ -3,7 +3,7 @@ const { defineSupportCode } = require('cucumber');
 
 defineSupportCode(({ BeforeAll, Before, After, AfterAll }) => {
   if (process.argv.some(arg => arg === 'features/hook.feature')) {
-    BeforeAll('@before-all', () => { console.log('BeforeAll') });
+    BeforeAll('@before-all', () => { console.log('BeforeAll'); });
     AfterAll('@after-all', () => { console.log('AfterAll'); });
   }
 

@@ -21,7 +21,7 @@ describe('Tag', () => {
   it('should log scenario outline tag', () => {
     exec('features/tag.feature', '--name', 'Scenario outline tag', ...args).should.containEql(
       '  @feature @tag @scenario-outline @example\n' +
-      '  Scenario: Scenario outline tag\n'
+      '  Scenario Outline: Scenario outline tag\n'
     );
   });
 });
