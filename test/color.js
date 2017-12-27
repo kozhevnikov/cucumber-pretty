@@ -26,8 +26,8 @@ describe('Color', () => {
 
   it('should color step keywords', () => {
     exec('features/step.feature', '--name', 'Step name', ...args).should.containEql(
-      '    \u001b[34mWhen\u001b[39m noop\n' +
-      '    \u001b[34mThen\u001b[39m noop\n'
+      '    \u001b[1mWhen\u001b[22m noop\n' +
+      '    \u001b[1mThen\u001b[22m noop\n'
     );
   });
 

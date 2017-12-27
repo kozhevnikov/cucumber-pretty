@@ -30,7 +30,7 @@ const marks = {
 const theme = {
   feature: ['magenta', 'bold'],
   scenario: ['magenta', 'bold'],
-  step: 'blue'
+  step: 'bold'
 };
 
 const table = {
