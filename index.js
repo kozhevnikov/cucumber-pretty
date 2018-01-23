@@ -1,7 +1,7 @@
 const { Formatter, SummaryFormatter, formatterHelpers } = require('cucumber');
 const Table = require('cli-table');
 const { cross, tick } = require('figures');
-const { EOL } = require('os');
+const { EOL: n } = require('os');
 
 /**
  * @typedef {Object} Options
@@ -27,21 +27,20 @@ const marks = {
   undefined: '?'
 };
 
+/** @see https://github.com/Marak/colors.js#custom-themes */
 const theme = {
   feature: ['magenta', 'bold'],
   scenario: ['magenta', 'bold'],
   step: 'bold'
 };
 
+/** @see https://github.com/Automattic/cli-table#custom-styles */
 const table = {
   chars: {
-    bottom: '', 'bottom-left': '', 'bottom-mid': '', 'bottom-right': '',
-    left: '|', 'left-mid': '',
-    mid: '', 'mid-mid': '', middle: '|',
-    right: '|', 'right-mid': '',
     top: '', 'top-left': '', 'top-mid': '', 'top-right': '',
-  },
-  style: { 'padding-left': 1, 'padding-right': 1 }
+    mid: '', 'left-mid': '', 'mid-mid': '', 'right-mid': '',
+    bottom: '', 'bottom-left': '', 'bottom-mid': '', 'bottom-right': ''
+  }
 };
 
 class PrettyFormatter extends Formatter {
@@ -59,45 +58,44 @@ class PrettyFormatter extends Formatter {
       if (source !== sourceLocation.uri) {
         const { feature } = gherkinDocument;
 
-        if (source) options.log(EOL);
+        if (source) this.logn();
 
         const tags = feature.tags.map(tag => tag.name).join(' ');
-        if (tags) options.log(`${options.colorFns.tag(tags)}${EOL}`);
+        if (tags) this.logn(options.colorFns.tag(tags));
 
-        options.log(`${options.colorFns.feature(feature.keyword)}: ${feature.name}${EOL}`);
+        this.logn(`${options.colorFns.feature(feature.keyword)}: ${feature.name}`);
 
-        if (feature.description) options.log(`${EOL}${feature.description}${EOL}`);
+        if (feature.description) this.logn(`${n}${feature.description}`);
 
         source = sourceLocation.uri;
       }
 
-      options.log(EOL);
+      this.logn();
 
       const tags = pickle.tags.map(tag => tag.name).join(' ');
-      if (tags) options.log(`  ${options.colorFns.tag(tags)}${EOL}`);
+      if (tags) this.logn(options.colorFns.tag(tags), 2);
 
       const line = Math.min(...pickle.locations.map(location => location.line));
       const { keyword } = gherkinDocument.feature.children.find(child => child.location.line === line);
 
-      options.log(`  ${options.colorFns.scenario(keyword)}: ${pickle.name}${EOL}`);
+      this.logn(`${options.colorFns.scenario(keyword)}: ${pickle.name}`, 2);
     });
 
     options.eventBroadcaster.on('test-step-started', (event) => {
       const { gherkinKeyword, pickleStep } = options.eventDataCollector.getTestStepData(event);
       if (!gherkinKeyword) return; // hook
 
-      options.log(`    ${options.colorFns.step(gherkinKeyword.trim())} ${pickleStep.text}${EOL}`);
+      this.logn(`${options.colorFns.step(gherkinKeyword.trim())} ${pickleStep.text}`, 4);
 
       pickleStep.arguments.forEach((argument) => {
         if (argument.content) {
-          const docstring = `"""${EOL}${argument.content}${EOL}"""`.replace(/^/gm, '      ');
-          options.log(`${docstring}${EOL}`);
+          this.logn(`"""${n}${argument.content}${n}"""`, 6);
         }
 
         if (argument.rows) {
           const datatable = new Table(table);
           datatable.push(...argument.rows.map(row => row.cells.map(cell => cell.value)));
-          options.log(`${datatable.toString().replace(/^/gm, '      ')}${EOL}`);
+          this.logn(datatable, 6);
         }
       });
     });
@@ -106,21 +104,27 @@ class PrettyFormatter extends Formatter {
       const { testStep: { result: { status, exception } } } = options.eventDataCollector.getTestStepData(event);
 
       if (status !== 'passed') {
-        options.log(`    ${options.colorFns[status](`${marks[status]} ${status}`)}${EOL}`);
+        this.logn(options.colorFns[status](`${marks[status]} ${status}`), 4);
       }
 
       if (exception) {
-        const error = formatterHelpers.formatError(exception, options.colorFns).replace(/^/gm, '      ');
-        options.log(`${error}${EOL}`);
+        const error = formatterHelpers.formatError(exception, options.colorFns);
+        this.logn(error, 6);
       }
     });
 
     options.eventBroadcaster.on('test-run-finished', (event) => {
       const noptions = Object.create(options, { eventBroadcaster: { value: { on: () => {} } } });
       const formatter = new SummaryFormatter(noptions);
-      if (source) options.log(EOL);
+      if (source) this.logn();
       formatter.logSummary(event);
     });
+  }
+
+  logn(value = '', indent = 0) {
+    let text = value.toString();
+    if (indent > 0) text = text.replace(/^/gm, ' '.repeat(indent));
+    this.log(`${text}${n}`);
   }
 }
 

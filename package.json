@@ -1,6 +1,6 @@
 {
   "name": "cucumber-pretty",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "Cucumber.js Pretty Formatter",
   "main": "index.js",
   "repository": "https://github.com/kozhevnikov/cucumber-pretty",
@@ -15,15 +15,15 @@
   },
   "dependencies": {
     "cli-table": "^0.3.1",
-    "cucumber": "^3.2.0",
+    "cucumber": "^3.2.1",
     "figures": "^2.0.0"
   },
   "devDependencies": {
-    "eslint": "^4.13.1",
+    "eslint": "^4.16.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0",
-    "mocha": "^4.0.1",
-    "should": "^13.1.3"
+    "mocha": "^5.0.0",
+    "should": "^13.2.1"
   },
   "eslintConfig": {
     "extends": "airbnb-base",
