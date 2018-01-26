@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 const { execFileSync } = require('child_process');
 
-const cmd = 'node_modules/cucumber/bin/cucumber.js';
+const cmd = 'node_modules/cucumber/bin/cucumber-js';
 
 exports.args = ['--format', '.', '--format-options', JSON.stringify({ colorsEnabled: false })];
 
