@@ -50,15 +50,13 @@ class PrettyFormatter extends Formatter {
 
     options.colorFns.setTheme(theme);
 
-    let source;
-
     options.eventBroadcaster.on('test-case-started', ({ sourceLocation }) => {
       const { gherkinDocument, pickle } = options.eventDataCollector.getTestCaseData(sourceLocation);
 
-      if (source !== sourceLocation.uri) {
+      if (this.uri !== sourceLocation.uri) {
         const { feature } = gherkinDocument;
 
-        if (source) this.logn();
+        if (this.uri) this.logn();
 
         const tags = feature.tags.map(tag => tag.name).join(' ');
         if (tags) this.logn(options.colorFns.tag(tags));
@@ -67,7 +65,7 @@ class PrettyFormatter extends Formatter {
 
         if (feature.description) this.logn(`${n}${feature.description}`);
 
-        source = sourceLocation.uri;
+        this.uri = sourceLocation.uri;
       }
 
       this.logn();
@@ -116,7 +114,7 @@ class PrettyFormatter extends Formatter {
     options.eventBroadcaster.on('test-run-finished', (event) => {
       const noptions = Object.create(options, { eventBroadcaster: { value: { on: () => {} } } });
       const formatter = new SummaryFormatter(noptions);
-      if (source) this.logn();
+      if (this.uri) this.logn();
       formatter.logSummary(event);
     });
   }
