@@ -19,16 +19,19 @@
     "figures": "^2.0.0"
   },
   "devDependencies": {
-    "eslint": "^4.17.0",
+    "eslint": "^4.18.2",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.8.0",
-    "mocha": "^5.0.0",
+    "eslint-plugin-import": "^2.9.0",
+    "mocha": "^5.0.4",
     "should": "^13.2.1"
   },
   "eslintConfig": {
     "extends": "airbnb-base",
     "rules": {
-      "comma-dangle": "off",
+      "comma-dangle": [
+        "error",
+        "never"
+      ],
       "function-paren-newline": "off",
       "max-len": "off",
       "object-curly-newline": "off",
