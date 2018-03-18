@@ -19,3 +19,5 @@ defineStep('skipped', () => 'skipped');
 defineStep('doc string', (noop) => {});
 
 defineStep('data table', (noop) => {});
+
+defineStep('world', function () { this.world(); });

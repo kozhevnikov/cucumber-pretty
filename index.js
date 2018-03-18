@@ -1,6 +1,7 @@
 const { Formatter, SummaryFormatter, formatterHelpers } = require('cucumber');
 const Table = require('cli-table');
 const { cross, tick } = require('figures');
+const colors = require('colors');
 const { EOL: n } = require('os');
 
 /**
@@ -28,11 +29,11 @@ const marks = {
 };
 
 /** @see https://github.com/Marak/colors.js#custom-themes */
-const theme = {
+colors.setTheme({
   feature: ['magenta', 'bold'],
   scenario: ['magenta', 'bold'],
   step: 'bold'
-};
+});
 
 /** @see https://github.com/Automattic/cli-table#custom-styles */
 const table = {
@@ -48,8 +49,6 @@ class PrettyFormatter extends Formatter {
   constructor(options) {
     super(options);
 
-    options.colorFns.setTheme(theme);
-
     options.eventBroadcaster.on('test-case-started', ({ sourceLocation }) => {
       const { gherkinDocument, pickle } = options.eventDataCollector.getTestCaseData(sourceLocation);
 
@@ -61,7 +60,7 @@ class PrettyFormatter extends Formatter {
         const tags = feature.tags.map(tag => tag.name).join(' ');
         if (tags) this.logn(options.colorFns.tag(tags));
 
-        this.logn(`${options.colorFns.feature(feature.keyword)}: ${feature.name}`);
+        this.logn(`${feature.keyword.feature}: ${feature.name}`);
 
         if (feature.description) this.logn(`${n}${feature.description}`);
 
@@ -76,14 +75,14 @@ class PrettyFormatter extends Formatter {
       const line = Math.min(...pickle.locations.map(location => location.line));
       const { keyword } = gherkinDocument.feature.children.find(child => child.location.line === line);
 
-      this.logn(`${options.colorFns.scenario(keyword)}: ${pickle.name}`, 2);
+      this.logn(`${keyword.scenario}: ${pickle.name}`, 2);
     });
 
     options.eventBroadcaster.on('test-step-started', (event) => {
       const { gherkinKeyword, pickleStep } = options.eventDataCollector.getTestStepData(event);
       if (!gherkinKeyword) return; // hook
 
-      this.logn(`${options.colorFns.step(gherkinKeyword.trim())} ${pickleStep.text}`, 4);
+      this.logn(`${gherkinKeyword.trim().step} ${pickleStep.text}`, 4);
 
       pickleStep.arguments.forEach((argument) => {
         if (argument.content) {

@@ -1,5 +1,8 @@
-/* eslint-disable no-console */
-const { BeforeAll, Before, After, AfterAll } = require('cucumber');
+const { setWorldConstructor, BeforeAll, Before, After, AfterAll } = require('cucumber');
+
+const World = require('./World');
+
+setWorldConstructor(World);
 
 if (process.argv.some(arg => arg === 'features/hook.feature')) {
   BeforeAll(() => { console.log('BeforeAll'); });
