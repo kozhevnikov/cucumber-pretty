@@ -30,9 +30,9 @@ const marks = {
 
 /** @see https://github.com/Marak/colors.js#custom-themes */
 colors.setTheme({
-  feature: ['magenta', 'bold'],
-  scenario: ['magenta', 'bold'],
-  step: 'bold'
+  feature: ['blue', 'bold'],
+  scenario: ['blue', 'bold'],
+  step: ['green', 'bold']
 });
 
 /** @see https://github.com/Automattic/cli-table#custom-styles */
