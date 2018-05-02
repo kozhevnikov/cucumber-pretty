@@ -8,18 +8,18 @@ const args = ['--format', '.'];
 describe('Color', () => {
   it('should color feature keyword', () => {
     exec('features/feature.feature', '--name', 'Feature name', ...args).should.containEql(
-      '\u001b[1m\u001b[35m' +
+      '\u001b[35m\u001b[1m' +
       'Feature' +
-      '\u001b[39m\u001b[22m' +
+      '\u001b[22m\u001b[39m' +
       ': Feature\n'
     );
   });
 
   it('should color scenario keyword', () => {
     exec('features/scenario.feature', '--name', 'Scenario name', ...args).should.containEql(
-      '\u001b[1m\u001b[35m' +
+      '\u001b[35m\u001b[1m' +
       'Scenario' +
-      '\u001b[39m\u001b[22m' +
+      '\u001b[22m\u001b[39m' +
       ': Scenario name\n'
     );
   });

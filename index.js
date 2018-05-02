@@ -28,13 +28,6 @@ const marks = {
   undefined: '?'
 };
 
-/** @see https://github.com/Marak/colors.js#custom-themes */
-colors.setTheme({
-  feature: ['magenta', 'bold'],
-  scenario: ['magenta', 'bold'],
-  step: 'bold'
-});
-
 /** @see https://github.com/Automattic/cli-table#custom-styles */
 const table = {
   chars: {
@@ -60,7 +53,7 @@ class PrettyFormatter extends Formatter {
         const tags = feature.tags.map(tag => tag.name).join(' ');
         if (tags) this.logn(options.colorFns.tag(tags));
 
-        this.logn(`${feature.keyword.feature}: ${feature.name}`);
+        this.logn(`${colors.magenta.bold(feature.keyword)}: ${feature.name}`);
 
         if (feature.description) this.logn(`${n}${feature.description}`);
 
@@ -75,14 +68,14 @@ class PrettyFormatter extends Formatter {
       const line = Math.min(...pickle.locations.map(location => location.line));
       const { keyword } = gherkinDocument.feature.children.find(child => child.location.line === line);
 
-      this.logn(`${keyword.scenario}: ${pickle.name}`, 2);
+      this.logn(`${colors.magenta.bold(keyword)}: ${pickle.name}`, 2);
     });
 
     options.eventBroadcaster.on('test-step-started', (event) => {
       const { gherkinKeyword, pickleStep } = options.eventDataCollector.getTestStepData(event);
       if (!gherkinKeyword) return; // hook
 
-      this.logn(`${gherkinKeyword.trim().step} ${pickleStep.text}`, 4);
+      this.logn(`${colors.bold(gherkinKeyword.trim())} ${pickleStep.text}`, 4);
 
       pickleStep.arguments.forEach((argument) => {
         if (argument.content) {
