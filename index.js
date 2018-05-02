@@ -1,6 +1,6 @@
 const { Formatter, SummaryFormatter, formatterHelpers } = require('cucumber');
-const Table = require('cli-table');
 const { cross, tick } = require('figures');
+const Table = require('cli-table');
 const colors = require('colors');
 const { EOL: n } = require('os');
 
