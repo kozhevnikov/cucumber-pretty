@@ -5,14 +5,14 @@ const { exec, args } = require('./exec');
 
 describe('Tag', () => {
   it('should log feature tag', () => {
-    exec('features/tag.feature', '--name', 'Feature tag', ...args).should.startWith(
+    exec('test/features/tag.feature', '--name', 'Feature tag', ...args).should.startWith(
       '@feature @tag\n' +
       'Feature: Tag\n'
     );
   });
 
   it('should log new line', () => {
-    exec('features/', '--name', 'Feature .*', ...args).should.containEql(
+    exec('test/features/', '--name', 'Feature .*', ...args).should.containEql(
       '\n' +
       '@feature @tag\n' +
       'Feature: Tag\n'
@@ -20,14 +20,14 @@ describe('Tag', () => {
   });
 
   it('should log scenario tag', () => {
-    exec('features/tag.feature', '--name', 'Scenario tag', ...args).should.containEql(
+    exec('test/features/tag.feature', '--name', 'Scenario tag', ...args).should.containEql(
       '  @feature @tag @scenario\n' +
       '  Scenario: Scenario tag\n'
     );
   });
 
   it('should log scenario outline tag', () => {
-    exec('features/tag.feature', '--name', 'Scenario outline tag', ...args).should.containEql(
+    exec('test/features/tag.feature', '--name', 'Scenario outline tag', ...args).should.containEql(
       '  @feature @tag @scenario-outline @example\n' +
       '  Scenario Outline: Scenario outline tag\n'
     );

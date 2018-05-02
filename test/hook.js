@@ -5,7 +5,7 @@ const { exec, args } = require('./exec');
 
 describe('Hook', () => {
   it('should not log hook', () => {
-    exec('features/hook.feature', ...args).should.startWith(
+    exec('test/features/hook.feature', ...args).should.startWith(
       'BeforeAll\n' +
       'Feature: Hook\n' +
       '\n' +

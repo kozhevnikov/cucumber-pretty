@@ -5,7 +5,7 @@ const { exec, args } = require('./exec');
 
 describe('Background', () => {
   it('should not log background', () => {
-    exec('features/background.feature', ...args).should.startWith(
+    exec('test/features/background.feature', ...args).should.startWith(
       'Feature: Background\n' +
       '\n' +
       '  Scenario: Background scenario\n' +

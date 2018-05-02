@@ -5,11 +5,11 @@ const { exec, args } = require('./exec');
 
 describe('Feature', () => {
   it('should log feature name', () => {
-    exec('features/feature.feature', '--name', 'Feature', ...args).should.startWith('Feature: Feature\n');
+    exec('test/features/feature.feature', '--name', 'Feature', ...args).should.startWith('Feature: Feature\n');
   });
 
   it('should log new lines', () => {
-    exec('features/', '--name', 'Feature \\d', ...args).should.startWith(
+    exec('test/features/', '--name', 'Feature \\d', ...args).should.startWith(
       'Feature: Feature\n' +
       '\n' +
       '  Scenario: Feature 1\n' +

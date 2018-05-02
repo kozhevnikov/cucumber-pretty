@@ -5,7 +5,7 @@ const { exec, args } = require('./exec');
 
 describe('Description', () => {
   it('should log feature description', () => {
-    exec('features/description.feature', ...args).should.startWith(
+    exec('test/features/description.feature', ...args).should.startWith(
       'Feature: Description\n' +
       '\n' +
       '  As a\n' +
@@ -16,7 +16,7 @@ describe('Description', () => {
   });
 
   it('should not log scenario description', () => {
-    exec('features/description.feature', ...args).should.containEql(
+    exec('test/features/description.feature', ...args).should.containEql(
       '  Scenario: Description scenario\n' +
       '    When noop\n' +
       '    Then noop\n' +

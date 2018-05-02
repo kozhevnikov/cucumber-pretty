@@ -4,7 +4,7 @@ const World = require('./World');
 
 setWorldConstructor(World);
 
-if (process.argv.some(arg => arg === 'features/hook.feature')) {
+if (process.argv.some(arg => arg === 'test/features/hook.feature')) {
   BeforeAll(() => { console.log('BeforeAll'); });
   AfterAll(() => { console.log('AfterAll'); });
 }

@@ -13,7 +13,7 @@ describe('Summary', () => {
   });
 
   it('should log new line', () => {
-    exec('features/feature.feature', '--name', 'Feature name', ...args)
+    exec('test/features/feature.feature', '--name', 'Feature name', ...args)
       .replace(/0m00\.\d+s/, '0m00.000s')
       .should.equal(
         'Feature: Feature\n' +
