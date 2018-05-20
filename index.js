@@ -55,7 +55,7 @@ class PrettyFormatter extends Formatter {
 
         this.logn(`${colors.magenta.bold(feature.keyword)}: ${feature.name}`);
 
-        if (feature.description) this.logn(`${n}${feature.description}`);
+        // if (feature.description) this.logn(`${n}${feature.description}`);
 
         this.uri = sourceLocation.uri;
       }

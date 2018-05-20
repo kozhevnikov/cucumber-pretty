@@ -4,7 +4,7 @@ require('should');
 const { exec, args } = require('./exec');
 
 describe('Description', () => {
-  it('should log feature description', () => {
+  it.skip('should log feature description', () => {
     exec('test/features/description.feature', ...args).should.startWith(
       'Feature: Description\n' +
       '\n' +
