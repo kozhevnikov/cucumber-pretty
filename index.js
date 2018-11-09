@@ -41,6 +41,7 @@ class PrettyFormatter extends Formatter {
   /** @param {Options} options */
   constructor(options) {
     super(options);
+    this.colorsEnabled = options.colorsEnabled;
 
     options.eventBroadcaster.on('test-case-started', ({ sourceLocation }) => {
       const { gherkinDocument, pickle } = options.eventDataCollector.getTestCaseData(sourceLocation);
@@ -53,7 +54,7 @@ class PrettyFormatter extends Formatter {
         const tags = feature.tags.map(tag => tag.name).join(' ');
         if (tags) this.logn(options.colorFns.tag(tags));
 
-        this.logn(`${colors.magenta.bold(feature.keyword)}: ${feature.name}`);
+        this.logn(`${this.color(feature.keyword, 'magenta', 'bold')}: ${feature.name}`);
 
         // if (feature.description) this.logn(`${n}${feature.description}`);
 
@@ -68,14 +69,14 @@ class PrettyFormatter extends Formatter {
       const line = Math.min(...pickle.locations.map(location => location.line));
       const { keyword } = gherkinDocument.feature.children.find(child => child.location.line === line);
 
-      this.logn(`${colors.magenta.bold(keyword)}: ${pickle.name}`, 2);
+      this.logn(`${this.color(keyword, 'magenta', 'bold')}: ${pickle.name}`, 2);
     });
 
     options.eventBroadcaster.on('test-step-started', (event) => {
       const { gherkinKeyword, pickleStep } = options.eventDataCollector.getTestStepData(event);
       if (!gherkinKeyword) return; // hook
 
-      this.logn(`${colors.bold(gherkinKeyword.trim())} ${pickleStep.text}`, 4);
+      this.logn(`${this.color(gherkinKeyword.trim(), 'bold')} ${pickleStep.text}`, 4);
 
       pickleStep.arguments.forEach((argument) => {
         if (argument.content) {
@@ -109,6 +110,10 @@ class PrettyFormatter extends Formatter {
       if (this.uri) this.logn();
       formatter.logSummary(event);
     });
+  }
+
+  color(value, ...color) {
+    return this.colorsEnabled ? color.reduce((v, c) => v[c], colors)(value) : value;
   }
 
   logn(value = '', indent = 0) {

@@ -3,7 +3,7 @@ require('should');
 
 const { exec } = require('./exec');
 
-const args = ['--format', '.'];
+const args = ['--format', '.', '--format-options', JSON.stringify({ colorsEnabled: true })];
 
 describe('Color', () => {
   it('should color feature keyword', () => {

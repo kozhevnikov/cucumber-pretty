@@ -7,7 +7,7 @@
 [version]: https://img.shields.io/npm/v/cucumber-pretty.svg
 [downloads]: https://img.shields.io/npm/dm/cucumber-pretty.svg
 
-Cucumber.js 4 pretty formatter implementing event protocol. For HTML formatter try [cucumber-html5](https://github.com/kozhevnikov/cucumber-html5).
+Cucumber.js pretty formatter implementing event protocol.
 
 Built with 🥒 by [Ilya Kozhevnikov](http://kozhevnikov.com/).
 
