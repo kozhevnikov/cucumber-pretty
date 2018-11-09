@@ -22,7 +22,6 @@ cucumber-js -f node_modules/cucumber-pretty
 
 - https://github.com/cucumber/cucumber-js/blob/master/docs/cli.md#formats
 - https://github.com/cucumber/cucumber-js/blob/master/docs/custom_formatters.md
-- https://docs.cucumber.io/event-protocol/
 
 ## Dark
 
