@@ -41,7 +41,8 @@
       "max-len": "off",
       "no-console": "off",
       "object-curly-newline": "off",
-      "object-property-newline": "off"
+      "object-property-newline": "off",
+      "operator-linebreak": "off"
     }
   }
 }
