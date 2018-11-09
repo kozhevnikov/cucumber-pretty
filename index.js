@@ -1,6 +1,6 @@
 const { Formatter, SummaryFormatter, formatterHelpers } = require('cucumber');
 const { cross, tick } = require('figures');
-const Table = require('cli-table');
+const Table = require('cli-table3');
 const colors = require('colors');
 const { EOL: n } = require('os');
 
@@ -34,6 +34,10 @@ const table = {
     top: '', 'top-left': '', 'top-mid': '', 'top-right': '',
     mid: '', 'left-mid': '', 'mid-mid': '', 'right-mid': '',
     bottom: '', 'bottom-left': '', 'bottom-mid': '', 'bottom-right': ''
+  },
+  style: {
+    head: [],
+    border: []
   }
 };
 
