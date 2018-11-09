@@ -1,10 +1,15 @@
 const { describe, it } = require('mocha');
 require('should');
 
-const { exec, args } = require('./exec');
+const { exec } = require('./exec');
+
+const args = ['--format', '.', '--format-options', JSON.stringify({
+  colorsEnabled: false,
+  descriptionEnabled: true
+})];
 
 describe('Description', () => {
-  it.skip('should log feature description', () => {
+  it('should log feature description', () => {
     exec('test/features/description.feature', ...args).should.startWith(
       'Feature: Description\n' +
       '\n' +

@@ -46,6 +46,7 @@ class PrettyFormatter extends Formatter {
   constructor(options) {
     super(options);
     this.colorsEnabled = options.colorsEnabled;
+    this.descriptionEnabled = options.descriptionEnabled;
 
     options.eventBroadcaster.on('test-case-started', ({ sourceLocation }) => {
       const { gherkinDocument, pickle } = options.eventDataCollector.getTestCaseData(sourceLocation);
@@ -60,7 +61,7 @@ class PrettyFormatter extends Formatter {
 
         this.logn(`${this.color(feature.keyword, 'magenta', 'bold')}: ${feature.name}`);
 
-        // if (feature.description) this.logn(`${n}${feature.description}`);
+        if (feature.description && this.descriptionEnabled) this.logn(`${n}${feature.description}`);
 
         this.uri = sourceLocation.uri;
       }
