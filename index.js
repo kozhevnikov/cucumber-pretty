@@ -28,7 +28,7 @@ const marks = {
   undefined: '?'
 };
 
-/** @see https://github.com/Automattic/cli-table#custom-styles */
+/** @see https://github.com/cli-table/cli-table3#custom-styles */
 const table = {
   chars: {
     top: '', 'top-left': '', 'top-mid': '', 'top-right': '',
