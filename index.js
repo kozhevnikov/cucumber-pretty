@@ -48,10 +48,10 @@ class PrettyFormatter extends Formatter {
     this.colorsEnabled = options.colorsEnabled;
     this.descriptionEnabled = options.descriptionEnabled;
 
-    options.eventBroadcaster.on('test-case-started', ({ sourceLocation }) => {
-      const { gherkinDocument, pickle } = options.eventDataCollector.getTestCaseData(sourceLocation);
+    options.eventBroadcaster.on('test-case-started', (event) => {
+      const { gherkinDocument, pickle } = options.eventDataCollector.getTestCaseAttempt(event);
 
-      if (this.uri !== sourceLocation.uri) {
+      if (this.uri !== event.sourceLocation.uri) {
         const { feature } = gherkinDocument;
 
         if (this.uri) this.logn();
@@ -63,7 +63,7 @@ class PrettyFormatter extends Formatter {
 
         if (feature.description && this.descriptionEnabled) this.logn(`${n}${feature.description}`);
 
-        this.uri = sourceLocation.uri;
+        this.uri = event.sourceLocation.uri;
       }
 
       this.logn();
@@ -78,26 +78,29 @@ class PrettyFormatter extends Formatter {
     });
 
     options.eventBroadcaster.on('test-step-started', (event) => {
-      const { gherkinKeyword, pickleStep } = options.eventDataCollector.getTestStepData(event);
-      if (!gherkinKeyword) return; // hook
+      const testCaseAttempt = options.eventDataCollector.getTestCaseAttempt(event.testCase);
+      testCaseAttempt.stepResults = testCaseAttempt.testCase.steps.map(() => ({}));
 
-      this.logn(`${this.color(gherkinKeyword.trim(), 'bold')} ${pickleStep.text}`, 4);
+      const testStep = formatterHelpers.parseTestCaseAttempt({ testCaseAttempt }).testSteps[event.index];
+      if (!testStep.sourceLocation) return; // hook
 
-      pickleStep.arguments.forEach((argument) => {
+      this.logn(`${this.color(testStep.keyword.trim(), 'bold')} ${testStep.text}`, 4);
+
+      testStep.arguments.forEach((argument) => {
         if (argument.content) {
           this.logn(`"""${n}${argument.content}${n}"""`, 6);
         }
 
         if (argument.rows) {
           const datatable = new Table(table);
-          datatable.push(...argument.rows.map(row => row.cells.map(cell => cell.value)));
+          datatable.push(...argument.rows);
           this.logn(datatable, 6);
         }
       });
     });
 
     options.eventBroadcaster.on('test-step-finished', (event) => {
-      const { testStep: { result: { status, exception } } } = options.eventDataCollector.getTestStepData(event);
+      const { result: { status, exception } } = event;
 
       if (status !== 'passed') {
         this.logn(options.colorFns[status](`${marks[status]} ${status}`), 4);
@@ -110,7 +113,7 @@ class PrettyFormatter extends Formatter {
     });
 
     options.eventBroadcaster.on('test-run-finished', (event) => {
-      const noptions = Object.create(options, { eventBroadcaster: { value: { on: () => {} } } });
+      const noptions = Object.create(options, { eventBroadcaster: { value: { on: () => { } } } });
       const formatter = new SummaryFormatter(noptions);
       if (this.uri) this.logn();
       formatter.logSummary(event);
