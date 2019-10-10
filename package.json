@@ -28,21 +28,5 @@
     "eslint-plugin-import": "^2.18.2",
     "mocha": "^6.2.1",
     "should": "^13.2.3"
-  },
-  "eslintConfig": {
-    "extends": "airbnb-base",
-    "rules": {
-      "comma-dangle": [
-        "error",
-        "never"
-      ],
-      "func-names": "off",
-      "function-paren-newline": "off",
-      "max-len": "off",
-      "no-console": "off",
-      "object-curly-newline": "off",
-      "object-property-newline": "off",
-      "operator-linebreak": "off"
-    }
   }
 }

@@ -5,7 +5,8 @@ const { exec, args } = require('./exec');
 
 describe('Scenario', () => {
   it('should log scenario name', () => {
-    exec('test/features/scenario.feature', '--name', 'Scenario name', ...args).should.containEql('  Scenario: Scenario name\n');
+    exec('test/features/scenario.feature', '--name', 'Scenario name', ...args)
+      .should.containEql('  Scenario: Scenario name\n');
   });
 
   it('should log new lines', () => {

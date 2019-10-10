@@ -1,0 +1,20 @@
+{
+    "extends": "airbnb-base",
+    "rules": {
+        "comma-dangle": [
+            "error",
+            "never"
+        ],
+        "max-len": [
+            "error",
+            {
+                "code": 120,
+                "ignoreComments": true
+            }
+        ],
+        "no-console": "off",
+        "object-curly-newline": "off",
+        "object-property-newline": "off",
+        "operator-linebreak": "off"
+    }
+}

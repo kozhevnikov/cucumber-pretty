@@ -56,7 +56,7 @@ class PrettyFormatter extends Formatter {
 
         if (this.uri) this.logn();
 
-        const tags = feature.tags.map(tag => tag.name).join(' ');
+        const tags = feature.tags.map((tag) => tag.name).join(' ');
         if (tags) this.logn(options.colorFns.tag(tags));
 
         this.logn(`${this.color(feature.keyword, 'magenta', 'bold')}: ${feature.name}`);
@@ -68,11 +68,11 @@ class PrettyFormatter extends Formatter {
 
       this.logn();
 
-      const tags = pickle.tags.map(tag => tag.name).join(' ');
+      const tags = pickle.tags.map((tag) => tag.name).join(' ');
       if (tags) this.logn(options.colorFns.tag(tags), 2);
 
-      const line = Math.min(...pickle.locations.map(location => location.line));
-      const { keyword } = gherkinDocument.feature.children.find(child => child.location.line === line);
+      const line = Math.min(...pickle.locations.map((location) => location.line));
+      const { keyword } = gherkinDocument.feature.children.find((child) => child.location.line === line);
 
       this.logn(`${this.color(keyword, 'magenta', 'bold')}: ${pickle.name}`, 2);
     });
