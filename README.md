@@ -18,6 +18,10 @@ npm i cucumber-pretty
 cucumber-js -f node_modules/cucumber-pretty
 ```
 
+- For Cucumber.js versions 1 and 2 use `-f pretty`
+- For Cucumber.js versions 3 to 5 use `cucumber-pretty@1.5`
+- For Cucumber.js version 6 use `cucumber-pretty@6`
+
 ## References
 
 - https://github.com/cucumber/cucumber-js/blob/master/docs/cli.md#formats
