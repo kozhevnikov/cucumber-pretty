@@ -21,7 +21,6 @@
     "test": "mocha"
   },
   "dependencies": {
-    "-": "0.0.1",
     "cli-table3": "^0.6.0",
     "colors": "^1.4.0",
     "figures": "^3.2.0"
