@@ -1,9 +1,11 @@
 # Cucumber Pretty
 
-[![build](https://github.com/jbpros/cucumber-pretty/workflows/build/badge.svg)](https://github.com/jbpros/cucumber-pretty/actions?query=workflow%3Abuild)
+[![build][build-badge]][build]
 [![npm][version]][npm]
 [![npm][downloads]][npm]
 
+[build]: https://github.com/jbpros/cucumber-pretty/actions?query=workflow%3Abuild
+[build-badge]: https://github.com/jbpros/cucumber-pretty/workflows/build/badge.svg
 [npm]: https://www.npmjs.com/package/cucumber-pretty
 [version]: https://img.shields.io/npm/v/cucumber-pretty.svg
 [downloads]: https://img.shields.io/npm/dm/cucumber-pretty.svg
