@@ -24,6 +24,7 @@ cucumber-js -f node_modules/cucumber-pretty
 - For Cucumber.js versions 1 and 2 use `-f pretty`
 - For Cucumber.js versions 3 to 5 use `cucumber-pretty@1.5`
 - For Cucumber.js version 6 use `cucumber-pretty@6`
+- The pretty formatter is [not yet compatible with Cucumber.js 7](https://github.com/kozhevnikov/cucumber-pretty/issues/14).
 
 ## References
 
