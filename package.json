@@ -22,9 +22,9 @@
   },
   "dependencies": {
     "-": "0.0.1",
-    "cli-table3": "^0.5.1",
+    "cli-table3": "^0.6.0",
     "colors": "^1.4.0",
-    "figures": "^3.0.0"
+    "figures": "^3.2.0"
   },
   "peerDependencies": {
     "cucumber": ">=6.0.0"
@@ -35,12 +35,12 @@
     "@types/node": "^14.14.16",
     "@typescript-eslint/eslint-plugin": "^4.11.0",
     "@typescript-eslint/parser": "^4.11.0",
-    "cucumber": "^6.0.2",
+    "cucumber": "^6.0.5",
     "eslint": "^7.15.0",
     "eslint-config-prettier": "^7.0.0",
-    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.3.0",
-    "mocha": "^6.2.1",
+    "mocha": "^8.2.1",
     "prettier": "^2.2.1",
     "should": "^13.2.3",
     "ts-node": "^9.1.1",
