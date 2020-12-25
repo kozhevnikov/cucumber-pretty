@@ -7,5 +7,6 @@
   },
   "include": [
     "src/**/*.ts",
+    "test/features/**/*.ts"
   ]
 }
