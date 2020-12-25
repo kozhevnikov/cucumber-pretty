@@ -1,10 +1,9 @@
-/* eslint-disable no-unused-vars */
-import { defineStep } from 'cucumber'
+import { defineStep } from '@cucumber/cucumber'
 
 const noop = () => {}
 
 defineStep('noop', noop)
-defineStep('noop {string}', (_) => {})
+defineStep('noop {string}', () => {})
 defineStep('ambiguous', noop)
 defineStep('ambiguous', noop)
 defineStep('failed', () => {
@@ -15,6 +14,6 @@ defineStep('pending', () => 'pending')
 defineStep('skipped', () => 'skipped')
 defineStep('doc string', noop)
 defineStep('data table', noop)
-defineStep('world', function world() {
+defineStep('world', function (this: any) {
   this.someWorldMethod()
 })

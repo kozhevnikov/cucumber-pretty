@@ -4,7 +4,7 @@ import {
   Before,
   BeforeAll,
   setWorldConstructor,
-} from 'cucumber'
+} from '@cucumber/cucumber'
 
 import { World } from './World'
 
