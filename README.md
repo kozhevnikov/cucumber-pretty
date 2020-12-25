@@ -1,5 +1,6 @@
 # Cucumber Pretty
 
+[![build](https://github.com/jbpros/cucumber-pretty/workflows/build/badge.svg)](https://github.com/jbpros/cucumber-pretty/actions?query=workflow%3Abuild)
 [![npm][version]][npm]
 [![npm][downloads]][npm]
 
