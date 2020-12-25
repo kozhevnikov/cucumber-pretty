@@ -12,7 +12,7 @@
     "target": "es2019",
 
   },
-  "include": ["src/*", "features/*", "examples/*"],
+  "include": ["src/*", "test/features/*"],
   "exclude": [
     "**/node_modules",
   ],
