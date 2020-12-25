@@ -1,11 +1,11 @@
 import { execFileSync } from 'child_process'
-import { resolve } from 'path'
+import { join } from 'path'
 
 const cmd = 'node_modules/.bin/cucumber-js'
 
 export const args = [
   '--format',
-  '.',
+  join(__dirname, '..', 'lib', 'src'),
   '--format-options',
   JSON.stringify({ colorsEnabled: false }),
 ]
@@ -14,10 +14,11 @@ export const args = [
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const exec = (...args: any[]): string => {
   args = [
+    '--publish-quiet',
     '--require-module',
     'ts-node/register',
     '--require',
-    resolve(__dirname, '..', 'lib', 'test'),
+    join(__dirname, '..', 'lib', 'test'),
     ...args,
   ]
   console.log(`${cmd} ${args.join(' ')}`)

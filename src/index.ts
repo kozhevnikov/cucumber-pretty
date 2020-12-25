@@ -32,7 +32,7 @@ import { IFormatterOptions } from '@cucumber/cucumber/lib/formatter'
 //   },
 // }
 
-export class PrettyFormatter extends Formatter {
+export default class PrettyFormatter extends Formatter {
   private uri?: string = undefined
 
   constructor(options: IFormatterOptions) {
