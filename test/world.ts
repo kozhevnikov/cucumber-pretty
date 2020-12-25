@@ -1,14 +1,13 @@
-const { describe, it } = require('mocha');
-require('should');
+import 'should'
 
-const { exec } = require('./exec');
+import { exec } from './exec'
 
-const args = ['--format', '.'];
+const args = ['--format', '.']
 
 describe('World', () => {
   it('should not throw colors error', () => {
     exec('test/features/world.feature', ...args).should.containEql(
       '\n\u001b[34mWORLD\u001b[39m\n'
-    );
-  });
-});
+    )
+  })
+})

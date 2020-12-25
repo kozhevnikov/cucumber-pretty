@@ -1,5 +1,6 @@
 import 'should'
-import { exec, args } from './exec'
+
+import { args, exec } from './exec'
 
 describe('Feature', () => {
   it('should log feature name', () => {

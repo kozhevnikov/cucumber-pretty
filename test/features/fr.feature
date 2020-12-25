@@ -1,6 +1,6 @@
 # language: fr
-Fonctionnalité: Fonctionnalité Name
+Fonctionnalité: Nom de la Fonctionnalité
 
-  Scénario: Scénario name
+  Scénario: Nom du Scénario
     Quand noop
     Alors noop
