@@ -58,6 +58,7 @@ export default class PrettyFormatter extends Formatter {
 
   constructor(options: IFormatterOptions) {
     super(options)
+    this.colorsEnabled = !!options.parsedArgvOptions.colorsEnabled
     this.parseEnvelope = this.parseEnvelope.bind(this)
 
     options.eventBroadcaster.on('envelope', this.parseEnvelope)
@@ -132,7 +133,7 @@ export default class PrettyFormatter extends Formatter {
     if (status && status !== Status.PASSED) {
       this.logn(
         this.colorFns.forStatus(status)(
-          ` ${marks[status]} ${Status[status].toLowerCase()}`
+          `${marks[status]} ${Status[status].toLowerCase()}`
         ),
         4
       )
@@ -203,7 +204,6 @@ export default class PrettyFormatter extends Formatter {
   }
 
   private color(value: any, ...color: any[]) {
-    // TODO: fix this
     return this.colorsEnabled
       ? color.reduce((v, c) => v[c], colors)(value)
       : value
