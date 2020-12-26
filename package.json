@@ -18,7 +18,8 @@
     "build:watch": "tsc -p tsconfig.node.json --watch",
     "lint": "eslint \"src/**/*.ts\" \"test/**/*.ts\"",
     "pretest": "npm run build",
-    "test": "mocha"
+    "test": "npm run test:mocha",
+    "test:mocha": "mocha"
   },
   "dependencies": {
     "@cucumber/messages": "^13.2.1",
