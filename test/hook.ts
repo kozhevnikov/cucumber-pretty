@@ -14,6 +14,7 @@ describe('Hook', () => {
         '    When noop\n' +
         '    Then noop\n' +
         '[[[After]]]\n' +
+        '\n' +
         '[[[AfterAll]]]\n'
     )
   })
