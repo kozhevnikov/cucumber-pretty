@@ -4,12 +4,13 @@ import { args, exec } from './exec'
 
 describe('Summary', () => {
   it('should log empty summary', () => {
-    exec(
-      'test/features/feature.feature',
-      '--tags',
-      '@empty',
-      ...args
-    ).should.equal('0 scenarios\n' + '0 steps\n' + '0m00.000s\n')
+    exec('test/features/feature.feature', '--tags', '@empty', ...args)
+      .replace(/\d+m\d+\.\d+s/g, '0m00.000s')
+      .should.equal(
+        '0 scenarios\n' +
+          '0 steps\n' +
+          '0m00.000s (executing steps: 0m00.000s)\n'
+      )
   })
 
   it('should log new line', () => {
