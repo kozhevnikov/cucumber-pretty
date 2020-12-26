@@ -49,6 +49,7 @@ const marks = {
 export default class PrettyFormatter extends Formatter {
   // TODO: review this:
   private uri?: string = undefined
+  private errorCount = 0
   private colorsEnabled = false
   private testRunStartedTimestamp: messages.ITimestamp = {
     seconds: 0,
@@ -143,7 +144,7 @@ export default class PrettyFormatter extends Formatter {
         const error = formatIssue({
           colorFns: this.colorFns,
           cwd: this.cwd,
-          number: 9999, // TODO: get this number
+          number: ++this.errorCount,
           snippetBuilder: this.snippetBuilder,
           supportCodeLibrary: this.supportCodeLibrary,
           testCaseAttempt,
