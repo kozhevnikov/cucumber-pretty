@@ -11,6 +11,7 @@ import {
 import { getPickleStepMap } from '@cucumber/cucumber/lib/formatter/helpers/pickle_parser'
 import { durationBetweenTimestamps } from '@cucumber/cucumber/lib/time'
 import { messages } from '@cucumber/messages'
+import * as CliTable3 from 'cli-table3'
 import { bold, magenta } from 'colors/safe'
 import { cross, tick } from 'figures'
 import { EOL as n } from 'os'
@@ -31,27 +32,26 @@ const styleDefs: { [key in TextStyle]: StyleFunction } = {
   magenta,
 }
 
-/** @see https://github.com/cli-table/cli-table3#custom-styles */
-// const table = {
-//   chars: {
-//     top: '',
-//     'top-left': '',
-//     'top-mid': '',
-//     'top-right': '',
-//     mid: '',
-//     'left-mid': '',
-//     'mid-mid': '',
-//     'right-mid': '',
-//     bottom: '',
-//     'bottom-left': '',
-//     'bottom-mid': '',
-//     'bottom-right': '',
-//   },
-//   style: {
-//     head: [],
-//     border: [],
-//   },
-// }
+const tableLayout = {
+  chars: {
+    top: '',
+    'top-left': '',
+    'top-mid': '',
+    'top-right': '',
+    mid: '',
+    'left-mid': '',
+    'mid-mid': '',
+    'right-mid': '',
+    bottom: '',
+    'bottom-left': '',
+    'bottom-mid': '',
+    'bottom-right': '',
+  },
+  style: {
+    head: [],
+    border: [],
+  },
+}
 
 export default class PrettyFormatter extends Formatter {
   private uri?: string = undefined
@@ -130,6 +130,17 @@ export default class PrettyFormatter extends Formatter {
         `${this.style(gherkinStep.keyword.trim(), 'bold')} ${pickleStep.text}`,
         4
       )
+
+      if (gherkinStep.dataTable) {
+        const datatable = new CliTable3(tableLayout)
+        datatable.push(
+          ...gherkinStep.dataTable.rows.map(
+            (row: messages.GherkinDocument.Feature.ITableRow) =>
+              (row.cells || []).map((cell) => cell.value)
+          )
+        )
+        this.logn(datatable.toString(), 6)
+      }
     }
   }
 
