@@ -65,13 +65,13 @@ describe('Color', () => {
   })
 
   it('should color feature tag', () => {
-    runColored('step.feature', 'Feature tag').should.containEql(
+    runColored('tag.feature', 'Feature tag').should.containEql(
       '\u001b[36m@feature @tag\u001b[39m\n'
     )
   })
 
   it('should color scenario tag', () => {
-    runColored('step.feature', 'Scenario tag').should.containEql(
+    runColored('tag.feature', 'Scenario tag').should.containEql(
       '\u001b[36m@feature @tag @scenario\u001b[39m\n'
     )
   })
