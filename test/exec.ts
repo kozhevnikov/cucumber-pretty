@@ -18,6 +18,11 @@ export const run = (
 ): string => {
   const finalOptions: FinalRunOptions = { colorsEnabled: false, ...options }
   const args = [
+    '--publish-quiet',
+    '--require-module',
+    'ts-node/register',
+    '--require',
+    join(__dirname, '..', 'lib', 'test'),
     '--format',
     join(__dirname, '..', 'lib', 'src'),
     '--format-options',
@@ -32,28 +37,8 @@ export const run = (
   )
 }
 
-// TODO: remove
-/** @deprecated */
-export const args = [
-  '--format',
-  join(__dirname, '..', 'lib', 'src'),
-  '--format-options',
-  JSON.stringify({ colorsEnabled: false }),
-]
-
-// TODO: remove
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-/** @deprecated */
-export const exec = (...args: any[]): string => {
-  args = [
-    '--publish-quiet',
-    '--require-module',
-    'ts-node/register',
-    '--require',
-    join(__dirname, '..', 'lib', 'test'),
-    ...args,
-  ]
-  console.log(`${cmd} ${args.join(' ')}`)
+const exec = (...args: string[]): string => {
+  if (process.env.LOG_CUCUMBER_RUN) console.log(`${cmd} ${args.join(' ')}`)
 
   let stdout: string
   try {
@@ -62,6 +47,6 @@ export const exec = (...args: any[]): string => {
     stdout = error.stdout.toString()
   }
 
-  console.log(stdout)
+  if (process.env.LOG_CUCUMBER_RUN) console.log(stdout)
   return stdout
 }
