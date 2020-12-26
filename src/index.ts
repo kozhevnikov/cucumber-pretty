@@ -1,6 +1,9 @@
-import { Status, SummaryFormatter } from '@cucumber/cucumber'
+import { Formatter, Status } from '@cucumber/cucumber'
 import { IFormatterOptions } from '@cucumber/cucumber/lib/formatter'
-import { formatIssue } from '@cucumber/cucumber/lib/formatter/helpers'
+import {
+  formatIssue,
+  formatSummary,
+} from '@cucumber/cucumber/lib/formatter/helpers'
 import {
   getGherkinScenarioMap,
   getGherkinStepMap,
@@ -43,7 +46,7 @@ const marks = {
 //   },
 // }
 
-export default class PrettyFormatter extends SummaryFormatter {
+export default class PrettyFormatter extends Formatter {
   // TODO: review this:
   private uri?: string = undefined
   private errorCount = 0
@@ -161,6 +164,13 @@ export default class PrettyFormatter extends SummaryFormatter {
       testRunFinished.timestamp || { nanos: 0, seconds: 0 }
     )
     if (this.uri) this.logn()
+    this.log(
+      formatSummary({
+        colorFns: this.colorFns,
+        testCaseAttempts: this.eventDataCollector.getTestCaseAttempts(),
+        testRunDuration,
+      })
+    )
   }
 
   private renderFeatureHead(feature: messages.GherkinDocument.IFeature) {
