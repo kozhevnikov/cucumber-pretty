@@ -27,6 +27,7 @@ export const run = (
 }
 
 // TODO: remove
+/** @deprecated */
 export const args = [
   '--format',
   join(__dirname, '..', 'lib', 'src'),
@@ -36,6 +37,7 @@ export const args = [
 
 // TODO: remove
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
+/** @deprecated */
 export const exec = (...args: any[]): string => {
   args = [
     '--publish-quiet',
