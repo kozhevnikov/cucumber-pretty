@@ -1,9 +1,5 @@
-import { Formatter, Status } from '@cucumber/cucumber'
+import { Status, SummaryFormatter } from '@cucumber/cucumber'
 import { IFormatterOptions } from '@cucumber/cucumber/lib/formatter'
-import {
-  formatIssue,
-  formatSummary,
-} from '@cucumber/cucumber/lib/formatter/helpers'
 import {
   getGherkinScenarioMap,
   getGherkinStepMap,
@@ -53,7 +49,7 @@ const tableLayout = {
   },
 }
 
-export default class PrettyFormatter extends Formatter {
+export default class PrettyFormatter extends SummaryFormatter {
   private uri?: string = undefined
   private errorCount = 0
   private colorsEnabled = false
@@ -162,39 +158,18 @@ export default class PrettyFormatter extends Formatter {
         4
       )
 
-      if (message) {
-        const testCaseAttempt = this.eventDataCollector.getTestCaseAttempt(
-          testStepFinished.testCaseStartedId || ''
-        )
-        const error = formatIssue({
-          colorFns: this.colorFns,
-          cwd: this.cwd,
-          number: ++this.errorCount,
-          snippetBuilder: this.snippetBuilder,
-          supportCodeLibrary: this.supportCodeLibrary,
-          testCaseAttempt,
-        })
-        this.logn(error, 6)
-      }
+      if (message) this.logn(message, 6)
     }
   }
 
   private onTestCaseFinished(_testCaseFinished: messages.ITestCaseFinished) {
-    // this.logn()
+    this.logn()
   }
 
   private onTestRunFinished(testRunFinished: messages.ITestRunFinished) {
     const testRunDuration = durationBetweenTimestamps(
       this.testRunStartedTimestamp,
       testRunFinished.timestamp || { nanos: 0, seconds: 0 }
-    )
-    if (this.uri) this.logn()
-    this.log(
-      formatSummary({
-        colorFns: this.colorFns,
-        testCaseAttempts: this.eventDataCollector.getTestCaseAttempts(),
-        testRunDuration,
-      })
     )
   }
 
@@ -208,13 +183,13 @@ export default class PrettyFormatter extends Formatter {
     )
 
     if (feature.description) this.logn(`${n}${feature.description}`)
+    this.logn()
   }
 
   private renderScenarioHead(
     gherkinDocument: messages.IGherkinDocument,
     pickle: messages.IPickle
   ) {
-    this.logn()
     const tags = (pickle.tags || []).map((tag) => tag.name).join(' ')
     if (tags) this.logn(this.colorFns.tag(tags), 2)
     const gherkinScenarioMap = getGherkinScenarioMap(gherkinDocument)
