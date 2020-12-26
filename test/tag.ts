@@ -1,41 +1,28 @@
 import 'should'
 
-import { args, exec } from './exec'
+import { run } from './exec'
 
-describe('Tag', () => {
+describe('@wip Tag', () => {
   it('should log feature tag', () => {
-    exec(
-      'test/features/tag.feature',
-      '--name',
-      'Feature tag',
-      ...args
-    ).should.startWith('@feature @tag\n' + 'Feature: Tag\n')
+    run('tag.feature', { '--name': 'Feature tag' }).should.startWith(
+      '@feature @tag\n' + 'Feature: Tag\n'
+    )
   })
 
   it('should log new line', () => {
-    exec('test/features/', '--name', 'Feature .*', ...args).should.containEql(
+    run('*.feature', { '--name': 'Feature .*' }).should.containEql(
       '\n' + '@feature @tag\n' + 'Feature: Tag\n'
     )
   })
 
   it('should log scenario tag', () => {
-    exec(
-      'test/features/tag.feature',
-      '--name',
-      'Scenario tag',
-      ...args
-    ).should.containEql(
+    run('tag.feature', { '--name': 'Scenario tag' }).should.containEql(
       '  @feature @tag @scenario\n' + '  Scenario: Scenario tag\n'
     )
   })
 
   it('should log scenario outline tag', () => {
-    exec(
-      'test/features/tag.feature',
-      '--name',
-      'Scenario outline tag',
-      ...args
-    ).should.containEql(
+    run('tag.feature', { '--name': 'Scenario outline tag' }).should.containEql(
       '  @feature @tag @scenario-outline @example\n' +
         '  Scenario Outline: Scenario outline tag\n'
     )
