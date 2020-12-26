@@ -120,7 +120,7 @@ export default class PrettyFormatter extends Formatter {
       const astNodeId = pickleStep.astNodeIds[0]
       const gherkinStep = gherkinStepMap[astNodeId]
       this.logn(
-        `${this.color(gherkinStep.keyword.trim(), 'bold')} ${gherkinStep.text}`,
+        `${this.color(gherkinStep.keyword.trim(), 'bold')} ${pickleStep.text}`,
         4
       )
     }
