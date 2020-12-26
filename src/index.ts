@@ -5,7 +5,6 @@ import {
   getGherkinStepMap,
 } from '@cucumber/cucumber/lib/formatter/helpers/gherkin_document_parser'
 import { getPickleStepMap } from '@cucumber/cucumber/lib/formatter/helpers/pickle_parser'
-import { durationBetweenTimestamps } from '@cucumber/cucumber/lib/time'
 import { messages } from '@cucumber/messages'
 import * as CliTable3 from 'cli-table3'
 import { bold, magenta } from 'colors/safe'
@@ -51,12 +50,7 @@ const tableLayout = {
 
 export default class PrettyFormatter extends SummaryFormatter {
   private uri?: string = undefined
-  private errorCount = 0
   private colorsEnabled = false
-  private testRunStartedTimestamp: messages.ITimestamp = {
-    seconds: 0,
-    nanos: 0,
-  }
 
   constructor(options: IFormatterOptions) {
     super(options)
@@ -67,7 +61,6 @@ export default class PrettyFormatter extends SummaryFormatter {
   }
 
   private parseEnvelope(envelope: messages.Envelope) {
-    if (envelope.testRunStarted) this.onTestRunStarted(envelope.testRunStarted)
     if (envelope.testCaseStarted)
       this.onTestCaseStarted(envelope.testCaseStarted)
     if (envelope.testStepStarted)
@@ -76,15 +69,6 @@ export default class PrettyFormatter extends SummaryFormatter {
       this.onTestStepFinished(envelope.testStepFinished)
     if (envelope.testCaseFinished)
       this.onTestCaseFinished(envelope.testCaseFinished)
-    if (envelope.testRunFinished)
-      this.onTestRunFinished(envelope.testRunFinished)
-  }
-
-  private onTestRunStarted(testRunStarted: messages.ITestRunStarted) {
-    this.testRunStartedTimestamp =
-      typeof testRunStarted.timestamp === 'number'
-        ? testRunStarted.timestamp
-        : { seconds: 0, nanos: 0 }
   }
 
   private onTestCaseStarted(testCaseStarted: messages.ITestCaseStarted) {
@@ -163,13 +147,6 @@ export default class PrettyFormatter extends SummaryFormatter {
 
   private onTestCaseFinished(_testCaseFinished: messages.ITestCaseFinished) {
     this.logn()
-  }
-
-  private onTestRunFinished(testRunFinished: messages.ITestRunFinished) {
-    const testRunDuration = durationBetweenTimestamps(
-      this.testRunStartedTimestamp,
-      testRunFinished.timestamp || { nanos: 0, seconds: 0 }
-    )
   }
 
   private renderFeatureHead(feature: messages.GherkinDocument.IFeature) {
