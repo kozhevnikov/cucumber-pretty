@@ -11,7 +11,7 @@ describe('Summary', () => {
 
   it('should log new line', () => {
     exec('test/features/feature.feature', '--name', 'Feature name', ...args)
-      .replace(/0m00\.\d+s/, '0m00.000s')
+      .replace(/\d+m\d+\.\d+s/g, '0m00.000s')
       .should.equal(
         'Feature: Feature\n' +
           '\n' +
@@ -21,7 +21,7 @@ describe('Summary', () => {
           '\n' +
           '1 scenario (1 passed)\n' +
           '2 steps (2 passed)\n' +
-          '0m00.000s\n'
+          '0m00.000s (executing steps: 0m00.000s)\n'
       )
   })
 })
