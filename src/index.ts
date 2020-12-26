@@ -8,10 +8,10 @@ import {
   getGherkinScenarioMap,
   getGherkinStepMap,
 } from '@cucumber/cucumber/lib/formatter/helpers/gherkin_document_parser'
-import { durationBetweenTimestamps } from '@cucumber/cucumber/lib/time'
 import { getPickleStepMap } from '@cucumber/cucumber/lib/formatter/helpers/pickle_parser'
+import { durationBetweenTimestamps } from '@cucumber/cucumber/lib/time'
 import { messages } from '@cucumber/messages'
-import * as colors from 'colors'
+import { bold, magenta } from 'colors/safe'
 import { cross, tick } from 'figures'
 import { EOL as n } from 'os'
 
@@ -22,6 +22,13 @@ const marks = {
   [Status.PENDING]: '?',
   [Status.SKIPPED]: '-',
   [Status.UNDEFINED]: '?',
+}
+
+type TextStyle = 'bold' | 'magenta'
+type StyleFunction = (text: string) => string
+const styleDefs: { [key in TextStyle]: StyleFunction } = {
+  bold,
+  magenta,
 }
 
 /** @see https://github.com/cli-table/cli-table3#custom-styles */
@@ -47,7 +54,6 @@ const marks = {
 // }
 
 export default class PrettyFormatter extends Formatter {
-  // TODO: review this:
   private uri?: string = undefined
   private errorCount = 0
   private colorsEnabled = false
@@ -121,7 +127,7 @@ export default class PrettyFormatter extends Formatter {
       const astNodeId = pickleStep.astNodeIds[0]
       const gherkinStep = gherkinStepMap[astNodeId]
       this.logn(
-        `${this.color(gherkinStep.keyword.trim(), 'bold')} ${pickleStep.text}`,
+        `${this.style(gherkinStep.keyword.trim(), 'bold')} ${pickleStep.text}`,
         4
       )
     }
@@ -178,7 +184,9 @@ export default class PrettyFormatter extends Formatter {
     const tags = (feature?.tags || []).map((tag) => tag.name).join(' ')
     if (tags) this.logn(this.colorFns.tag(tags))
     this.logn(
-      `${this.color(feature.keyword, 'magenta', 'bold')}: ${feature.name}`
+      `${this.style(feature.keyword || '[feature]', 'magenta', 'bold')}: ${
+        feature.name
+      }`
     )
 
     if (feature.description) this.logn(`${n}${feature.description}`)
@@ -194,7 +202,7 @@ export default class PrettyFormatter extends Formatter {
     const gherkinScenarioMap = getGherkinScenarioMap(gherkinDocument)
     if (!pickle.astNodeIds) throw new Error('Pickle AST nodes missing')
     const keyword = gherkinScenarioMap[pickle.astNodeIds[0]].keyword
-    this.logn(`${this.color(keyword, 'magenta', 'bold')}: ${pickle.name}`, 2)
+    this.logn(`${this.style(keyword, 'magenta', 'bold')}: ${pickle.name}`, 2)
   }
 
   private logn(value = '', indent = 0) {
@@ -203,9 +211,14 @@ export default class PrettyFormatter extends Formatter {
     this.log(`${text}${n}`)
   }
 
-  private color(value: any, ...color: any[]) {
-    return this.colorsEnabled
-      ? color.reduce((v, c) => v[c], colors)(value)
-      : value
+  private style(text: string, ...styles: TextStyle[]) {
+    return this.colorsEnabled ? this.styleText(text, ...styles) : text
+  }
+
+  private styleText(text: string, ...styles: TextStyle[]) {
+    return styles.reduce<StyleFunction>(
+      (fn, style) => (text) => fn(styleDefs[style](text)),
+      (text) => text
+    )(text)
   }
 }
