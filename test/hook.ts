@@ -2,7 +2,7 @@ import 'should'
 
 import { run } from './exec'
 
-describe('@wip Hook', () => {
+describe('Hook', () => {
   it('should not log hook', () => {
     run('hook.feature').should.startWith(
       '[[[BeforeAll]]]\n' +
