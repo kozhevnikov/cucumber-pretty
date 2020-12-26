@@ -1,10 +1,10 @@
 import 'should'
 
-import { args, exec } from './exec'
+import { run } from './exec'
 
 describe('Background', () => {
   it('should not log background', () => {
-    exec('test/features/background.feature', ...args).should.startWith(
+    run('test/features/background.feature').should.startWith(
       'Feature: Background\n' +
         '\n' +
         '  Scenario: Background scenario\n' +
