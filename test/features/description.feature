@@ -1,8 +1,8 @@
 Feature: Description
 
-  As a
-  I want
-  So that
+  **I like**
+  To describe
+  My _features_
 
   Scenario: Description scenario
 

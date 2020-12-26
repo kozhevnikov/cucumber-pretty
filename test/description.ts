@@ -1,31 +1,21 @@
 import 'should'
 
-import { exec } from './exec'
-
-const args = [
-  '--format',
-  '.',
-  '--format-options',
-  JSON.stringify({
-    colorsEnabled: false,
-    descriptionEnabled: true,
-  }),
-]
+import { run } from './exec'
 
 describe('Description', () => {
   it('should log feature description', () => {
-    exec('test/features/description.feature', ...args).should.startWith(
+    run('description.feature').should.startWith(
       'Feature: Description\n' +
         '\n' +
-        '  As a\n' +
-        '  I want\n' +
-        '  So that\n' +
+        '  **I like**\n' +
+        '  To describe\n' +
+        '  My _features_\n' +
         '\n'
     )
   })
 
   it('should not log scenario description', () => {
-    exec('test/features/description.feature', ...args).should.containEql(
+    run('description.feature').should.containEql(
       '  Scenario: Description scenario\n' +
         '    When noop\n' +
         '    Then noop\n' +
