@@ -14,7 +14,7 @@ defineStep('failed', () => {
 defineStep('passed', noop)
 defineStep('pending', () => 'pending')
 defineStep('skipped', () => 'skipped')
-defineStep('doc string', noop)
+defineStep('doc string:', (_: string) => {})
 defineStep('data table:', (_: DataTable) => {})
 defineStep('world', function (this: World) {
   this.someWorldMethod()

@@ -1,7 +1,7 @@
 Feature: Doc String
 
   Scenario: Doc String
-    When doc string
+    When doc string:
       """
       foo
       bar

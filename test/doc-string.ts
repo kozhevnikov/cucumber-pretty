@@ -1,11 +1,11 @@
 import 'should'
 
-import { args, exec } from './exec'
+import { run } from './exec'
 
 describe('Doc String', () => {
   it('should log doc string', () => {
-    exec('test/features/doc-string.feature', ...args).should.containEql(
-      '    When doc string\n' +
+    run('doc-string.feature').should.containEql(
+      '    When doc string:\n' +
         '      """\n' +
         '      foo\n' +
         '      bar\n' +

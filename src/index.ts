@@ -131,6 +131,13 @@ export default class PrettyFormatter extends Formatter {
         4
       )
 
+      if (gherkinStep.docString) {
+        this.logn(
+          `${gherkinStep.docString.delimiter}\n${gherkinStep.docString.content}\n${gherkinStep.docString.delimiter}\n`,
+          6
+        )
+      }
+
       if (gherkinStep.dataTable) {
         const datatable = new CliTable3(tableLayout)
         datatable.push(
