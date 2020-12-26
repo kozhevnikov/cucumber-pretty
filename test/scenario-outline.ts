@@ -1,15 +1,12 @@
 import 'should'
 
-import { args, exec } from './exec'
+import { run } from './exec'
 
-describe('Scenario Outline', () => {
+describe('@wip Scenario Outline', () => {
   it('should log scenario outline', () => {
-    exec(
-      'test/features/scenario-outline.feature',
-      '--name',
-      'Scenario outline',
-      ...args
-    ).should.containEql(
+    run('scenario-outline.feature', {
+      '--name': 'Scenario outline',
+    }).should.containEql(
       'Feature: Scenario Outline\n' +
         '\n' +
         '  Scenario Outline: Scenario outline\n' +
