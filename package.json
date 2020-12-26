@@ -17,6 +17,7 @@
     "build": "tsc -p tsconfig.node.json",
     "build:watch": "tsc -p tsconfig.node.json --watch",
     "lint": "eslint \"src/**/*.ts\" \"test/**/*.ts\"",
+    "lint:fix": "eslint --fix \"src/**/*.ts\" \"test/**/*.ts\"",
     "pretest": "npm run build",
     "test": "npm run test:mocha",
     "test:mocha": "mocha"
