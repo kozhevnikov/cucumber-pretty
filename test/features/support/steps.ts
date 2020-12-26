@@ -1,4 +1,6 @@
-import { defineStep } from '@cucumber/cucumber'
+import { DataTable, defineStep } from '@cucumber/cucumber'
+
+import { World } from './World'
 
 const noop = () => {}
 
@@ -13,7 +15,7 @@ defineStep('passed', noop)
 defineStep('pending', () => 'pending')
 defineStep('skipped', () => 'skipped')
 defineStep('doc string', noop)
-defineStep('data table', noop)
-defineStep('world', function (this: any) {
+defineStep('data table:', (_: DataTable) => {})
+defineStep('world', function (this: World) {
   this.someWorldMethod()
 })

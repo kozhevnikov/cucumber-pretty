@@ -1,8 +1,7 @@
-import 'colors'
+import { blue } from 'colors/safe'
 
 export class World {
   someWorldMethod(): void {
-    // eslint-disable-line class-methods-use-this
-    console.log('WORLD'.blue)
+    console.log(blue('WORLD'))
   }
 }
