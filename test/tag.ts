@@ -2,7 +2,7 @@ import 'should'
 
 import { run } from './exec'
 
-describe('@wip Tag', () => {
+describe('Tag', () => {
   it('should log feature tag', () => {
     run('tag.feature', { '--name': 'Feature tag' }).should.startWith(
       '@feature @tag\n' + 'Feature: Tag\n'
