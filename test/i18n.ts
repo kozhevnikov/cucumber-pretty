@@ -1,15 +1,12 @@
 import 'should'
 
-import { args, exec } from './exec'
+import { run } from './exec'
 
 describe('Internationalization', () => {
   it('should log French', () => {
-    exec(
-      'test/features/fr.feature',
-      '--name',
-      'Nom du Scénario',
-      ...args
-    ).should.startWith(
+    run('fr.feature', {
+      '--name': 'Nom du Scénario',
+    }).should.startWith(
       'Fonctionnalité: Nom de la Fonctionnalité\n' +
         '\n' +
         '  Scénario: Nom du Scénario\n' +
@@ -19,12 +16,7 @@ describe('Internationalization', () => {
   })
 
   it('should log Russian', () => {
-    exec(
-      'test/features/ru.feature',
-      '--name',
-      'Сценарий name',
-      ...args
-    ).should.startWith(
+    run('ru.feature', { '--name': 'Сценарий name' }).should.startWith(
       'Функция: Функция Name\n' +
         '\n' +
         '  Сценарий: Сценарий name\n' +
