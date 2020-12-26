@@ -5,6 +5,7 @@ const cmd = 'node_modules/.bin/cucumber-js'
 
 type RunOptionalOptions = {
   '--name'?: string
+  '--tags'?: string[]
 }
 type RunOptions = {
   colorsEnabled?: boolean
@@ -23,8 +24,12 @@ export const run = (
     JSON.stringify({ colorsEnabled: finalOptions.colorsEnabled }),
   ]
   if (options['--name']) args.push('--name', options['--name'])
+  if (options['--tags']) args.push('--tags', options['--tags'].join(','))
 
-  return exec(...args, join('test', 'features', fileName))
+  return exec(...args, join('test', 'features', fileName)).replace(
+    /\d+m\d+\.\d+s/g,
+    '0m00.000s'
+  )
 }
 
 // TODO: remove
