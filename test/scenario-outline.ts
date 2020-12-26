@@ -2,7 +2,7 @@ import 'should'
 
 import { run } from './exec'
 
-describe('@wip Scenario Outline', () => {
+describe('Scenario Outline', () => {
   it('should log scenario outline', () => {
     run('scenario-outline.feature', {
       '--name': 'Scenario outline',
