@@ -22,6 +22,7 @@ export const run = (
     '--format-options',
     JSON.stringify({ colorsEnabled: finalOptions.colorsEnabled }),
   ]
+  if (options['--name']) args.push('--name', options['--name'])
 
   return exec(...args, join('test', 'features', fileName))
 }

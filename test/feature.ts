@@ -1,19 +1,16 @@
 import 'should'
 
-import { args, exec } from './exec'
+import { run } from './exec'
 
 describe('Feature', () => {
   it('should log feature name', () => {
-    exec(
-      'test/features/feature.feature',
-      '--name',
-      'Feature',
-      ...args
-    ).should.startWith('Feature: Feature\n')
+    run('feature.feature', { '--name': 'Feature' }).should.startWith(
+      'Feature: Feature\n'
+    )
   })
 
   it('should log new lines', () => {
-    exec('test/features/', '--name', 'Feature \\d', ...args).should.startWith(
+    run('*.feature', { '--name': 'Feature \\d' }).should.startWith(
       'Feature: Feature\n' +
         '\n' +
         '  Scenario: Feature 1\n' +
