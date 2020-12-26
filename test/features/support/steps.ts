@@ -3,7 +3,7 @@ import { defineStep } from '@cucumber/cucumber'
 const noop = () => {}
 
 defineStep('noop', noop)
-defineStep('noop {string}', () => {})
+defineStep('noop {string}', (_: string) => {})
 defineStep('ambiguous', noop)
 defineStep('ambiguous', noop)
 defineStep('failed', () => {
