@@ -1,24 +1,16 @@
 import 'should'
 
-import { args, exec } from './exec'
+import { run } from './exec'
 
 describe('Scenario', () => {
   it('should log scenario name', () => {
-    exec(
-      'test/features/scenario.feature',
-      '--name',
-      'Scenario name',
-      ...args
-    ).should.containEql('  Scenario: Scenario name\n')
+    run('scenario.feature', { '--name': 'Scenario name' }).should.containEql(
+      '  Scenario: Scenario name\n'
+    )
   })
 
   it('should log new lines', () => {
-    exec(
-      'test/features/scenario.feature',
-      '--name',
-      'Scenario \\d',
-      ...args
-    ).should.containEql(
+    run('scenario.feature', { '--name': 'Scenario \\d' }).should.containEql(
       'Feature: Scenario\n' +
         '\n' +
         '  Scenario: Scenario 1\n' +
