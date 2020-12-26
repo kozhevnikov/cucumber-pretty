@@ -4,7 +4,7 @@ import { run } from './exec'
 
 describe('Background', () => {
   it('should not log background', () => {
-    run('test/features/background.feature').should.startWith(
+    run('background.feature').should.startWith(
       'Feature: Background\n' +
         '\n' +
         '  Scenario: Background scenario\n' +

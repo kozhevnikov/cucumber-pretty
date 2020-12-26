@@ -3,6 +3,30 @@ import { join } from 'path'
 
 const cmd = 'node_modules/.bin/cucumber-js'
 
+type RunOptionalOptions = {
+  '--name'?: string
+}
+type RunOptions = {
+  colorsEnabled?: boolean
+}
+type FinalRunOptions = RunOptionalOptions & Required<RunOptions>
+
+export const run = (
+  fileName: string,
+  options: RunOptions & RunOptionalOptions = {}
+): string => {
+  const finalOptions: FinalRunOptions = { colorsEnabled: false, ...options }
+  const args = [
+    '--format',
+    join(__dirname, '..', 'lib', 'src'),
+    '--format-options',
+    JSON.stringify({ colorsEnabled: finalOptions.colorsEnabled }),
+  ]
+
+  return exec(...args, join('test', 'features', fileName))
+}
+
+// TODO: remove
 export const args = [
   '--format',
   join(__dirname, '..', 'lib', 'src'),
@@ -10,7 +34,7 @@ export const args = [
   JSON.stringify({ colorsEnabled: false }),
 ]
 
-// TODO: fix:
+// TODO: remove
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const exec = (...args: any[]): string => {
   args = [
