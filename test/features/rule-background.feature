@@ -1,4 +1,4 @@
-Feature: Rule
+Feature: Rule background
 
   Rule: the rule
 

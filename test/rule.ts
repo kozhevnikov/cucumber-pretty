@@ -24,7 +24,7 @@ describe('Rule', () => {
 
   it('should log background steps in rules', () => {
     const expectedOutput =
-      'Feature: Rule\n\
+      'Feature: Rule background\n\
 \n\
   Rule: the rule\n\
 \n\
@@ -32,5 +32,19 @@ describe('Rule', () => {
       Given noop\n\
       Given noop\n'
     run('rule-background.feature').should.startWith(expectedOutput)
+  })
+
+  it('offsets the scenario indentation', () => {
+    run('rule*.feature').should.startWith(
+      'Feature: Rule background\n\
+\n\
+  Rule: the rule\n\
+\n\
+    Scenario: Rule 1 scenario\n\
+      Given noop\n\
+      Given noop\n\
+\n\
+Feature: Rule'
+    )
   })
 })

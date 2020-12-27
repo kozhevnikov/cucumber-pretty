@@ -81,10 +81,10 @@ export default class PrettyFormatter extends SummaryFormatter {
     } = this.eventDataCollector.getTestCaseAttempt(testCaseStarted.id || '')
     const { feature } = gherkinDocument
     if (this.uri !== gherkinDocument.uri && feature) {
-      this.renderFeatureHead(feature)
+      this.indentOffset = 0
       this.uri = gherkinDocument.uri || ''
       this.lastRuleId = undefined
-      this.indentOffset = 0
+      this.renderFeatureHead(feature)
     }
 
     const gherkinExampleRuleMap = getGherkinExampleRuleMap(gherkinDocument)
