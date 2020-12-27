@@ -2,7 +2,7 @@ import 'should'
 
 import { run } from './exec'
 
-describe('@wip Rule', () => {
+describe('Rule', () => {
   it('should log rules', () => {
     const expectedOutput =
       'Feature: Rule\n\
@@ -22,5 +22,15 @@ describe('@wip Rule', () => {
     run('rule.feature').should.startWith(expectedOutput)
   })
 
-  it('should log backgrounds in rules')
+  it('should log background steps in rules', () => {
+    const expectedOutput =
+      'Feature: Rule\n\
+\n\
+  Rule: the rule\n\
+\n\
+    Scenario: Rule 1 scenario\n\
+      Given noop\n\
+      Given noop\n'
+    run('rule-background.feature').should.startWith(expectedOutput)
+  })
 })
