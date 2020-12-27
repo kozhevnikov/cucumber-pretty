@@ -82,7 +82,6 @@ export default class PrettyFormatter extends SummaryFormatter {
     const { feature } = gherkinDocument
     if (this.uri !== gherkinDocument.uri && feature) {
       this.renderFeatureHead(feature)
-      // TODO: what do we do when there is no URI?
       this.uri = gherkinDocument.uri || ''
       this.lastRuleId = undefined
       this.indentOffset = 0
