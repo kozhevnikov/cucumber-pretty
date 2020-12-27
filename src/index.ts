@@ -1,6 +1,7 @@
 import { Status, SummaryFormatter } from '@cucumber/cucumber'
 import { IFormatterOptions } from '@cucumber/cucumber/lib/formatter'
 import {
+  getGherkinExampleRuleMap,
   getGherkinScenarioMap,
   getGherkinStepMap,
 } from '@cucumber/cucumber/lib/formatter/helpers/gherkin_document_parser'
@@ -49,7 +50,9 @@ const tableLayout = {
 }
 
 export default class PrettyFormatter extends SummaryFormatter {
-  private uri?: string = undefined
+  private uri?: string
+  private lastRuleId?: string
+  private indentOffset = 0
   private colorsEnabled = false
 
   constructor(options: IFormatterOptions) {
@@ -81,6 +84,18 @@ export default class PrettyFormatter extends SummaryFormatter {
       this.renderFeatureHead(feature)
       // TODO: what do we do when there is no URI?
       this.uri = gherkinDocument.uri || ''
+      this.lastRuleId = undefined
+      this.indentOffset = 0
+    }
+
+    const gherkinExampleRuleMap = getGherkinExampleRuleMap(gherkinDocument)
+    if (!pickle.astNodeIds) throw new Error('Pickle AST nodes missing')
+    const rule = gherkinExampleRuleMap[pickle.astNodeIds[0]]
+    if (rule && rule.id !== this.lastRuleId) {
+      this.indentOffset = 0
+      this.renderRule(rule)
+      this.lastRuleId = rule.id
+      this.indentOffset = 2
     }
 
     this.renderScenarioHead(gherkinDocument, pickle)
@@ -170,12 +185,19 @@ export default class PrettyFormatter extends SummaryFormatter {
     if (tags) this.logn(this.colorFns.tag(tags), 2)
     const gherkinScenarioMap = getGherkinScenarioMap(gherkinDocument)
     if (!pickle.astNodeIds) throw new Error('Pickle AST nodes missing')
+
     const keyword = gherkinScenarioMap[pickle.astNodeIds[0]].keyword
     this.logn(`${this.style(keyword, 'magenta', 'bold')}: ${pickle.name}`, 2)
   }
 
+  private renderRule(rule: messages.GherkinDocument.Feature.FeatureChild.Rule) {
+    this.logn(`${this.style(rule.keyword, 'magenta', 'bold')}: ${rule.name}`, 2)
+    this.logn()
+  }
+
   private logn(value = '', indent = 0) {
     let text = value.toString()
+    if (text.trim().length > 0) indent = indent + this.indentOffset
     if (indent > 0) text = text.replace(/^/gm, ' '.repeat(indent))
     this.log(`${text}${n}`)
   }
