@@ -8,7 +8,7 @@ import {
 import { getPickleStepMap } from '@cucumber/cucumber/lib/formatter/helpers/pickle_parser'
 import { messages } from '@cucumber/messages'
 import * as CliTable3 from 'cli-table3'
-import { bold, magenta } from 'colors/safe'
+import * as colors from 'ansi-styles'
 import { cross, tick } from 'figures'
 import { EOL as n } from 'os'
 
@@ -23,9 +23,9 @@ const marks = {
 
 type TextStyle = 'bold' | 'magenta'
 type StyleFunction = (text: string) => string
-const styleDefs: { [key in TextStyle]: StyleFunction } = {
-  bold,
-  magenta,
+const styleDefs: { [key in TextStyle]: colors.CSPair } = {
+  bold: colors.bold,
+  magenta: colors.magenta,
 }
 
 const tableLayout = {
@@ -207,7 +207,8 @@ export default class PrettyFormatter extends SummaryFormatter {
 
   private styleText(text: string, ...styles: TextStyle[]) {
     return styles.reduce<StyleFunction>(
-      (fn, style) => (text) => fn(styleDefs[style](text)),
+      (fn, style) => (text) =>
+        fn(`${styleDefs[style].open}${text}${styleDefs[style].close}`),
       (text) => text
     )(text)
   }
