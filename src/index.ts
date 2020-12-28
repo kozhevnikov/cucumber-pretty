@@ -11,7 +11,7 @@ import * as CliTable3 from 'cli-table3'
 import { cross, tick } from 'figures'
 import { EOL as n } from 'os'
 
-import { makeTheme, ThemeItem, ThemeStyles } from './theme'
+import { ApplyThemeToItem, makeTheme, ThemeItem, ThemeStyles } from './theme'
 
 const marks = {
   [Status.AMBIGUOUS]: cross,
@@ -44,10 +44,10 @@ const tableLayout = {
 }
 
 const defaultThemeStyles: ThemeStyles = {
-  [ThemeItem.FeatureKeyword]: ['magenta', 'bold'],
-  [ThemeItem.RuleKeyword]: ['magenta', 'bold'],
-  [ThemeItem.ScenarioKeyword]: ['magenta', 'bold'],
-  [ThemeItem.StepKeyword]: ['bold'],
+  [ThemeItem.FeatureKeyword]: ['blue', 'bold'],
+  [ThemeItem.RuleKeyword]: ['blue', 'bold'],
+  [ThemeItem.ScenarioKeyword]: ['cyan'],
+  [ThemeItem.StepKeyword]: ['cyan', 'bold'],
 }
 
 const noThemeStyles: ThemeStyles = {
@@ -61,7 +61,7 @@ export default class PrettyFormatter extends SummaryFormatter {
   private uri?: string
   private lastRuleId?: string
   private indentOffset = 0
-  private theme: (item: ThemeItem, text: string) => string
+  private theme: ApplyThemeToItem
 
   constructor(options: IFormatterOptions) {
     super(options)
@@ -183,8 +183,9 @@ export default class PrettyFormatter extends SummaryFormatter {
     this.logn(
       `${this.theme(
         ThemeItem.FeatureKeyword,
-        feature.keyword || '[feature]'
-      )}: ${feature.name}`
+        feature.keyword || '[feature]',
+        ':'
+      )} ${feature.name}`
     )
 
     if (feature.description) this.logn(`${n}${feature.description}`)
@@ -202,14 +203,14 @@ export default class PrettyFormatter extends SummaryFormatter {
 
     const keyword = gherkinScenarioMap[pickle.astNodeIds[0]].keyword
     this.logn(
-      `${this.theme(ThemeItem.ScenarioKeyword, keyword)}: ${pickle.name}`,
+      `${this.theme(ThemeItem.ScenarioKeyword, keyword, ':')} ${pickle.name}`,
       2
     )
   }
 
   private renderRule(rule: messages.GherkinDocument.Feature.FeatureChild.Rule) {
     this.logn(
-      `${this.theme(ThemeItem.RuleKeyword, rule.keyword)}: ${rule.name}`,
+      `${this.theme(ThemeItem.RuleKeyword, rule.keyword, ':')} ${rule.name}`,
       2
     )
     this.logn()

@@ -10,7 +10,7 @@ export type ThemeStyles = { [key in ThemeItem]: TextStyle[] }
 
 export const makeTheme = (styles: ThemeStyles): ApplyThemeToItem => (
   item: ThemeItem,
-  text: string
-) => styleText(text, ...styles[item])
+  ...text: string[]
+) => styleText(text.join(''), ...styles[item])
 
-type ApplyThemeToItem = (item: ThemeItem, text: string) => string
+export type ApplyThemeToItem = (item: ThemeItem, ...text: string[]) => string

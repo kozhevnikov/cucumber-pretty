@@ -8,29 +8,27 @@ describe('Color', () => {
 
   it('should color feature keywords', () => {
     runColored('feature.feature', 'Feature name').should.containEql(
-      '\u001b[35m\u001b[1m' + 'Feature' + '\u001b[22m\u001b[39m' + ': Feature\n'
+      '\u001b[34m\u001b[1mFeature:\u001b[22m\u001b[39m Feature\n'
     )
   })
 
-  it('should color rule keywords', () => {
+  it(' should color rule keywords', () => {
     runColored('rule.feature').should.containEql(
-      '\u001b[35m\u001b[1m' + 'Rule' + '\u001b[22m\u001b[39m' + ': first rule\n'
+      '  \u001b[34m\u001b[1mRule:\u001b[22m\u001b[39m first rule\n'
     )
   })
 
-  it('should color scenario keywords', () => {
+  it(' should color scenario keywords', () => {
     runColored('scenario.feature', 'Scenario name').should.containEql(
-      '\u001b[35m\u001b[1m' +
-        'Scenario' +
-        '\u001b[22m\u001b[39m' +
-        ': Scenario name\n'
+      '\u001b[36mScenario:\u001b[39m Scenario name\n'
     )
   })
 
-  it('should color step keywords', () => {
+  it(' should color step keywords', () => {
     runColored('step.feature', 'Step name').should.containEql(
-      '    \u001b[1mWhen\u001b[22m noop\n' +
-        '    \u001b[1mThen\u001b[22m noop\n'
+      '    \u001b[36m\u001b[1mGiven\u001b[22m\u001b[39m noop\n' +
+        '    \u001b[36m\u001b[1mWhen\u001b[22m\u001b[39m noop\n' +
+        '    \u001b[36m\u001b[1mThen\u001b[22m\u001b[39m noop\n'
     )
   })
 

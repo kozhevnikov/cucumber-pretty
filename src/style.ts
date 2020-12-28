@@ -8,11 +8,13 @@ import {
   Modifier,
 } from 'ansi-styles'
 
-export type TextStyle = 'bold' | 'magenta'
-type X = keyof BackgroundColor | keyof ForegroundColor | keyof Modifier
+export type TextStyle =
+  | keyof BackgroundColor
+  | keyof ForegroundColor
+  | keyof Modifier
 
 type StyleFunction = (text: string) => string
-const styleDefs: { [key in X]: CSPair } = {
+const styleDefs: { [key in TextStyle]: CSPair } = {
   ...bgColor,
   ...color,
   ...modifier,
