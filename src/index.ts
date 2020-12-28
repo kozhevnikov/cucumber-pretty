@@ -43,15 +43,38 @@ const tableLayout = {
   },
 }
 
+enum ThemeItem {
+  FeatureKeyword,
+  RuleKeyword,
+  ScenarioKeyword,
+  StepKeyword,
+}
+
+const theme = (item: ThemeItem, text: string) => {
+  switch (item) {
+    case ThemeItem.FeatureKeyword:
+    case ThemeItem.RuleKeyword:
+    case ThemeItem.ScenarioKeyword:
+      return styleText(text, 'magenta', 'bold')
+
+    case ThemeItem.StepKeyword:
+      return styleText(text, 'bold')
+
+    default:
+      return assertUnreachable(item)
+  }
+}
+
 export default class PrettyFormatter extends SummaryFormatter {
   private uri?: string
   private lastRuleId?: string
   private indentOffset = 0
   private colorsEnabled = false
+  private theme: (item: ThemeItem, text: string) => string
 
   constructor(options: IFormatterOptions) {
     super(options)
-    this.colorsEnabled = !!options.parsedArgvOptions.colorsEnabled
+    this.theme = this.colorsEnabled ? theme : (_, text) => text
     this.parseEnvelope = this.parseEnvelope.bind(this)
 
     options.eventBroadcaster.on('envelope', this.parseEnvelope)
@@ -114,7 +137,9 @@ export default class PrettyFormatter extends SummaryFormatter {
       const astNodeId = pickleStep.astNodeIds[0]
       const gherkinStep = gherkinStepMap[astNodeId]
       this.logn(
-        `${this.style(gherkinStep.keyword.trim(), 'bold')} ${pickleStep.text}`,
+        `${this.theme(ThemeItem.StepKeyword, gherkinStep.keyword.trim())} ${
+          pickleStep.text
+        }`,
         4
       )
 
@@ -161,9 +186,10 @@ export default class PrettyFormatter extends SummaryFormatter {
     const tags = (feature?.tags || []).map((tag) => tag.name).join(' ')
     if (tags) this.logn(this.colorFns.tag(tags))
     this.logn(
-      `${this.style(feature.keyword || '[feature]', 'magenta', 'bold')}: ${
-        feature.name
-      }`
+      `${this.theme(
+        ThemeItem.FeatureKeyword,
+        feature.keyword || '[feature]'
+      )}: ${feature.name}`
     )
 
     if (feature.description) this.logn(`${n}${feature.description}`)
@@ -180,11 +206,17 @@ export default class PrettyFormatter extends SummaryFormatter {
     if (!pickle.astNodeIds) throw new Error('Pickle AST nodes missing')
 
     const keyword = gherkinScenarioMap[pickle.astNodeIds[0]].keyword
-    this.logn(`${this.style(keyword, 'magenta', 'bold')}: ${pickle.name}`, 2)
+    this.logn(
+      `${this.theme(ThemeItem.ScenarioKeyword, keyword)}: ${pickle.name}`,
+      2
+    )
   }
 
   private renderRule(rule: messages.GherkinDocument.Feature.FeatureChild.Rule) {
-    this.logn(`${this.style(rule.keyword, 'magenta', 'bold')}: ${rule.name}`, 2)
+    this.logn(
+      `${this.theme(ThemeItem.RuleKeyword, rule.keyword)}: ${rule.name}`,
+      2
+    )
     this.logn()
   }
 
@@ -194,8 +226,8 @@ export default class PrettyFormatter extends SummaryFormatter {
     if (indent > 0) text = text.replace(/^/gm, ' '.repeat(indent))
     this.log(`${text}${n}`)
   }
+}
 
-  private style(text: string, ...styles: TextStyle[]) {
-    return this.colorsEnabled ? styleText(text, ...styles) : text
-  }
+function assertUnreachable(_: never): never {
+  throw new Error("Didn't expect to get here")
 }
