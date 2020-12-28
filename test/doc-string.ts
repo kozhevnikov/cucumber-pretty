@@ -9,7 +9,8 @@ describe('Doc String', () => {
         '      """\n' +
         '      foo\n' +
         '      bar\n' +
-        '      """\n'
+        '      """\n' +
+        '    Then noop\n'
     )
   })
 })

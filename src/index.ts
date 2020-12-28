@@ -126,7 +126,7 @@ export default class PrettyFormatter extends SummaryFormatter {
 
       if (gherkinStep.docString) {
         this.logn(
-          `${gherkinStep.docString.delimiter}\n${gherkinStep.docString.content}\n${gherkinStep.docString.delimiter}\n`,
+          `${gherkinStep.docString.delimiter}\n${gherkinStep.docString.content}\n${gherkinStep.docString.delimiter}`,
           6
         )
       }
