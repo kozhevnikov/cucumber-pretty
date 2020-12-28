@@ -11,7 +11,7 @@ import * as CliTable3 from 'cli-table3'
 import { cross, tick } from 'figures'
 import { EOL as n } from 'os'
 
-import { styleText, TextStyle } from './style'
+import { makeTheme, ThemeItem, ThemeStyles } from './theme'
 
 const marks = {
   [Status.AMBIGUOUS]: cross,
@@ -43,38 +43,33 @@ const tableLayout = {
   },
 }
 
-enum ThemeItem {
-  FeatureKeyword,
-  RuleKeyword,
-  ScenarioKeyword,
-  StepKeyword,
+const defaultThemeStyles: ThemeStyles = {
+  [ThemeItem.FeatureKeyword]: ['magenta', 'bold'],
+  [ThemeItem.RuleKeyword]: ['magenta', 'bold'],
+  [ThemeItem.ScenarioKeyword]: ['magenta', 'bold'],
+  [ThemeItem.StepKeyword]: ['bold'],
 }
 
-const theme = (item: ThemeItem, text: string) => {
-  switch (item) {
-    case ThemeItem.FeatureKeyword:
-    case ThemeItem.RuleKeyword:
-    case ThemeItem.ScenarioKeyword:
-      return styleText(text, 'magenta', 'bold')
-
-    case ThemeItem.StepKeyword:
-      return styleText(text, 'bold')
-
-    default:
-      return assertUnreachable(item)
-  }
+const noThemeStyles: ThemeStyles = {
+  [ThemeItem.FeatureKeyword]: [],
+  [ThemeItem.RuleKeyword]: [],
+  [ThemeItem.ScenarioKeyword]: [],
+  [ThemeItem.StepKeyword]: [],
 }
 
 export default class PrettyFormatter extends SummaryFormatter {
   private uri?: string
   private lastRuleId?: string
   private indentOffset = 0
-  private colorsEnabled = false
   private theme: (item: ThemeItem, text: string) => string
 
   constructor(options: IFormatterOptions) {
     super(options)
-    this.theme = this.colorsEnabled ? theme : (_, text) => text
+    this.theme = makeTheme(
+      !!options.parsedArgvOptions.colorsEnabled
+        ? defaultThemeStyles
+        : noThemeStyles
+    )
     this.parseEnvelope = this.parseEnvelope.bind(this)
 
     options.eventBroadcaster.on('envelope', this.parseEnvelope)
@@ -226,8 +221,4 @@ export default class PrettyFormatter extends SummaryFormatter {
     if (indent > 0) text = text.replace(/^/gm, ' '.repeat(indent))
     this.log(`${text}${n}`)
   }
-}
-
-function assertUnreachable(_: never): never {
-  throw new Error("Didn't expect to get here")
 }
