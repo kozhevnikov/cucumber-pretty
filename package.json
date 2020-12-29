@@ -20,6 +20,8 @@
     "lint:fix": "eslint --fix \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint \"src/**/*.ts\" \"test/**/*.ts\"",
     "pretest": "npm run build",
+    "test:mocha:wip:watch": "mocha -w -g wip",
+    "test:mocha:wip": "mocha -g wip",
     "test:mocha": "mocha",
     "test": "npm run test:mocha"
   },
