@@ -1,6 +1,6 @@
 require('should')
 
 module.exports = {
-  spec: ['lib/test/*.js'],
+  spec: ['lib/**/*.spec.js'],
   'watch-files': ['lib/**/*']
 }
