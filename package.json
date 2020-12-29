@@ -14,13 +14,14 @@
     "lib": "lib"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.node.json",
+    "build:clean": "rm -rf lib",
     "build:watch": "tsc -p tsconfig.node.json --watch",
-    "lint": "eslint \"src/**/*.ts\" \"test/**/*.ts\"",
+    "build": "tsc -p tsconfig.node.json",
     "lint:fix": "eslint --fix \"src/**/*.ts\" \"test/**/*.ts\"",
+    "lint": "eslint \"src/**/*.ts\" \"test/**/*.ts\"",
     "pretest": "npm run build",
-    "test": "npm run test:mocha",
-    "test:mocha": "mocha"
+    "test:mocha": "mocha",
+    "test": "npm run test:mocha"
   },
   "dependencies": {
     "@cucumber/messages": "^13.2.1",
