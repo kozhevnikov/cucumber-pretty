@@ -19,12 +19,10 @@ export const run = (
   const finalOptions: FinalRunOptions = { colorsEnabled: false, ...options }
   const args = [
     '--publish-quiet',
-    '--require-module',
-    'ts-node/register',
     '--require',
-    join(__dirname, '..', 'lib', 'test'),
+    join(__dirname, 'features'),
     '--format',
-    join(__dirname, '..', 'lib', 'src'),
+    join(__dirname, '..', 'src'),
     '--format-options',
     JSON.stringify({ colorsEnabled: finalOptions.colorsEnabled }),
   ]
