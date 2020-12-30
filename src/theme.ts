@@ -1,4 +1,4 @@
-import { styleText, TextStyle } from './style'
+import { styleText, TextStyle } from './styleText'
 
 export enum ThemeItem {
   FeatureKeyword = 'feature keyword',
