@@ -1,17 +1,18 @@
 import 'should'
 
-import { ApplyThemeToItem, makeTheme, ThemeItem } from './theme'
+import { ApplyThemeToItem, makeTheme, ThemeItem, ThemeStyles } from './theme'
 
 describe('theme', () => {
   let applyTheme: ApplyThemeToItem
 
   beforeEach(() => {
-    applyTheme = makeTheme({
+    const styles: ThemeStyles = {
       [ThemeItem.FeatureKeyword]: ['red'],
       [ThemeItem.RuleKeyword]: ['green'],
       [ThemeItem.ScenarioKeyword]: ['blue'],
       [ThemeItem.StepKeyword]: ['magenta'],
-    })
+    }
+    applyTheme = makeTheme(styles)
   })
 
   it('applies styles to Feature keywords', () => {
