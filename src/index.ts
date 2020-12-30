@@ -50,13 +50,6 @@ const defaultThemeStyles: ThemeStyles = {
   [ThemeItem.StepKeyword]: ['cyan', 'bold'],
 }
 
-const noThemeStyles: ThemeStyles = {
-  [ThemeItem.FeatureKeyword]: [],
-  [ThemeItem.RuleKeyword]: [],
-  [ThemeItem.ScenarioKeyword]: [],
-  [ThemeItem.StepKeyword]: [],
-}
-
 export default class PrettyFormatter extends SummaryFormatter {
   private uri?: string
   private lastRuleId?: string
@@ -66,9 +59,7 @@ export default class PrettyFormatter extends SummaryFormatter {
   constructor(options: IFormatterOptions) {
     super(options)
     this.theme = makeTheme(
-      !!options.parsedArgvOptions.colorsEnabled
-        ? defaultThemeStyles
-        : noThemeStyles
+      !!options.parsedArgvOptions.colorsEnabled ? defaultThemeStyles : {}
     )
     this.parseEnvelope = this.parseEnvelope.bind(this)
 

@@ -7,10 +7,18 @@ export enum ThemeItem {
   StepKeyword = 'step keyword',
 }
 export type ThemeStyles = { [key in ThemeItem]: TextStyle[] }
+export type PartialThemeStyles = { [key in ThemeItem]?: TextStyle[] }
 
-export const makeTheme = (styles: ThemeStyles): ApplyThemeToItem => (
+const unstyledTheme: ThemeStyles = {
+  [ThemeItem.FeatureKeyword]: [],
+  [ThemeItem.RuleKeyword]: [],
+  [ThemeItem.ScenarioKeyword]: [],
+  [ThemeItem.StepKeyword]: [],
+}
+
+export const makeTheme = (styles: PartialThemeStyles): ApplyThemeToItem => (
   item: ThemeItem,
   ...text: string[]
-) => styleText(text.join(''), ...styles[item])
+) => styleText(text.join(''), ...{ ...unstyledTheme, ...styles }[item])
 
 export type ApplyThemeToItem = (item: ThemeItem, ...text: string[]) => string
