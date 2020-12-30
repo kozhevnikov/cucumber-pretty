@@ -20,8 +20,16 @@ const styleDefs: { [key in TextStyle]: CSPair } = {
   ...modifier,
 }
 
-export const styleText = (text: string, ...styles: TextStyle[]): string =>
-  applyStyles(...styles)(text)
+export const styleText = (text: string, ...styles: TextStyle[]): string => {
+  validateStyles(styles)
+  return applyStyles(...styles)(text)
+}
+
+const validateStyles = (styles: TextStyle[]) => {
+  styles.forEach((style) => {
+    if (!(style in styleDefs)) throw new Error(`Unknown style "${style}"`)
+  })
+}
 
 const applyStyles = (...styles: TextStyle[]): StyleFunction =>
   styles.reduce<StyleFunction>(
