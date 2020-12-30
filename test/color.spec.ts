@@ -1,82 +1,84 @@
 import 'should'
 
 import { run } from './exec'
+import { styleText, TextStyle } from '../src/styleText'
 
 describe('Color', () => {
   const runColored = (fileName: string, name?: string) =>
     run(fileName, { colorsEnabled: true, '--name': name })
 
-  it('should color feature keywords', () => {
+  it('colors feature keywords', () => {
     runColored('feature.feature', 'Feature name').should.containEql(
-      '\u001b[34m\u001b[1mFeature:\u001b[22m\u001b[39m Feature\n'
+      styleText('Feature:', 'blue', 'bold')
     )
   })
 
-  it('should color rule keywords', () => {
+  it('colors rule keywords', () => {
     runColored('rule.feature').should.containEql(
-      '  \u001b[34m\u001b[1mRule:\u001b[22m\u001b[39m first rule\n'
+      `  ${styleText('Rule:', 'blue', 'bold')} first rule\n`
     )
   })
 
-  it('should color scenario keywords', () => {
+  it('colors scenario keywords', () => {
     runColored('scenario.feature', 'Scenario name').should.containEql(
-      '\u001b[36mScenario:\u001b[39m Scenario name\n'
+      `${styleText('Scenario:', 'cyan')} Scenario name\n`
     )
   })
 
-  it('should color step keywords', () => {
+  it('colors step keywords', () => {
+    const stepStyles: TextStyle[] = ['cyan', 'bold']
     runColored('step.feature', 'Step name').should.containEql(
-      '    \u001b[36m\u001b[1mGiven\u001b[22m\u001b[39m noop\n' +
-        '    \u001b[36m\u001b[1mWhen\u001b[22m\u001b[39m noop\n' +
-        '    \u001b[36m\u001b[1mThen\u001b[22m\u001b[39m noop\n'
+      `    ${styleText('Given', ...stepStyles)} noop\n` +
+        `    ${styleText('When', ...stepStyles)} noop\n` +
+        `    ${styleText('Then', ...stepStyles)} noop\n`
     )
   })
 
-  it('should color ambiguous steps', () => {
+  it('colors ambiguous steps', () => {
     runColored('step.feature', 'Ambiguous step').should.containEql(
-      '    \u001b[31m✖ ambiguous\u001b[39m\n'
+      `    ${styleText('✖ ambiguous', 'red')}\n`
     )
   })
 
-  it('should color failed steps', () => {
+  it('colors failed steps', () => {
     runColored('step.feature', 'Failed step').should.containEql(
-      '    \u001b[31m✖ failed\u001b[39m\n'
+      `    ${styleText('✖ failed', 'red')}\n`
     )
   })
 
-  it('should color pending steps', () => {
+  it('colors pending steps', () => {
     runColored('step.feature', 'Pending step').should.containEql(
-      '    \u001b[33m? pending\u001b[39m\n'
+      `    ${styleText('? pending', 'yellow')}\n`
     )
   })
 
-  it('should color skipped steps', () => {
-    runColored('step.feature', 'Skipped step').should.containEql(
-      '    \u001b[36m- skipped\u001b[39m\n'
-    )
-  })
-
-  it('should color undefined steps', () => {
+  it('colors undefined steps', () => {
     runColored('step.feature', 'Undefined step').should.containEql(
-      '    \u001b[33m? undefined\u001b[39m\n'
+      `    ${styleText('? undefined', 'yellow')}\n`
     )
   })
 
-  it('should color errors', () => {
+  it('colors skipped steps', () => {
+    runColored('step.feature', 'Skipped step').should.containEql(
+      `    ${styleText('- skipped', 'cyan')}\n`
+    )
+  })
+
+  it('colors errors', () => {
     runColored('step.feature', 'Failed step').should.containEql(
-      '    \u001b[31mError: FAILED'
+      `    ${styleText('Error: FAILED', 'red')}`
     )
   })
 
-  it('should color feature tags', () => {
+  it('colors feature tags', () => {
     runColored('tag.feature', 'Feature tag').should.containEql(
-      '\u001b[36m@feature @tag\u001b[39m\n'
+      `${styleText('@feature @tag', 'cyan')}\n`
     )
   })
 
-  it('should color scenario tags', () => {
+  it('colors scenario tags', () => {
     runColored('tag.feature', 'Scenario tag').should.containEql(
-      '\u001b[36m@feature @tag @scenario\u001b[39m\n'
+      `${styleText('@feature @tag @scenario', 'cyan')}\n`
     )
   })
 })
