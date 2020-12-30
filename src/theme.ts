@@ -15,9 +15,14 @@ const unstyledTheme: ThemeStyles = {
   [ThemeItem.StepKeyword]: [],
 }
 
-export const makeTheme = (styles: Partial<ThemeStyles>): ApplyThemeToItem => (
-  item: ThemeItem,
-  ...text: string[]
-) => styleText(text.join(''), ...{ ...unstyledTheme, ...styles }[item])
+export const makeTheme = (styles: Partial<ThemeStyles>): ApplyThemeToItem => {
+  Object.keys(styles).forEach((item) => {
+    if (!Object.values(ThemeItem).includes(item as ThemeItem))
+      throw new Error(`Unknown theme item "${item}"`)
+  })
+
+  return (item: ThemeItem, ...text: string[]) =>
+    styleText(text.join(''), ...{ ...unstyledTheme, ...styles }[item])
+}
 
 export type ApplyThemeToItem = (item: ThemeItem, ...text: string[]) => string

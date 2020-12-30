@@ -1,6 +1,8 @@
 import { execFileSync } from 'child_process'
 import { join } from 'path'
 
+import { ThemeStyles } from '../src/theme'
+
 const cmd = 'node_modules/.bin/cucumber-js'
 
 type RunOptionalOptions = {
@@ -9,14 +11,20 @@ type RunOptionalOptions = {
 }
 type RunOptions = {
   colorsEnabled?: boolean
+  theme?: Partial<ThemeStyles>
 }
 type FinalRunOptions = RunOptionalOptions & Required<RunOptions>
 
 export const run = (
   fileName: string,
-  options: RunOptions & RunOptionalOptions = {}
+  options: RunOptions & RunOptionalOptions = {},
+  throws = false
 ): string => {
-  const finalOptions: FinalRunOptions = { colorsEnabled: false, ...options }
+  const { colorsEnabled, theme }: FinalRunOptions = {
+    colorsEnabled: false,
+    theme: {},
+    ...options,
+  }
   const args = [
     '--publish-quiet',
     '--require',
@@ -24,25 +32,26 @@ export const run = (
     '--format',
     join(__dirname, '..', 'src'),
     '--format-options',
-    JSON.stringify({ colorsEnabled: finalOptions.colorsEnabled }),
+    JSON.stringify({ colorsEnabled, theme }),
   ]
   if (options['--name']) args.push('--name', options['--name'])
   if (options['--tags']) args.push('--tags', options['--tags'].join(','))
 
-  return exec(...args, join('test', 'features', fileName)).replace(
+  return exec(throws, ...args, join('test', 'features', fileName)).replace(
     /\d+m\d+\.\d+s/g,
     '0m00.000s'
   )
 }
 
-const exec = (...args: string[]): string => {
+const exec = (throws: boolean, ...args: string[]): string => {
   if (process.env.LOG_CUCUMBER_RUN) console.log(`${cmd} ${args.join(' ')}`)
 
   let stdout: string
   try {
-    stdout = execFileSync(cmd, args).toString()
+    stdout = execFileSync(cmd, args, { stdio: 'pipe' }).toString()
   } catch (error) {
     stdout = error.stdout.toString()
+    if (throws) throw error
   }
 
   if (process.env.LOG_CUCUMBER_RUN) console.log(stdout)

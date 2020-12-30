@@ -48,7 +48,7 @@ describe('theme', () => {
     ).should.containEql('\u001b[35mEtant donné que\u001b[39m')
   })
 
-  it('fails on unknown theme items', () => {
+  it('fails when applying styles to unknown theme items', () => {
     ;(() =>
       applyTheme(
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -56,6 +56,14 @@ describe('theme', () => {
         'unknown theme item',
         'text'
       )).should.throw()
+  })
+
+  it('fails when making a theme with unknown theme items', () => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    ;(() => makeTheme({ 'random item': ['red'] })).should.throwError(
+      'Unknown theme item "random item"'
+    )
   })
 
   it('defaults to unstyled items', () => {

@@ -59,7 +59,9 @@ export default class PrettyFormatter extends SummaryFormatter {
   constructor(options: IFormatterOptions) {
     super(options)
     this.theme = makeTheme(
-      !!options.parsedArgvOptions.colorsEnabled ? defaultThemeStyles : {}
+      !!options.parsedArgvOptions.colorsEnabled
+        ? options.parsedArgvOptions.theme || defaultThemeStyles
+        : {}
     )
     this.parseEnvelope = this.parseEnvelope.bind(this)
 
