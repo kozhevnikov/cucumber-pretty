@@ -2,7 +2,7 @@ import 'should'
 
 import { styleText } from './styleText'
 
-describe('@wip styleText()', () => {
+describe('styleText()', () => {
   it('applies modifiers', () => {
     styleText('Burpless 26', 'bold').should.containEql(
       '\u001b[1mBurpless 26\u001b[22m'
