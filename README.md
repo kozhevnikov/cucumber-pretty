@@ -38,3 +38,34 @@ cucumber-js -f node_modules/cucumber-pretty
 ## Light
 
 <img src="https://raw.githubusercontent.com/kozhevnikov/cucumber-pretty/master/docs/basic.png" width="570">
+
+## Customise the theme
+
+You can define your own colors by passing a `theme` format option:
+
+    --format-options '{"theme": <THEME_JSON>}'
+
+Where `THEME_JSON` is in the following shape:
+
+```json
+{"feature keyword": ["magenta", "bold"], "scenario keyword": ["red"]}
+```
+
+The currently known theme items are:
+
+* `feature keyword`
+* `rule keyword`
+* `scenario keyword`
+* `step keyword`
+
+You can combine all the styles you'd like from [modifiers, foreground colors and background colors exposed by ansi-styles](https://github.com/chalk/ansi-styles#styles).
+
+### Example Themes
+
+_Matrix_:
+
+    --format-options '{"theme": {"feature keyword": ["green", "bold"], "rule keyword": ["yellow"], "scenario keyword": ["greenBright"], "step keyword": ["black", "bgGreen", "italic"]}}'
+
+_Old pretty_:
+
+    --format-options '{"theme": {"feature keyword": ["magenta", "bold"], "rule keyword": ["magenta"]}}'
