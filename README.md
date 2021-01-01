@@ -58,7 +58,9 @@ _Matrix_:
 
     --format-options '{"theme": {"feature keyword": ["green", "bold"], "rule keyword": ["yellow"], "scenario keyword": ["greenBright"], "step keyword": ["black", "bgGreen", "italic"]}}'
 
-_Old pretty_:
+_Original pretty_:
+
+This was the default theme, pre-Cucumber.js 7.x.
 
 <img src="https://raw.githubusercontent.com/kozhevnikov/cucumber-pretty/master/docs/homebrew.png" width="300">
 <img src="https://raw.githubusercontent.com/kozhevnikov/cucumber-pretty/master/docs/basic.png" width="300">
