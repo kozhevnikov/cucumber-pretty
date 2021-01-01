@@ -1,5 +1,7 @@
 Feature: Step
 
+  Description
+
   Scenario: Step name
     Given noop
     When noop
