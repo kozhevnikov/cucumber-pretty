@@ -219,14 +219,21 @@ export default class PrettyFormatter extends SummaryFormatter {
   }
 
   private renderRule(rule: messages.GherkinDocument.Feature.FeatureChild.Rule) {
-    this.logn(
-      `${this.indentStyleText(2, ThemeItem.RuleKeyword, rule.keyword, ':')} ${
-        rule.name
-      }`
-    )
-    this.logn()
+    this.logItem(2, ThemeItem.RuleKeyword, rule.keyword, ':')
+    this.log(` ${rule.name}${n}${n}`)
   }
 
+  private logItem(indent: number, item: ThemeItem, ...text: string[]) {
+    this.log(
+      this.indentStyleText(
+        2 + this.indentOffset,
+        ThemeItem.RuleKeyword,
+        ...text
+    )
+    )
+  }
+
+  // TODO: remove logn()
   private logn(value = '', indent = 0) {
     let text = value.toString()
     if (text.trim().length > 0) indent = indent + this.indentOffset
