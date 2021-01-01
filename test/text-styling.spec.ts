@@ -1,5 +1,6 @@
 import 'should'
 
+import { indentStyleText } from '../src/indentStyleText'
 import { styleText, TextStyle } from '../src/styleText'
 import { ThemeItem, ThemeStyles } from '../src/theme'
 import { run } from './exec'
@@ -55,7 +56,9 @@ describe('Text styling', () => {
       runColored('description.feature', undefined, {
         [ThemeItem.FeatureDescription]: ['bgGreen'],
       }).should.containEql(
-        styleText('  **I like**\n  To describe\n  My _features_', 'bgGreen')
+        indentStyleText(2, '**I like**\nTo describe\nMy _features_', [
+          'bgGreen',
+        ])
       )
     })
 
@@ -146,7 +149,7 @@ describe('Text styling', () => {
       runResult.should.containEql(styleText('Scenario:', 'cyan')))
 
     it('styles descriptions', () =>
-      runResult.should.containEql(styleText('  Description', 'gray')))
+      runResult.should.containEql(styleText('Description', 'gray')))
 
     it('styles step keywords', () => {
       runResult.should.containEql(styleText('Given', 'cyan', 'bold'))

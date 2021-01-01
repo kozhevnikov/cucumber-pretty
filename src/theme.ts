@@ -1,4 +1,5 @@
-import { styleText, TextStyle } from './styleText'
+import { indentStyleText } from './indentStyleText'
+import { TextStyle } from './styleText'
 
 export enum ThemeItem {
   FeatureKeyword = 'feature keyword',
@@ -17,14 +18,31 @@ const unstyledTheme: ThemeStyles = {
   [ThemeItem.StepKeyword]: [],
 }
 
-export const makeTheme = (styles: Partial<ThemeStyles>): ApplyThemeToItem => {
-  Object.keys(styles).forEach((item) => {
+export const makeTheme = (styles: Partial<ThemeStyles>): ThemeHelpers => {
+  const validateItemExists = (item: string) => {
     if (!Object.values(ThemeItem).includes(item as ThemeItem))
       throw new Error(`Unknown theme item "${item}"`)
-  })
+  }
 
-  return (item: ThemeItem, ...text: string[]) =>
-    styleText(text.join(''), ...{ ...unstyledTheme, ...styles }[item])
+  Object.keys(styles).forEach(validateItemExists)
+
+  return {
+    indentStyleText: (indent: number, item: ThemeItem, ...text: string[]) => {
+      validateItemExists(item)
+      return indentStyleText(
+        indent,
+        text.join(''),
+        { ...unstyledTheme, ...styles }[item]
+      )
+    },
+  }
 }
 
-export type ApplyThemeToItem = (item: ThemeItem, ...text: string[]) => string
+export type IndentStyleThemeItem = (
+  indent: number,
+  item: ThemeItem,
+  ...text: string[]
+) => string
+export type ThemeHelpers = {
+  indentStyleText: IndentStyleThemeItem
+}

@@ -11,7 +11,12 @@ import * as CliTable3 from 'cli-table3'
 import { cross, tick } from 'figures'
 import { EOL as n } from 'os'
 
-import { ApplyThemeToItem, makeTheme, ThemeItem, ThemeStyles } from './theme'
+import {
+  IndentStyleThemeItem,
+  makeTheme,
+  ThemeItem,
+  ThemeStyles,
+} from './theme'
 
 const marks = {
   [Status.AMBIGUOUS]: cross,
@@ -55,15 +60,16 @@ export default class PrettyFormatter extends SummaryFormatter {
   private uri?: string
   private lastRuleId?: string
   private indentOffset = 0
-  private theme: ApplyThemeToItem
+  private indentStyleText: IndentStyleThemeItem
 
   constructor(options: IFormatterOptions) {
     super(options)
-    this.theme = makeTheme(
+    const theme = makeTheme(
       !!options.parsedArgvOptions.colorsEnabled
         ? options.parsedArgvOptions.theme || defaultThemeStyles
         : {}
     )
+    this.indentStyleText = theme.indentStyleText
     this.parseEnvelope = this.parseEnvelope.bind(this)
 
     options.eventBroadcaster.on('envelope', this.parseEnvelope)
@@ -126,10 +132,11 @@ export default class PrettyFormatter extends SummaryFormatter {
       const astNodeId = pickleStep.astNodeIds[0]
       const gherkinStep = gherkinStepMap[astNodeId]
       this.logn(
-        `${this.theme(ThemeItem.StepKeyword, gherkinStep.keyword.trim())} ${
-          pickleStep.text
-        }`,
-        4
+        `${this.indentStyleText(
+          4,
+          ThemeItem.StepKeyword,
+          gherkinStep.keyword
+        )} ${pickleStep.text}`
       )
 
       if (gherkinStep.docString) {
@@ -175,7 +182,8 @@ export default class PrettyFormatter extends SummaryFormatter {
     const tags = (feature?.tags || []).map((tag) => tag.name).join(' ')
     if (tags) this.logn(this.colorFns.tag(tags))
     this.logn(
-      `${this.theme(
+      `${this.indentStyleText(
+        0,
         ThemeItem.FeatureKeyword,
         feature.keyword || '[feature]',
         ':'
@@ -184,7 +192,11 @@ export default class PrettyFormatter extends SummaryFormatter {
 
     if (feature.description)
       this.logn(
-        `${n}${this.theme(ThemeItem.FeatureDescription, feature.description)}`
+        `${n}${this.indentStyleText(
+          2,
+          ThemeItem.FeatureDescription,
+          feature.description
+        )}`
       )
     this.logn()
   }
@@ -200,15 +212,17 @@ export default class PrettyFormatter extends SummaryFormatter {
 
     const keyword = gherkinScenarioMap[pickle.astNodeIds[0]].keyword
     this.logn(
-      `${this.theme(ThemeItem.ScenarioKeyword, keyword, ':')} ${pickle.name}`,
-      2
+      `${this.indentStyleText(2, ThemeItem.ScenarioKeyword, keyword, ':')} ${
+        pickle.name
+      }`
     )
   }
 
   private renderRule(rule: messages.GherkinDocument.Feature.FeatureChild.Rule) {
     this.logn(
-      `${this.theme(ThemeItem.RuleKeyword, rule.keyword, ':')} ${rule.name}`,
-      2
+      `${this.indentStyleText(2, ThemeItem.RuleKeyword, rule.keyword, ':')} ${
+        rule.name
+      }`
     )
     this.logn()
   }

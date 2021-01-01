@@ -1,9 +1,15 @@
 import 'should'
+import { styleText } from './styleText'
 
-import { ApplyThemeToItem, makeTheme, ThemeItem, ThemeStyles } from './theme'
+import {
+  IndentStyleThemeItem,
+  makeTheme,
+  ThemeItem,
+  ThemeStyles,
+} from './theme'
 
-describe('theme', () => {
-  let applyTheme: ApplyThemeToItem
+describe('Theme', () => {
+  let styleThemeItem: IndentStyleThemeItem
 
   beforeEach(() => {
     const styles: ThemeStyles = {
@@ -13,52 +19,60 @@ describe('theme', () => {
       [ThemeItem.ScenarioKeyword]: ['blue'],
       [ThemeItem.StepKeyword]: ['magenta'],
     }
-    applyTheme = makeTheme(styles)
+    styleThemeItem = makeTheme(styles).indentStyleText
   })
 
   it('applies styles to Feature keywords', () => {
-    applyTheme(ThemeItem.FeatureKeyword, 'Fonctionnalité:').should.containEql(
-      '\u001b[31mFonctionnalité:\u001b[39m'
-    )
+    styleThemeItem(
+      0,
+      ThemeItem.FeatureKeyword,
+      'Fonctionnalité:'
+    ).should.containEql(styleText('Fonctionnalité:', 'red'))
   })
 
   it('applies styles to feature descriptions', () => {
-    applyTheme(
+    styleThemeItem(
+      2,
       ThemeItem.FeatureDescription,
       'This is some\ndescription...'
-    ).should.containEql('\u001b[37mThis is some\ndescription...\u001b[39m')
+    ).should.containEql(
+      `  ${styleText('This is some', 'white')}\n` +
+        `  ${styleText('description...', 'white')}`
+    )
   })
 
   it('applies styles to Rule keywords', () => {
-    applyTheme(ThemeItem.RuleKeyword, 'Règle:').should.containEql(
-      '\u001b[32mRègle:\u001b[39m'
+    styleThemeItem(0, ThemeItem.RuleKeyword, 'Règle:').should.containEql(
+      styleText('Règle:', 'green')
     )
   })
 
   it('applies styles to Scenario keywords', () => {
-    applyTheme(ThemeItem.ScenarioKeyword, 'Scénario:').should.containEql(
-      '\u001b[34mScénario:\u001b[39m'
+    styleThemeItem(0, ThemeItem.ScenarioKeyword, 'Scénario:').should.containEql(
+      styleText('Scénario:', 'blue')
     )
   })
 
   it('applies styles to Step keywords', () => {
-    applyTheme(ThemeItem.StepKeyword, 'Etant donné').should.containEql(
-      '\u001b[35mEtant donné\u001b[39m'
+    styleThemeItem(0, ThemeItem.StepKeyword, 'Etant donné').should.containEql(
+      styleText('Etant donné', 'magenta')
     )
   })
 
   it('concatenates multiple strings', () => {
-    applyTheme(
+    styleThemeItem(
+      0,
       ThemeItem.StepKeyword,
       'Etant',
       ' donné',
       ' que'
-    ).should.containEql('\u001b[35mEtant donné que\u001b[39m')
+    ).should.containEql(styleText('Etant donné que', 'magenta'))
   })
 
   it('fails when applying styles to unknown theme items', () => {
     ;(() =>
-      applyTheme(
+      styleThemeItem(
+        0,
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         'unknown theme item',
@@ -75,20 +89,25 @@ describe('theme', () => {
   })
 
   it('defaults to unstyled items', () => {
-    applyTheme = makeTheme({})
-    applyTheme(ThemeItem.FeatureKeyword, 'Feature').should.eql('Feature')
-    applyTheme(ThemeItem.RuleKeyword, 'Rule').should.eql('Rule')
-    applyTheme(ThemeItem.ScenarioKeyword, 'Scenario').should.eql('Scenario')
-    applyTheme(ThemeItem.StepKeyword, 'Given').should.eql('Given')
+    styleThemeItem = makeTheme({}).indentStyleText
+    styleThemeItem(0, ThemeItem.FeatureKeyword, 'Feature').should.eql('Feature')
+    styleThemeItem(0, ThemeItem.RuleKeyword, 'Rule').should.eql('Rule')
+    styleThemeItem(0, ThemeItem.ScenarioKeyword, 'Scenario').should.eql(
+      'Scenario'
+    )
+    styleThemeItem(0, ThemeItem.StepKeyword, 'Given').should.eql('Given')
   })
 
   it('allows some defined and some missing styles', () => {
-    applyTheme = makeTheme({ [ThemeItem.FeatureKeyword]: ['red'] })
-    applyTheme(ThemeItem.FeatureKeyword, 'Feature').should.containEql(
-      '\u001b[31mFeature\u001b[39m'
+    styleThemeItem = makeTheme({ [ThemeItem.FeatureKeyword]: ['red'] })
+      .indentStyleText
+    styleThemeItem(0, ThemeItem.FeatureKeyword, 'Feature').should.containEql(
+      styleText('Feature', 'red')
     )
-    applyTheme(ThemeItem.RuleKeyword, 'Rule').should.eql('Rule')
-    applyTheme(ThemeItem.ScenarioKeyword, 'Scenario').should.eql('Scenario')
-    applyTheme(ThemeItem.StepKeyword, 'Given').should.eql('Given')
+    styleThemeItem(0, ThemeItem.RuleKeyword, 'Rule').should.eql('Rule')
+    styleThemeItem(0, ThemeItem.ScenarioKeyword, 'Scenario').should.eql(
+      'Scenario'
+    )
+    styleThemeItem(0, ThemeItem.StepKeyword, 'Given').should.eql('Given')
   })
 })
