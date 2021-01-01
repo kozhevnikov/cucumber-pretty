@@ -4,7 +4,7 @@ import { styleText, TextStyle } from '../src/styleText'
 import { ThemeItem, ThemeStyles } from '../src/theme'
 import { run } from './exec'
 
-describe('Colors', () => {
+describe('Text styling', () => {
   const runColored = (
     fileName: string,
     name?: string,
