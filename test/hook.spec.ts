@@ -3,7 +3,7 @@ import 'should'
 import { run } from './exec'
 
 describe('Hook', () => {
-  it('should not log hook', () => {
+  it('does not log hooks', () => {
     run('hook.feature').should.startWith(
       '[[[BeforeAll]]]\n' +
         'Feature: Hook\n' +

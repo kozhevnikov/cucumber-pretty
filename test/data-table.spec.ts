@@ -3,7 +3,7 @@ import 'should'
 import { run } from './exec'
 
 describe('Data Table', () => {
-  it('should log data table', () => {
+  it('logs data tables', () => {
     run('data-table.feature').should.containEql(
       '    When data table:\n' +
         '      │ foo   │ bar   │\n' +

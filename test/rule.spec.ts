@@ -3,7 +3,7 @@ import 'should'
 import { run } from './exec'
 
 describe('Rule', () => {
-  it('should log rules', () => {
+  it('logs rules', () => {
     const expectedOutput =
       'Feature: Rule\n\
 \n\
@@ -22,7 +22,7 @@ describe('Rule', () => {
     run('rule.feature').should.startWith(expectedOutput)
   })
 
-  it('should log background steps in rules', () => {
+  it('logs background steps in rules', () => {
     const expectedOutput =
       'Feature: Rule background\n\
 \n\

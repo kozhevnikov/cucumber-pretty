@@ -3,7 +3,7 @@ import 'should'
 import { run } from './exec'
 
 describe('Background', () => {
-  it('should not log background', () => {
+  it('does not log backgrounds', () => {
     run('background.feature').should.startWith(
       'Feature: Background\n' +
         '\n' +

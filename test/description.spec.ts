@@ -3,7 +3,7 @@ import 'should'
 import { run } from './exec'
 
 describe('Description', () => {
-  it('should log feature description', () => {
+  it('logs feature descriptions', () => {
     run('description.feature').should.startWith(
       'Feature: Description\n' +
         '\n' +
@@ -14,7 +14,7 @@ describe('Description', () => {
     )
   })
 
-  it('should not log scenario description', () => {
+  it('does not log scenario descriptions', () => {
     run('description.feature').should.containEql(
       '  Scenario: Description scenario\n' +
         '    When noop\n' +

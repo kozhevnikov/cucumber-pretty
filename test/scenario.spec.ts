@@ -3,13 +3,13 @@ import 'should'
 import { run } from './exec'
 
 describe('Scenario', () => {
-  it('should log scenario name', () => {
+  it('logs scenario names', () => {
     run('scenario.feature', { '--name': 'Scenario name' }).should.containEql(
       '  Scenario: Scenario name\n'
     )
   })
 
-  it('should log new lines', () => {
+  it('logs new lines between scenarios', () => {
     run('scenario.feature', { '--name': 'Scenario \\d' }).should.containEql(
       'Feature: Scenario\n' +
         '\n' +

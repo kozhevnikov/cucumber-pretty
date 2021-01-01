@@ -3,7 +3,7 @@ import 'should'
 import { run } from './exec'
 
 describe('Internationalization', () => {
-  it('should log French', () => {
+  it('logs French', () => {
     run('fr.feature', {
       '--name': 'Nom du Scénario',
     }).should.startWith(
@@ -15,7 +15,7 @@ describe('Internationalization', () => {
     )
   })
 
-  it('should log Russian', () => {
+  it('logs Russian', () => {
     run('ru.feature', { '--name': 'Сценарий name' }).should.startWith(
       'Функция: Функция Name\n' +
         '\n' +

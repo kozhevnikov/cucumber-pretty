@@ -3,13 +3,13 @@ import 'should'
 import { run } from './exec'
 
 describe('Feature', () => {
-  it('should log feature name', () => {
+  it('logs feature names', () => {
     run('feature.feature', { '--name': 'Feature' }).should.startWith(
       'Feature: Feature\n'
     )
   })
 
-  it('should log new lines', () => {
+  it('logs new lines between scenarios and features', () => {
     run('*.feature', { '--name': 'Feature \\d' }).should.startWith(
       'Feature: Feature\n' +
         '\n' +

@@ -3,7 +3,7 @@ import 'should'
 import { run } from './exec'
 
 describe('Scenario Outline', () => {
-  it('should log scenario outline', () => {
+  it('logs scenario outlines', () => {
     run('scenario-outline.feature', {
       '--name': 'Scenario outline',
     }).should.containEql(

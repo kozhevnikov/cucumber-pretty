@@ -3,7 +3,7 @@ import 'should'
 import { run } from './exec'
 
 describe('Doc String', () => {
-  it('should log doc string', () => {
+  it('logs doc strings', () => {
     run('doc-string.feature').should.containEql(
       '    When doc string:\n' +
         '      """\n' +
