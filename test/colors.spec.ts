@@ -19,6 +19,12 @@ describe('Colors', () => {
       )
     })
 
+    it('colors feature descriptions', () => {
+      runColored('description.feature').should.containEql(
+        styleText('  **I like**\n  To describe\n  My _features_', 'gray')
+      )
+    })
+
     it('colors rule keywords', () => {
       runColored('rule.feature').should.containEql(
         `  ${styleText('Rule:', 'blue', 'bold')} first rule\n`

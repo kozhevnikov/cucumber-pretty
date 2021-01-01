@@ -45,6 +45,7 @@ const tableLayout = {
 
 const defaultThemeStyles: ThemeStyles = {
   [ThemeItem.FeatureKeyword]: ['blue', 'bold'],
+  [ThemeItem.FeatureDescription]: ['gray'],
   [ThemeItem.RuleKeyword]: ['blue', 'bold'],
   [ThemeItem.ScenarioKeyword]: ['cyan'],
   [ThemeItem.StepKeyword]: ['cyan', 'bold'],
@@ -181,7 +182,10 @@ export default class PrettyFormatter extends SummaryFormatter {
       )} ${feature.name}`
     )
 
-    if (feature.description) this.logn(`${n}${feature.description}`)
+    if (feature.description)
+      this.logn(
+        `${n}${this.theme(ThemeItem.FeatureDescription, feature.description)}`
+      )
     this.logn()
   }
 

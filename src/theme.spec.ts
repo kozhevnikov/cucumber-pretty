@@ -8,6 +8,7 @@ describe('theme', () => {
   beforeEach(() => {
     const styles: ThemeStyles = {
       [ThemeItem.FeatureKeyword]: ['red'],
+      [ThemeItem.FeatureDescription]: ['white'],
       [ThemeItem.RuleKeyword]: ['green'],
       [ThemeItem.ScenarioKeyword]: ['blue'],
       [ThemeItem.StepKeyword]: ['magenta'],
@@ -19,6 +20,13 @@ describe('theme', () => {
     applyTheme(ThemeItem.FeatureKeyword, 'Fonctionnalité:').should.containEql(
       '\u001b[31mFonctionnalité:\u001b[39m'
     )
+  })
+
+  it('applies styles to feature descriptions', () => {
+    applyTheme(
+      ThemeItem.FeatureDescription,
+      'This is some\ndescription...'
+    ).should.containEql('\u001b[37mThis is some\ndescription...\u001b[39m')
   })
 
   it('applies styles to Rule keywords', () => {
