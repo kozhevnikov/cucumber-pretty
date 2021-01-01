@@ -63,5 +63,5 @@ _Old pretty_:
 <img src="https://raw.githubusercontent.com/kozhevnikov/cucumber-pretty/master/docs/homebrew.png" width="300">
 <img src="https://raw.githubusercontent.com/kozhevnikov/cucumber-pretty/master/docs/basic.png" width="300">
 
-    --format-options '{"theme": {"feature keyword": ["magenta", "bold"], "rule keyword": ["magenta"]}}'
+    --format-options '{"theme": {"feature keyword": ["magenta", "bold"], "scenario keyword": ["magenta", "bold"]}}'
 
