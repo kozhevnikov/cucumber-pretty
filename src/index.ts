@@ -229,7 +229,7 @@ export default class PrettyFormatter extends SummaryFormatter {
         2 + this.indentOffset,
         ThemeItem.RuleKeyword,
         ...text
-    )
+      )
     )
   }
 
