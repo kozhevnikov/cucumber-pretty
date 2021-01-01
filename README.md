@@ -31,14 +31,6 @@ cucumber-js -f node_modules/cucumber-pretty
 - https://github.com/cucumber/cucumber-js/blob/master/docs/cli.md#formats
 - https://github.com/cucumber/cucumber-js/blob/master/docs/custom_formatters.md
 
-## Dark
-
-<img src="https://raw.githubusercontent.com/kozhevnikov/cucumber-pretty/master/docs/homebrew.png" width="570">
-
-## Light
-
-<img src="https://raw.githubusercontent.com/kozhevnikov/cucumber-pretty/master/docs/basic.png" width="570">
-
 ## Customise the theme
 
 You can define your own colors by passing a `theme` format option:
@@ -68,4 +60,8 @@ _Matrix_:
 
 _Old pretty_:
 
+<img src="https://raw.githubusercontent.com/kozhevnikov/cucumber-pretty/master/docs/homebrew.png" width="300">
+<img src="https://raw.githubusercontent.com/kozhevnikov/cucumber-pretty/master/docs/basic.png" width="300">
+
     --format-options '{"theme": {"feature keyword": ["magenta", "bold"], "rule keyword": ["magenta"]}}'
+
