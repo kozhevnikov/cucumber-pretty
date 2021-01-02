@@ -5,8 +5,8 @@ export const indentStyleText = (
   text: string,
   styles: TextStyle[] = []
 ): string =>
-  text
-    .replace(/^([ \t]*)(.*)$/gm, (_, __, subText) =>
-      styleText(subText.trim(), ...styles)
-    )
-    .replace(/^(.+)$/gm, (subString) => `${' '.repeat(indent)}${subString}`)
+  text.replace(/^(.+)$/gm, (subText) =>
+    subText.trim().length === 0
+      ? ''
+      : `${' '.repeat(indent)}${styleText(subText.trimRight(), ...styles)}`
+  )

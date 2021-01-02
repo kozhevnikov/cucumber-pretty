@@ -7,3 +7,12 @@ Feature: Doc String
       bar
       """
     Then noop
+
+  Scenario: Doc String with indentation
+    When doc string:
+      """
+      foo
+        bar
+          baz
+      /foo
+      """
