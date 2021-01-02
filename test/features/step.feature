@@ -33,3 +33,8 @@ Feature: Step
       Some multiline
       Text
       """
+
+  Scenario: DataTable
+    Given data table:
+      | a | b |
+      | c | d |

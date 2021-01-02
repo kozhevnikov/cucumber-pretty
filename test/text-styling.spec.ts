@@ -97,6 +97,16 @@ describe('Text styling', () => {
           `${indentStyleText(6, '"""', ['green', 'bgYellow'])}\n`
       )
     })
+
+    it('styles DataTable borders', () => {
+      const border = styleText('│', 'green', 'bgYellow')
+      runColored('data-table.feature', undefined, {
+        [ThemeItem.DataTableBorder]: ['green', 'bgYellow'],
+      }).should.containEql(
+        `      ${border} foo   ${border} bar   ${border}\n` +
+          `      ${border} lorem ${border} ipsum ${border}\n`
+      )
+    })
   })
 
   describe('non-customizable items (colored by Cucumber)', () => {
@@ -176,6 +186,14 @@ describe('Text styling', () => {
             'italic',
           ])}\n` +
           `${indentStyleText(6, '"""', ['gray'])}\n`
+      )
+    })
+
+    it('styles DataTable borders', () => {
+      const border = styleText('│', 'gray')
+      runResult.should.containEql(
+        `      ${border} a ${border} b ${border}\n` +
+          `      ${border} c ${border} d ${border}\n`
       )
     })
   })

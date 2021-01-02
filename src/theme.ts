@@ -2,6 +2,7 @@ import { indentStyleText } from './indentStyleText'
 import { TextStyle } from './styleText'
 
 export enum ThemeItem {
+  DataTableBorder = 'datatable border',
   DocStringContent = 'docstring content',
   DocStringDelimiter = 'docstring delimiter',
   FeatureDescription = 'feature description',
@@ -13,6 +14,7 @@ export enum ThemeItem {
 export type ThemeStyles = { [key in ThemeItem]: TextStyle[] }
 
 const unstyledTheme: ThemeStyles = {
+  [ThemeItem.DataTableBorder]: [],
   [ThemeItem.DocStringContent]: [],
   [ThemeItem.DocStringDelimiter]: [],
   [ThemeItem.FeatureDescription]: [],

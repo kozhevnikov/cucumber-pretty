@@ -23,28 +23,8 @@ const marks = {
   [Status.UNDEFINED]: '?',
 }
 
-const tableLayout = {
-  chars: {
-    top: '',
-    'top-left': '',
-    'top-mid': '',
-    'top-right': '',
-    mid: '',
-    'left-mid': '',
-    'mid-mid': '',
-    'right-mid': '',
-    bottom: '',
-    'bottom-left': '',
-    'bottom-mid': '',
-    'bottom-right': '',
-  },
-  style: {
-    head: [],
-    border: [],
-  },
-}
-
 const defaultThemeStyles: ThemeStyles = {
+  [ThemeItem.DataTableBorder]: ['gray'],
   [ThemeItem.DocStringContent]: ['gray', 'italic'],
   [ThemeItem.DocStringDelimiter]: ['gray'],
   [ThemeItem.FeatureDescription]: ['gray'],
@@ -59,6 +39,7 @@ export default class PrettyFormatter extends SummaryFormatter {
   private lastRuleId?: string
   private indentOffset = 0
   private logItem: (indent: number, item: ThemeItem, ...text: string[]) => void
+  private tableLayout: CliTable3.TableConstructorOptions
 
   constructor(options: IFormatterOptions) {
     super(options)
@@ -71,6 +52,34 @@ export default class PrettyFormatter extends SummaryFormatter {
       this.log(theme.indentStyleText(indent + this.indentOffset, item, ...text))
     }
     this.parseEnvelope = this.parseEnvelope.bind(this)
+    const tableFrameChar = theme.indentStyleText(
+      0,
+      ThemeItem.DataTableBorder,
+      '│'
+    )
+    this.tableLayout = {
+      chars: {
+        left: tableFrameChar,
+        middle: tableFrameChar,
+        right: tableFrameChar,
+        top: '',
+        'top-left': '',
+        'top-mid': '',
+        'top-right': '',
+        mid: '',
+        'left-mid': '',
+        'mid-mid': '',
+        'right-mid': '',
+        bottom: '',
+        'bottom-left': '',
+        'bottom-mid': '',
+        'bottom-right': '',
+      },
+      style: {
+        head: [],
+        border: [],
+      },
+    }
 
     options.eventBroadcaster.on('envelope', this.parseEnvelope)
   }
@@ -157,7 +166,7 @@ export default class PrettyFormatter extends SummaryFormatter {
       }
 
       if (gherkinStep.dataTable) {
-        const datatable = new CliTable3(tableLayout)
+        const datatable = new CliTable3(this.tableLayout)
         datatable.push(
           ...gherkinStep.dataTable.rows.map(
             (row: messages.GherkinDocument.Feature.ITableRow) =>
