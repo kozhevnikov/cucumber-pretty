@@ -211,11 +211,8 @@ export default class PrettyFormatter extends SummaryFormatter {
     if (!pickle.astNodeIds) throw new Error('Pickle AST nodes missing')
 
     const keyword = gherkinScenarioMap[pickle.astNodeIds[0]].keyword
-    this.logn(
-      `${this.indentStyleText(2, ThemeItem.ScenarioKeyword, keyword, ':')} ${
-        pickle.name
-      }`
-    )
+    this.logItem(2, ThemeItem.ScenarioKeyword, keyword, ':')
+    this.log(` ${pickle.name}${n}`)
   }
 
   private renderRule(rule: messages.GherkinDocument.Feature.FeatureChild.Rule) {
@@ -224,13 +221,7 @@ export default class PrettyFormatter extends SummaryFormatter {
   }
 
   private logItem(indent: number, item: ThemeItem, ...text: string[]) {
-    this.log(
-      this.indentStyleText(
-        2 + this.indentOffset,
-        ThemeItem.RuleKeyword,
-        ...text
-      )
-    )
+    this.log(this.indentStyleText(indent + this.indentOffset, item, ...text))
   }
 
   // TODO: remove logn()
