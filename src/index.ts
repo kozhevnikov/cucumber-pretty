@@ -185,7 +185,7 @@ export default class PrettyFormatter extends SummaryFormatter {
   }
 
   private onTestCaseFinished(_testCaseFinished: messages.ITestCaseFinished) {
-    this.logn()
+    this.newline()
   }
 
   private renderFeatureHead(feature: messages.GherkinDocument.IFeature) {
