@@ -10,6 +10,7 @@ import { messages } from '@cucumber/messages'
 import * as CliTable3 from 'cli-table3'
 import { cross, tick } from 'figures'
 import { EOL as n } from 'os'
+import dedent from 'ts-dedent'
 
 import {
   IndentStyleThemeItem,
@@ -202,15 +203,17 @@ export default class PrettyFormatter extends SummaryFormatter {
       )} ${feature.name}`
     )
 
-    if (feature.description)
-      this.logn(
-        `${n}${this.indentStyleText(
-          2,
-          ThemeItem.FeatureDescription,
-          feature.description
-        )}`
+    if (feature.description) {
+      this.log(n)
+      this.logItem(
+        2,
+        ThemeItem.FeatureDescription,
+        dedent(feature.description.trim())
       )
-    this.logn()
+      this.log(n)
+    }
+
+    this.log(n)
   }
 
   private renderScenarioHead(
