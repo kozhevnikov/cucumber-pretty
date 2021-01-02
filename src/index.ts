@@ -12,12 +12,7 @@ import { cross, tick } from 'figures'
 import { EOL as n } from 'os'
 import dedent from 'ts-dedent'
 
-import {
-  IndentStyleThemeItem,
-  makeTheme,
-  ThemeItem,
-  ThemeStyles,
-} from './theme'
+import { makeTheme, ThemeItem, ThemeStyles } from './theme'
 
 const marks = {
   [Status.AMBIGUOUS]: cross,
@@ -63,7 +58,7 @@ export default class PrettyFormatter extends SummaryFormatter {
   private uri?: string
   private lastRuleId?: string
   private indentOffset = 0
-  private indentStyleText: IndentStyleThemeItem
+  private logItem: (indent: number, item: ThemeItem, ...text: string[]) => void
 
   constructor(options: IFormatterOptions) {
     super(options)
@@ -72,7 +67,9 @@ export default class PrettyFormatter extends SummaryFormatter {
         ? options.parsedArgvOptions.theme || defaultThemeStyles
         : {}
     )
-    this.indentStyleText = theme.indentStyleText
+    this.logItem = (indent: number, item: ThemeItem, ...text: string[]) => {
+      this.log(theme.indentStyleText(indent + this.indentOffset, item, ...text))
+    }
     this.parseEnvelope = this.parseEnvelope.bind(this)
 
     options.eventBroadcaster.on('envelope', this.parseEnvelope)
@@ -144,19 +141,19 @@ export default class PrettyFormatter extends SummaryFormatter {
           gherkinStep.docString.delimiter
         )
         // TODO: fix indentStyleText so that the newline can be part of the logItem call
-        this.log(n)
+        this.newline()
         this.logItem(
           6,
           ThemeItem.DocStringContent,
           gherkinStep.docString.content
         )
-        this.log(n)
+        this.newline()
         this.logItem(
           6,
           ThemeItem.DocStringDelimiter,
           gherkinStep.docString.delimiter
         )
-        this.log(n)
+        this.newline()
       }
 
       if (gherkinStep.dataTable) {
@@ -194,26 +191,26 @@ export default class PrettyFormatter extends SummaryFormatter {
   private renderFeatureHead(feature: messages.GherkinDocument.IFeature) {
     const tags = (feature?.tags || []).map((tag) => tag.name).join(' ')
     if (tags) this.logn(this.colorFns.tag(tags))
-    this.logn(
-      `${this.indentStyleText(
-        0,
-        ThemeItem.FeatureKeyword,
-        feature.keyword || '[feature]',
-        ':'
-      )} ${feature.name}`
+    this.logItem(
+      0,
+      ThemeItem.FeatureKeyword,
+      feature.keyword || '[feature]',
+      ':'
     )
+    this.log(` ${feature.name || ''}`)
+    this.newline()
 
     if (feature.description) {
-      this.log(n)
+      this.newline()
       this.logItem(
         2,
         ThemeItem.FeatureDescription,
         dedent(feature.description.trim())
       )
-      this.log(n)
+      this.newline()
     }
 
-    this.log(n)
+    this.newline()
   }
 
   private renderScenarioHead(
@@ -235,8 +232,8 @@ export default class PrettyFormatter extends SummaryFormatter {
     this.log(` ${rule.name}${n}${n}`)
   }
 
-  private logItem(indent: number, item: ThemeItem, ...text: string[]) {
-    this.log(this.indentStyleText(indent + this.indentOffset, item, ...text))
+  private newline() {
+    this.log(n)
   }
 
   // TODO: remove logn()
