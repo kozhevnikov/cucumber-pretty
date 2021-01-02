@@ -131,13 +131,8 @@ export default class PrettyFormatter extends SummaryFormatter {
       const pickleStep = pickleStepMap[testStep.pickleStepId]
       const astNodeId = pickleStep.astNodeIds[0]
       const gherkinStep = gherkinStepMap[astNodeId]
-      this.logn(
-        `${this.indentStyleText(
-          4,
-          ThemeItem.StepKeyword,
-          gherkinStep.keyword
-        )} ${pickleStep.text}`
-      )
+      this.logItem(4, ThemeItem.StepKeyword, gherkinStep.keyword)
+      this.log(` ${pickleStep.text}${n}`)
 
       if (gherkinStep.docString) {
         this.logn(
