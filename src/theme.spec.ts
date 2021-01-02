@@ -13,8 +13,10 @@ describe('Theme', () => {
 
   beforeEach(() => {
     const styles: ThemeStyles = {
-      [ThemeItem.FeatureKeyword]: ['red'],
+      [ThemeItem.DocStringContent]: ['green'],
+      [ThemeItem.DocStringDelimiter]: ['red'],
       [ThemeItem.FeatureDescription]: ['white'],
+      [ThemeItem.FeatureKeyword]: ['red'],
       [ThemeItem.RuleKeyword]: ['green'],
       [ThemeItem.ScenarioKeyword]: ['blue'],
       [ThemeItem.StepKeyword]: ['magenta'],
@@ -56,6 +58,20 @@ describe('Theme', () => {
   it('applies styles to Step keywords', () => {
     styleThemeItem(0, ThemeItem.StepKeyword, 'Etant donné').should.containEql(
       styleText('Etant donné', 'magenta')
+    )
+  })
+
+  it('applies styles to DocString content', () => {
+    styleThemeItem(
+      0,
+      ThemeItem.DocStringContent,
+      'this is some docstring'
+    ).should.containEql(styleText('this is some docstring', 'green'))
+  })
+
+  it('applies styles to DocString delimiters', () => {
+    styleThemeItem(0, ThemeItem.DocStringDelimiter, '"""').should.containEql(
+      styleText('"""', 'red')
     )
   })
 

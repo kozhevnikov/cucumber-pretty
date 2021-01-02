@@ -49,8 +49,10 @@ const tableLayout = {
 }
 
 const defaultThemeStyles: ThemeStyles = {
-  [ThemeItem.FeatureKeyword]: ['blue', 'bold'],
+  [ThemeItem.DocStringContent]: ['gray', 'italic'],
+  [ThemeItem.DocStringDelimiter]: ['gray'],
   [ThemeItem.FeatureDescription]: ['gray'],
+  [ThemeItem.FeatureKeyword]: ['blue', 'bold'],
   [ThemeItem.RuleKeyword]: ['blue', 'bold'],
   [ThemeItem.ScenarioKeyword]: ['cyan'],
   [ThemeItem.StepKeyword]: ['cyan', 'bold'],
@@ -135,10 +137,25 @@ export default class PrettyFormatter extends SummaryFormatter {
       this.log(` ${pickleStep.text}${n}`)
 
       if (gherkinStep.docString) {
-        this.logn(
-          `${gherkinStep.docString.delimiter}\n${gherkinStep.docString.content}\n${gherkinStep.docString.delimiter}`,
-          6
+        this.logItem(
+          6,
+          ThemeItem.DocStringDelimiter,
+          gherkinStep.docString.delimiter
         )
+        // TODO: fix indentStyleText so that the newline can be part of the logItem call
+        this.log(n)
+        this.logItem(
+          6,
+          ThemeItem.DocStringContent,
+          gherkinStep.docString.content
+        )
+        this.log(n)
+        this.logItem(
+          6,
+          ThemeItem.DocStringDelimiter,
+          gherkinStep.docString.delimiter
+        )
+        this.log(n)
       }
 
       if (gherkinStep.dataTable) {

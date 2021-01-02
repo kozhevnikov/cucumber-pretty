@@ -2,8 +2,10 @@ import { indentStyleText } from './indentStyleText'
 import { TextStyle } from './styleText'
 
 export enum ThemeItem {
-  FeatureKeyword = 'feature keyword',
+  DocStringContent = 'docstring content',
+  DocStringDelimiter = 'docstring delimiter',
   FeatureDescription = 'feature description',
+  FeatureKeyword = 'feature keyword',
   RuleKeyword = 'rule keyword',
   ScenarioKeyword = 'scenario keyword',
   StepKeyword = 'step keyword',
@@ -11,8 +13,10 @@ export enum ThemeItem {
 export type ThemeStyles = { [key in ThemeItem]: TextStyle[] }
 
 const unstyledTheme: ThemeStyles = {
-  [ThemeItem.FeatureKeyword]: [],
+  [ThemeItem.DocStringContent]: [],
+  [ThemeItem.DocStringDelimiter]: [],
   [ThemeItem.FeatureDescription]: [],
+  [ThemeItem.FeatureKeyword]: [],
   [ThemeItem.RuleKeyword]: [],
   [ThemeItem.ScenarioKeyword]: [],
   [ThemeItem.StepKeyword]: [],

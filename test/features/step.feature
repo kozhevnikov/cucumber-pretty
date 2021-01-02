@@ -26,3 +26,10 @@ Feature: Step
 
   Scenario: Undefined step
     When undefined
+
+  Scenario: DocString
+    Given doc string:
+      """
+      Some multiline
+      Text
+      """

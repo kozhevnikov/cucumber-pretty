@@ -86,6 +86,17 @@ describe('Text styling', () => {
           `    ${styleText('Then', ...stepStyles)} noop\n`
       )
     })
+
+    it('styles DocString content and delimiters', () => {
+      runColored('doc-string.feature', undefined, {
+        [ThemeItem.DocStringDelimiter]: ['green', 'bgYellow'],
+        [ThemeItem.DocStringContent]: ['red', 'bold'],
+      }).should.containEql(
+        `${indentStyleText(6, '"""', ['green', 'bgYellow'])}\n` +
+          `${indentStyleText(6, 'foo\nbar', ['red', 'bold'])}\n` +
+          `${indentStyleText(6, '"""', ['green', 'bgYellow'])}\n`
+      )
+    })
   })
 
   describe('non-customizable items (colored by Cucumber)', () => {
@@ -140,7 +151,7 @@ describe('Text styling', () => {
 
   describe('default theme', () => {
     let runResult: string
-    before(() => (runResult = runColored('step.feature', 'Step name')))
+    before(() => (runResult = runColored('step.feature')))
 
     it('styles feature keywords', () =>
       runResult.should.containEql(styleText('Feature:', 'blue', 'bold')))
@@ -155,6 +166,17 @@ describe('Text styling', () => {
       runResult.should.containEql(styleText('Given', 'cyan', 'bold'))
       runResult.should.containEql(styleText('When', 'cyan', 'bold'))
       runResult.should.containEql(styleText('Then', 'cyan', 'bold'))
+    })
+
+    it('styles DocString content and delimiters', () => {
+      runResult.should.containEql(
+        `${indentStyleText(6, '"""', ['gray'])}\n` +
+          `${indentStyleText(6, 'Some multiline\nText', [
+            'gray',
+            'italic',
+          ])}\n` +
+          `${indentStyleText(6, '"""', ['gray'])}\n`
+      )
     })
   })
 })

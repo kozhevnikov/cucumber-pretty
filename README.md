@@ -45,8 +45,10 @@ Where `THEME_JSON` is in the following shape:
 
 The currently known theme items are:
 
-* `feature keyword`
+* `docstring content` (multiline argument content)
+* `docstring delimiter` (multiline argument delimiter: `"""`)
 * `feature description`
+* `feature keyword`
 * `rule keyword`
 * `scenario keyword`
 * `step keyword`
@@ -57,7 +59,7 @@ You can combine all the styles you'd like from [modifiers, foreground colors and
 
 _Matrix_:
 
-    --format-options '{"theme": {"feature keyword": ["green", "bold"], "feature description": ["green"], "rule keyword": ["yellow"], "scenario keyword": ["greenBright"], "step keyword": ["black", "bgGreen", "italic"]}}'
+    --format-options '{"theme": {"feature keyword": ["green", "bold"], "feature description": ["green"], "rule keyword": ["yellow"], "scenario keyword": ["greenBright"], "step keyword": ["black", "bgGreen", "italic"], "docstring delimiter": ["green"], "docstring content": ["green", "italic"]}}'
 
 _Original pretty_:
 
