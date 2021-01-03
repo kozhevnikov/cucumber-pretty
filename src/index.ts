@@ -165,7 +165,6 @@ export default class PrettyFormatter extends SummaryFormatter {
           ThemeItem.DocStringDelimiter,
           gherkinStep.docString.delimiter
         )
-        // TODO: fix indentStyleText so that the newline can be part of the logItem call
         this.newline()
         this.logItem(
           6,
