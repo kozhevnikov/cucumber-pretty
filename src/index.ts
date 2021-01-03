@@ -160,6 +160,7 @@ export default class PrettyFormatter extends SummaryFormatter {
       this.log(` ${pickleStep.text}${n}`)
 
       if (gherkinStep.docString) {
+        // TODO: Add generic DocString style, similar DataTable
         this.logItem(
           6,
           ThemeItem.DocStringDelimiter,
