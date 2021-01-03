@@ -14,6 +14,7 @@ describe('Theme', () => {
   beforeEach(() => {
     const styles: ThemeStyles = {
       [ThemeItem.DataTableBorder]: ['red'],
+      [ThemeItem.DataTableContent]: ['blue'],
       [ThemeItem.DocStringContent]: ['green'],
       [ThemeItem.DocStringDelimiter]: ['red'],
       [ThemeItem.FeatureDescription]: ['white'],
@@ -79,6 +80,12 @@ describe('Theme', () => {
   it('applies styles to DataTable borders', () => {
     styleThemeItem(0, ThemeItem.DataTableBorder, '|').should.containEql(
       styleText('|', 'red')
+    )
+  })
+
+  it('applies styles to DataTable content', () => {
+    styleThemeItem(0, ThemeItem.DataTableContent, 'foo').should.containEql(
+      styleText('foo', 'blue')
     )
   })
 

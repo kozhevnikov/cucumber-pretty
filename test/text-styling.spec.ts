@@ -107,6 +107,22 @@ describe('Text styling', () => {
           `      ${border} lorem ${border} ipsum ${border}\n`
       )
     })
+
+    it('styles DataTable content', () => {
+      const styles: TextStyle[] = ['green', 'bgYellow']
+      runColored('data-table.feature', undefined, {
+        [ThemeItem.DataTableContent]: ['green', 'bgYellow'],
+      }).should.containEql(
+        `      │ ${styleText('foo', ...styles)}   │ ${styleText(
+          'bar',
+          ...styles
+        )}   │\n` +
+          `      │ ${styleText('lorem', ...styles)} │ ${styleText(
+            'ipsum',
+            ...styles
+          )} │\n`
+      )
+    })
   })
 
   describe('non-customizable items (colored by Cucumber)', () => {
@@ -189,11 +205,13 @@ describe('Text styling', () => {
       )
     })
 
-    it('styles DataTable borders', () => {
-      const border = styleText('│', 'gray')
+    it('styles DataTable borders and content', () => {
+      const d = styleText('│', 'gray')
+      const s = (text: string) => styleText(text, 'gray')
+
       runResult.should.containEql(
-        `      ${border} a ${border} b ${border}\n` +
-          `      ${border} c ${border} d ${border}\n`
+        `      ${d} ${s('a')} ${d} ${s('b')} ${d}\n` +
+          `      ${d} ${s('c')} ${d} ${s('d')} ${d}\n`
       )
     })
   })

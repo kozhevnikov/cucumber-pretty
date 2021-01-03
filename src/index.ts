@@ -25,6 +25,7 @@ const marks = {
 
 const defaultThemeStyles: ThemeStyles = {
   [ThemeItem.DataTableBorder]: ['gray'],
+  [ThemeItem.DataTableContent]: ['gray'],
   [ThemeItem.DocStringContent]: ['gray', 'italic'],
   [ThemeItem.DocStringDelimiter]: ['gray'],
   [ThemeItem.FeatureDescription]: ['gray'],
@@ -39,6 +40,11 @@ export default class PrettyFormatter extends SummaryFormatter {
   private lastRuleId?: string
   private indentOffset = 0
   private logItem: (indent: number, item: ThemeItem, ...text: string[]) => void
+  private styleItem: (
+    indent: number,
+    item: ThemeItem,
+    ...text: string[]
+  ) => string
   private tableLayout: CliTable3.TableConstructorOptions
 
   constructor(options: IFormatterOptions) {
@@ -48,15 +54,24 @@ export default class PrettyFormatter extends SummaryFormatter {
         ? options.parsedArgvOptions.theme || defaultThemeStyles
         : {}
     )
-    this.logItem = (indent: number, item: ThemeItem, ...text: string[]) => {
-      this.log(theme.indentStyleText(indent + this.indentOffset, item, ...text))
+
+    this.styleItem = (indent: number, item: ThemeItem, ...text: string[]) => {
+      if (indent > 0 && this.indentOffset > 0)
+        indent = indent + this.indentOffset
+      return theme.indentStyleText(indent, item, ...text)
     }
+
+    this.logItem = (indent: number, item: ThemeItem, ...text: string[]) =>
+      this.log(this.styleItem(indent, item, ...text))
+
     this.parseEnvelope = this.parseEnvelope.bind(this)
+
     const tableFrameChar = theme.indentStyleText(
       0,
       ThemeItem.DataTableBorder,
       '│'
     )
+
     this.tableLayout = {
       chars: {
         left: tableFrameChar,
@@ -170,7 +185,9 @@ export default class PrettyFormatter extends SummaryFormatter {
         datatable.push(
           ...gherkinStep.dataTable.rows.map(
             (row: messages.GherkinDocument.Feature.ITableRow) =>
-              (row.cells || []).map((cell) => cell.value)
+              (row.cells || []).map((cell) =>
+                this.styleItem(0, ThemeItem.DataTableContent, cell.value || '')
+              )
           )
         )
         this.logn(datatable.toString(), 6)

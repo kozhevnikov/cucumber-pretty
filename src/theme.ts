@@ -3,6 +3,7 @@ import { TextStyle } from './styleText'
 
 export enum ThemeItem {
   DataTableBorder = 'datatable border',
+  DataTableContent = 'datatable content',
   DocStringContent = 'docstring content',
   DocStringDelimiter = 'docstring delimiter',
   FeatureDescription = 'feature description',
@@ -15,6 +16,7 @@ export type ThemeStyles = { [key in ThemeItem]: TextStyle[] }
 
 const unstyledTheme: ThemeStyles = {
   [ThemeItem.DataTableBorder]: [],
+  [ThemeItem.DataTableContent]: [],
   [ThemeItem.DocStringContent]: [],
   [ThemeItem.DocStringDelimiter]: [],
   [ThemeItem.FeatureDescription]: [],
