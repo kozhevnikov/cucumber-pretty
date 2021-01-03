@@ -98,6 +98,16 @@ describe('Text styling', () => {
       )
     })
 
+    it('styles DataTables', () => {
+      const styles: TextStyle[] = ['green', 'bgYellow']
+      runColored('data-table.feature', undefined, {
+        [ThemeItem.DataTable]: ['green', 'bgYellow'],
+      }).should.containEql(
+        `      ${styleText('│ foo   │ bar   │', ...styles)}\n` +
+          `      ${styleText('│ lorem │ ipsum │', ...styles)}\n`
+      )
+    })
+
     it('styles DataTable borders', () => {
       const border = styleText('│', 'green', 'bgYellow')
       runColored('data-table.feature', undefined, {
@@ -207,7 +217,7 @@ describe('Text styling', () => {
 
     it('styles DataTable borders and content', () => {
       const d = styleText('│', 'gray')
-      const s = (text: string) => styleText(text, 'gray')
+      const s = (text: string) => styleText(text, 'gray', 'italic')
 
       runResult.should.containEql(
         `      ${d} ${s('a')} ${d} ${s('b')} ${d}\n` +

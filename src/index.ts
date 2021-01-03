@@ -24,8 +24,9 @@ const marks = {
 }
 
 const defaultThemeStyles: ThemeStyles = {
+  [ThemeItem.DataTable]: [],
   [ThemeItem.DataTableBorder]: ['gray'],
-  [ThemeItem.DataTableContent]: ['gray'],
+  [ThemeItem.DataTableContent]: ['gray', 'italic'],
   [ThemeItem.DocStringContent]: ['gray', 'italic'],
   [ThemeItem.DocStringDelimiter]: ['gray'],
   [ThemeItem.FeatureDescription]: ['gray'],
@@ -190,7 +191,8 @@ export default class PrettyFormatter extends SummaryFormatter {
               )
           )
         )
-        this.logn(datatable.toString(), 6)
+        this.logItem(6, ThemeItem.DataTable, datatable.toString())
+        this.newline()
       }
     }
   }

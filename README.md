@@ -45,10 +45,11 @@ Where `THEME_JSON` is in the following shape:
 
 The currently known theme items are:
 
+* `datatable`: all data table elements (border and content)
 * `datatable border`
 * `datatable content`
-* `docstring content` (multiline argument content)
-* `docstring delimiter` (multiline argument delimiter: `"""`)
+* `docstring content`: multiline argument content
+* `docstring delimiter`: multiline argument delimiter: `"""`
 * `feature description`
 * `feature keyword`
 * `rule keyword`

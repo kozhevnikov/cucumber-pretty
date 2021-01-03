@@ -13,6 +13,7 @@ describe('Theme', () => {
 
   beforeEach(() => {
     const styles: ThemeStyles = {
+      [ThemeItem.DataTable]: ['bgRed'],
       [ThemeItem.DataTableBorder]: ['red'],
       [ThemeItem.DataTableContent]: ['blue'],
       [ThemeItem.DocStringContent]: ['green'],
@@ -74,6 +75,19 @@ describe('Theme', () => {
   it('applies styles to DocString delimiters', () => {
     styleThemeItem(0, ThemeItem.DocStringDelimiter, '"""').should.containEql(
       styleText('"""', 'red')
+    )
+  })
+
+  it('applies styles to DataTable', () => {
+    styleThemeItem(
+      0,
+      ThemeItem.DataTable,
+      '| foo | bar |\n| baz | oof |'
+    ).should.containEql(
+      `${styleText('| foo | bar |', 'bgRed')}\n${styleText(
+        '| baz | oof |',
+        'bgRed'
+      )}`
     )
   })
 
