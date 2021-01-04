@@ -26,6 +26,7 @@ describe('Theme', () => {
       [ThemeItem.ScenarioKeyword]: ['blue'],
       [ThemeItem.StepKeyword]: ['magenta'],
       [ThemeItem.StepMessage]: ['bgCyan'],
+      [ThemeItem.StepStatus]: ['bgRed'],
       [ThemeItem.StepText]: ['bgYellow'],
       [ThemeItem.Tag]: ['bgRed'],
     }
@@ -85,6 +86,14 @@ describe('Theme', () => {
     styleThemeItem(0, ThemeItem.StepText, 'some cucumbers').should.containEql(
       styleText('some cucumbers', 'bgYellow')
     )
+  })
+
+  it('applies styles to Step statuses', () => {
+    styleThemeItem(
+      0,
+      ThemeItem.StepStatus,
+      '? undefined step'
+    ).should.containEql(styleText('? undefined step', 'bgRed'))
   })
 
   it('applies styles to Step messages', () => {

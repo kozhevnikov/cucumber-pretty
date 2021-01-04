@@ -15,6 +15,7 @@ export enum ThemeItem {
   ScenarioKeyword = 'scenario keyword',
   StepKeyword = 'step keyword',
   StepMessage = 'step message',
+  StepStatus = 'step status',
   StepText = 'step text',
   Tag = 'tag',
 }
@@ -34,6 +35,7 @@ const unstyledTheme: ThemeStyles = {
   [ThemeItem.ScenarioKeyword]: [],
   [ThemeItem.StepKeyword]: [],
   [ThemeItem.StepMessage]: [],
+  [ThemeItem.StepStatus]: [],
   [ThemeItem.StepText]: [],
   [ThemeItem.Tag]: [],
 }

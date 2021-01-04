@@ -58,6 +58,7 @@ The currently known theme items are:
 * `scenario keyword`
 * `step keyword`
 * `step message`: usually a failing step error message and stack trace
+* `step status`: additional styles added to the built-in styles applied by Cucumber to non-passing steps status. Foreground colors have no effects on this item, background and modifiers do.
 * `step text`
 * `tag`
 

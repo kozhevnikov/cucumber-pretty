@@ -37,6 +37,7 @@ const defaultThemeStyles: ThemeStyles = {
   [ThemeItem.ScenarioKeyword]: ['cyan', 'bold'],
   [ThemeItem.StepKeyword]: ['cyan'],
   [ThemeItem.StepMessage]: [],
+  [ThemeItem.StepStatus]: [],
   [ThemeItem.StepText]: [],
   [ThemeItem.Tag]: ['cyan'],
 }
@@ -208,12 +209,14 @@ export default class PrettyFormatter extends SummaryFormatter {
     const { message, status } = testStepFinished.testStepResult || {}
 
     if (status && status !== Status.PASSED) {
-      this.logn(
+      this.logItem(
+        4,
+        ThemeItem.StepStatus,
         this.colorFns.forStatus(status)(
           `${marks[status]} ${Status[status].toLowerCase()}`
-        ),
-        4
+        )
       )
+      this.newline()
 
       if (message) {
         this.logItem(6, ThemeItem.StepMessage, message)

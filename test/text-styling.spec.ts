@@ -122,6 +122,14 @@ describe('Text styling', () => {
       }).should.containEql(styleText('noop', ...stepStyles))
     })
 
+    it('styles step statuses', () => {
+      const stepStyles: TextStyle[] = ['bgWhite']
+      const s = (text: string) => styleText(text, ...stepStyles)
+      runColored('step.feature', 'Failed step', {
+        [ThemeItem.StepStatus]: stepStyles,
+      }).should.containEql(`    ${s('\u001b[31m✖ failed\u001b[39m')}\n      `)
+    })
+
     it('styles step messages', () => {
       const stepStyles: TextStyle[] = ['bgCyan']
       const s = (text: string) => styleText(text, ...stepStyles)
