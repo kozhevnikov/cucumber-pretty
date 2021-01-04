@@ -40,3 +40,8 @@ Feature: Step
     Given data table:
       | a | b |
       | c | d |
+
+  Rule: some rule
+
+    Scenario: scenario under rule
+      Given noop

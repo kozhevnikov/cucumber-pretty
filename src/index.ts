@@ -33,6 +33,7 @@ const defaultThemeStyles: ThemeStyles = {
   [ThemeItem.FeatureKeyword]: ['blueBright', 'bold'],
   [ThemeItem.FeatureName]: ['blueBright', 'underline'],
   [ThemeItem.RuleKeyword]: ['blueBright', 'bold'],
+  [ThemeItem.RuleName]: ['blueBright', 'underline'],
   [ThemeItem.ScenarioKeyword]: ['cyan', 'bold'],
   [ThemeItem.StepKeyword]: ['cyan'],
   [ThemeItem.StepMessage]: [],
@@ -252,7 +253,7 @@ export default class PrettyFormatter extends SummaryFormatter {
       feature.keyword || '[feature]',
       ':'
     )
-    this.log(` `)
+    this.log(' ')
     this.logItem(0, ThemeItem.FeatureName, feature.name || '')
     this.newline()
 
@@ -279,13 +280,15 @@ export default class PrettyFormatter extends SummaryFormatter {
 
     const keyword = gherkinScenarioMap[pickle.astNodeIds[0]].keyword
     this.logItem(2, ThemeItem.ScenarioKeyword, keyword, ':')
-    this.log(` ${pickle.name}`)
+    this.log(' ')
+    this.logItem(0, ThemeItem.StepText, pickle.name || '')
     this.newline()
   }
 
   private renderRule(rule: messages.GherkinDocument.Feature.FeatureChild.Rule) {
     this.logItem(2, ThemeItem.RuleKeyword, rule.keyword, ':')
-    this.log(` ${rule.name}`)
+    this.log(' ')
+    this.logItem(0, ThemeItem.RuleName, rule.name || '')
     this.newline()
     this.newline()
   }

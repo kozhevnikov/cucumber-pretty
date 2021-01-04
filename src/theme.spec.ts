@@ -22,6 +22,7 @@ describe('Theme', () => {
       [ThemeItem.FeatureKeyword]: ['red'],
       [ThemeItem.FeatureName]: ['yellow'],
       [ThemeItem.RuleKeyword]: ['green'],
+      [ThemeItem.RuleName]: ['bgRed'],
       [ThemeItem.ScenarioKeyword]: ['blue'],
       [ThemeItem.StepKeyword]: ['magenta'],
       [ThemeItem.StepMessage]: ['bgCyan'],
@@ -59,6 +60,12 @@ describe('Theme', () => {
   it('applies styles to Rule keywords', () => {
     styleThemeItem(0, ThemeItem.RuleKeyword, 'Règle:').should.containEql(
       styleText('Règle:', 'green')
+    )
+  })
+
+  it('applies styles to Rule names', () => {
+    styleThemeItem(0, ThemeItem.RuleName, 'my rules').should.containEql(
+      styleText('my rules', 'bgRed')
     )
   })
 

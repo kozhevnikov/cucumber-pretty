@@ -81,6 +81,12 @@ describe('Text styling', () => {
       }).should.containEql(`  ${styleText('Rule:', 'yellow')} first rule\n`)
     })
 
+    it('styles rule names', () => {
+      runColored('rule.feature', undefined, {
+        [ThemeItem.RuleName]: ['green'],
+      }).should.containEql(`  Rule: ${styleText('first rule', 'green')}\n`)
+    })
+
     it('styles scenario keywords', () => {
       runColored('scenario.feature', 'Scenario name', {
         [ThemeItem.ScenarioKeyword]: ['bgYellow'],
@@ -222,6 +228,14 @@ describe('Text styling', () => {
 
     it('styles feature tags', () =>
       runResult.should.containEql(styleText('@tag', 'cyan')))
+
+    it('styles rule keywords', () =>
+      runResult.should.containEql(styleText('Rule:', 'blueBright', 'bold')))
+
+    it('styles rule names', () =>
+      runResult.should.containEql(
+        styleText('some rule', 'blueBright', 'underline')
+      ))
 
     it('styles scenario keywords', () =>
       runResult.should.containEql(styleText('Scenario:', 'cyan', 'bold')))
