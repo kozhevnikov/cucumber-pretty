@@ -35,6 +35,7 @@ const defaultThemeStyles: ThemeStyles = {
   [ThemeItem.ScenarioKeyword]: ['cyan'],
   [ThemeItem.StepKeyword]: ['cyan', 'bold'],
   [ThemeItem.StepText]: ['bold'],
+  [ThemeItem.Tag]: ['cyan'],
 }
 
 export default class PrettyFormatter extends SummaryFormatter {
@@ -228,7 +229,13 @@ export default class PrettyFormatter extends SummaryFormatter {
       []
     )
     if (tagStrings.length > 0) {
-      this.logn(this.colorFns.tag(tagStrings.join(' ')), indent)
+      const firstTag = tagStrings.shift() as string
+      this.logItem(indent, ThemeItem.Tag, firstTag)
+      tagStrings.forEach((tag) => {
+        this.log(' ')
+        this.logItem(0, ThemeItem.Tag, tag)
+      })
+      this.newline()
     }
   }
 

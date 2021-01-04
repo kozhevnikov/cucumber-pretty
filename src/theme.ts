@@ -13,6 +13,7 @@ export enum ThemeItem {
   ScenarioKeyword = 'scenario keyword',
   StepKeyword = 'step keyword',
   StepText = 'step text',
+  Tag = 'tag',
 }
 export type ThemeStyles = { [key in ThemeItem]: TextStyle[] }
 
@@ -28,6 +29,7 @@ const unstyledTheme: ThemeStyles = {
   [ThemeItem.ScenarioKeyword]: [],
   [ThemeItem.StepKeyword]: [],
   [ThemeItem.StepText]: [],
+  [ThemeItem.Tag]: [],
 }
 
 export const makeTheme = (styles: Partial<ThemeStyles>): ThemeHelpers => {

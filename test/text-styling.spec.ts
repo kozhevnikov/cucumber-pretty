@@ -62,6 +62,13 @@ describe('Text styling', () => {
       )
     })
 
+    it('styles feature tags', () => {
+      const s = (tag: string) => styleText(tag, 'bgYellow')
+      runColored('tag.feature', 'Scenario tag', {
+        [ThemeItem.Tag]: ['bgYellow'],
+      }).should.containEql(`${s('@feature')} ${s('@tag')}\n`)
+    })
+
     it('styles rule keywords', () => {
       runColored('rule.feature', undefined, {
         [ThemeItem.RuleKeyword]: ['yellow'],
@@ -73,6 +80,15 @@ describe('Text styling', () => {
         [ThemeItem.ScenarioKeyword]: ['bgYellow'],
       }).should.containEql(
         `${styleText('Scenario:', 'bgYellow')} Scenario name\n`
+      )
+    })
+
+    it('styles scenario tags', () => {
+      const s = (tag: string) => styleText(tag, 'bgBlue')
+      runColored('tag.feature', 'Scenario tag', {
+        [ThemeItem.Tag]: ['bgBlue'],
+      }).should.containEql(
+        `  ${s('@feature')} ${s('@tag')} ${s('@scenario')}\n`
       )
     })
 
@@ -178,18 +194,6 @@ describe('Text styling', () => {
         `    ${styleText('Error: FAILED', 'red')}`
       )
     })
-
-    it('styles feature tags', () => {
-      runColored('tag.feature', 'Feature tag').should.containEql(
-        `${styleText('@feature @tag', 'cyan')}\n`
-      )
-    })
-
-    it('styles scenario tags', () => {
-      runColored('tag.feature', 'Scenario tag').should.containEql(
-        `${styleText('@feature @tag @scenario', 'cyan')}\n`
-      )
-    })
   })
 
   describe('default theme', () => {
@@ -199,8 +203,14 @@ describe('Text styling', () => {
     it('styles feature keywords', () =>
       runResult.should.containEql(styleText('Feature:', 'blue', 'bold')))
 
+    it('styles feature tags', () =>
+      runResult.should.containEql(styleText('@tag', 'cyan')))
+
     it('styles scenario keywords', () =>
       runResult.should.containEql(styleText('Scenario:', 'cyan')))
+
+    it('styles scenario tags', () =>
+      runResult.should.containEql(styleText('@stag', 'cyan')))
 
     it('styles descriptions', () =>
       runResult.should.containEql(styleText('Description', 'gray')))

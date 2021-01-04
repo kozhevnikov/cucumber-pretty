@@ -56,6 +56,7 @@ The currently known theme items are:
 * `scenario keyword`
 * `step keyword`
 * `step text`
+* `tag`
 
 You can combine all the styles you'd like from [modifiers, foreground colors and background colors exposed by ansi-styles](https://github.com/chalk/ansi-styles#styles).
 
@@ -63,7 +64,7 @@ You can combine all the styles you'd like from [modifiers, foreground colors and
 
 _Matrix_:
 
-    --format-options '{"theme":{"datatable border":["green"],"datatable content":["green","italic"],"docstring content":["green","italic"],"docstring delimiter":["green"],"feature description":["green"],"feature keyword":["bold","green"],"rule keyword":["yellow"],"scenario keyword":["greenBright"],"step keyword":["bgGreen","black","italic"],"step text":["greenBright","italic"]}}'
+    --format-options '{"theme":{"datatable border":["green"],"datatable content":["green","italic"],"docstring content":["green","italic"],"docstring delimiter":["green"],"feature description":["green"],"feature keyword":["bold","green"],"rule keyword":["yellow"],"scenario keyword":["greenBright"],"step keyword":["bgGreen","black","italic"],"step text":["greenBright","italic"],"tag":["green"]}}'
 
 _Original pretty_:
 

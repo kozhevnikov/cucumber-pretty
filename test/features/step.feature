@@ -1,7 +1,9 @@
+@tag
 Feature: Step
 
   Description
 
+  @stag
   Scenario: Step name
     Given noop
     When noop

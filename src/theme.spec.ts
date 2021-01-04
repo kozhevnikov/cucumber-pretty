@@ -24,6 +24,7 @@ describe('Theme', () => {
       [ThemeItem.ScenarioKeyword]: ['blue'],
       [ThemeItem.StepKeyword]: ['magenta'],
       [ThemeItem.StepText]: ['bgYellow'],
+      [ThemeItem.Tag]: ['bgRed'],
     }
     styleThemeItem = makeTheme(styles).indentStyleText
   })
@@ -107,6 +108,12 @@ describe('Theme', () => {
   it('applies styles to DataTable content', () => {
     styleThemeItem(0, ThemeItem.DataTableContent, 'foo').should.containEql(
       styleText('foo', 'blue')
+    )
+  })
+
+  it('applies styles to feature tags', () => {
+    styleThemeItem(0, ThemeItem.Tag, '@someTag').should.containEql(
+      styleText('@someTag', 'bgRed')
     )
   })
 
