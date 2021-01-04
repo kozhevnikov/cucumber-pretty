@@ -52,6 +52,12 @@ describe('Text styling', () => {
       }).should.containEql(styleText('Feature:', 'red', 'italic'))
     })
 
+    it('styles feature names', () => {
+      runColored('feature.feature', 'Feature name', {
+        [ThemeItem.FeatureName]: ['yellow', 'italic'],
+      }).should.containEql(styleText('The Feature', 'yellow', 'italic'))
+    })
+
     it('styles feature descriptions', () => {
       runColored('description.feature', undefined, {
         [ThemeItem.FeatureDescription]: ['bgGreen'],
@@ -210,6 +216,9 @@ describe('Text styling', () => {
 
     it('styles feature keywords', () =>
       runResult.should.containEql(styleText('Feature:', 'blueBright', 'bold')))
+
+    it('styles feature names', () =>
+      runResult.should.containEql(styleText('Step', 'blueBright', 'underline')))
 
     it('styles feature tags', () =>
       runResult.should.containEql(styleText('@tag', 'cyan')))

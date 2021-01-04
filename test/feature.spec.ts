@@ -5,13 +5,13 @@ import { run } from './exec'
 describe('Feature', () => {
   it('logs feature names', () => {
     run('feature.feature', { '--name': 'Feature' }).should.startWith(
-      'Feature: Feature\n'
+      'Feature: The Feature\n'
     )
   })
 
   it('logs new lines between scenarios and features', () => {
     run('*.feature', { '--name': 'Feature \\d' }).should.startWith(
-      'Feature: Feature\n' +
+      'Feature: The Feature\n' +
         '\n' +
         '  Scenario: Feature 1\n' +
         '    When noop\n' +

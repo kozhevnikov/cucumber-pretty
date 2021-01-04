@@ -31,7 +31,8 @@ const defaultThemeStyles: ThemeStyles = {
   [ThemeItem.DocStringDelimiter]: ['gray'],
   [ThemeItem.FeatureDescription]: ['gray'],
   [ThemeItem.FeatureKeyword]: ['blueBright', 'bold'],
-  [ThemeItem.RuleKeyword]: ['blueBright', 'underline'],
+  [ThemeItem.FeatureName]: ['blueBright', 'underline'],
+  [ThemeItem.RuleKeyword]: ['blueBright', 'bold'],
   [ThemeItem.ScenarioKeyword]: ['cyan', 'bold'],
   [ThemeItem.StepKeyword]: ['cyan'],
   [ThemeItem.StepMessage]: [],
@@ -251,7 +252,8 @@ export default class PrettyFormatter extends SummaryFormatter {
       feature.keyword || '[feature]',
       ':'
     )
-    this.log(` ${feature.name || ''}`)
+    this.log(` `)
+    this.logItem(0, ThemeItem.FeatureName, feature.name || '')
     this.newline()
 
     if (feature.description) {

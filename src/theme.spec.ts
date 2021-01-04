@@ -20,6 +20,7 @@ describe('Theme', () => {
       [ThemeItem.DocStringDelimiter]: ['red'],
       [ThemeItem.FeatureDescription]: ['white'],
       [ThemeItem.FeatureKeyword]: ['red'],
+      [ThemeItem.FeatureName]: ['yellow'],
       [ThemeItem.RuleKeyword]: ['green'],
       [ThemeItem.ScenarioKeyword]: ['blue'],
       [ThemeItem.StepKeyword]: ['magenta'],
@@ -36,6 +37,12 @@ describe('Theme', () => {
       ThemeItem.FeatureKeyword,
       'Fonctionnalité:'
     ).should.containEql(styleText('Fonctionnalité:', 'red'))
+  })
+
+  it('applies styles to Feature names', () => {
+    styleThemeItem(0, ThemeItem.FeatureName, 'my feature').should.containEql(
+      styleText('my feature', 'yellow')
+    )
   })
 
   it('applies styles to feature descriptions', () => {

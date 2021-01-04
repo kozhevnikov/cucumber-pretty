@@ -1,4 +1,4 @@
-Feature: Feature
+Feature: The Feature
 
   Scenario: Feature name
     When noop
