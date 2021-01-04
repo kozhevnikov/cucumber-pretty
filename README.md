@@ -56,6 +56,7 @@ The currently known theme items are:
 * `rule keyword`
 * `rule name`
 * `scenario keyword`
+* `scenario name`
 * `step keyword`
 * `step message`: usually a failing step error message and stack trace
 * `step status`: additional styles added to the built-in styles applied by Cucumber to non-passing steps status. Foreground colors have no effects on this item, background and modifiers do.
@@ -68,7 +69,7 @@ You can combine all the styles you'd like from [modifiers, foreground colors and
 
 _Matrix_:
 
-    --format-options '{"theme":{"datatable border":["green"],"datatable content":["green","italic"],"docstring content":["green","italic"],"docstring delimiter":["green"],"feature description":["green"],"feature keyword":["bold","green"],"rule keyword":["yellow"],"scenario keyword":["greenBright"],"step keyword":["bgGreen","black","italic"],"step text":["greenBright","italic"],"tag":["green"]}}'
+    --format-options '{"theme":{"datatable border":["green"],"datatable content":["green","italic"],"docstring content":["green","italic"],"docstring delimiter":["green"],"feature description":["green"],"feature keyword":["bold","green"],"rule keyword":["yellow"],"scenario keyword":["greenBright"],"scenario name":["green","underline"],"step keyword":["bgGreen","black","italic"],"step text":["greenBright","italic"],"tag":["green"]}}'
 
 _Original pretty_:
 

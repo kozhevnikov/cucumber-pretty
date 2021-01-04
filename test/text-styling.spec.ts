@@ -95,6 +95,14 @@ describe('Text styling', () => {
       )
     })
 
+    it('styles scenario names', () => {
+      runColored('scenario.feature', 'Scenario name', {
+        [ThemeItem.ScenarioName]: ['bgMagenta'],
+      }).should.containEql(
+        `  Scenario: ${styleText('Scenario name', 'bgMagenta')}\n`
+      )
+    })
+
     it('styles scenario tags', () => {
       const s = (tag: string) => styleText(tag, 'bgBlue')
       runColored('tag.feature', 'Scenario tag', {
@@ -247,6 +255,9 @@ describe('Text styling', () => {
 
     it('styles scenario keywords', () =>
       runResult.should.containEql(styleText('Scenario:', 'cyan', 'bold')))
+
+    it('styles scenario names', () =>
+      runResult.should.containEql(styleText('Step name', 'cyan', 'underline')))
 
     it('styles scenario tags', () =>
       runResult.should.containEql(styleText('@stag', 'cyan')))

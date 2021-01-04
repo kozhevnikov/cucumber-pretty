@@ -24,6 +24,7 @@ describe('Theme', () => {
       [ThemeItem.RuleKeyword]: ['green'],
       [ThemeItem.RuleName]: ['bgRed'],
       [ThemeItem.ScenarioKeyword]: ['blue'],
+      [ThemeItem.ScenarioName]: ['blue', 'underline'],
       [ThemeItem.StepKeyword]: ['magenta'],
       [ThemeItem.StepMessage]: ['bgCyan'],
       [ThemeItem.StepStatus]: ['bgRed'],
@@ -73,6 +74,12 @@ describe('Theme', () => {
   it('applies styles to Scenario keywords', () => {
     styleThemeItem(0, ThemeItem.ScenarioKeyword, 'Scénario:').should.containEql(
       styleText('Scénario:', 'blue')
+    )
+  })
+
+  it('applies styles to Scenario names', () => {
+    styleThemeItem(0, ThemeItem.ScenarioName, 'my scenario').should.containEql(
+      styleText('my scenario', 'blue', 'underline')
     )
   })
 

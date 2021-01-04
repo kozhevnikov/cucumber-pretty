@@ -35,6 +35,7 @@ const defaultThemeStyles: ThemeStyles = {
   [ThemeItem.RuleKeyword]: ['blueBright', 'bold'],
   [ThemeItem.RuleName]: ['blueBright', 'underline'],
   [ThemeItem.ScenarioKeyword]: ['cyan', 'bold'],
+  [ThemeItem.ScenarioName]: ['cyan', 'underline'],
   [ThemeItem.StepKeyword]: ['cyan'],
   [ThemeItem.StepMessage]: [],
   [ThemeItem.StepStatus]: [],
@@ -54,6 +55,7 @@ const themeItemIndentations: { [key in ThemeItem]: number } = {
   [ThemeItem.RuleKeyword]: 2,
   [ThemeItem.RuleName]: 0,
   [ThemeItem.ScenarioKeyword]: 2,
+  [ThemeItem.ScenarioName]: 0,
   [ThemeItem.StepKeyword]: 4,
   [ThemeItem.StepMessage]: 6,
   [ThemeItem.StepStatus]: 4,
@@ -290,7 +292,7 @@ export default class PrettyFormatter extends SummaryFormatter {
     const keyword = gherkinScenarioMap[pickle.astNodeIds[0]].keyword
     this.logItem(ThemeItem.ScenarioKeyword, keyword, ':')
     this.log(' ')
-    this.logItem(ThemeItem.StepText, pickle.name || '')
+    this.logItem(ThemeItem.ScenarioName, pickle.name || '')
     this.newline()
   }
 
