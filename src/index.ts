@@ -31,7 +31,7 @@ const defaultThemeStyles: ThemeStyles = {
   [ThemeItem.DocStringDelimiter]: ['gray'],
   [ThemeItem.FeatureDescription]: ['gray'],
   [ThemeItem.FeatureKeyword]: ['blueBright', 'bold'],
-  [ThemeItem.RuleKeyword]: ['blue', 'bold', 'underline'],
+  [ThemeItem.RuleKeyword]: ['blueBright', 'underline'],
   [ThemeItem.ScenarioKeyword]: ['cyan', 'bold'],
   [ThemeItem.StepKeyword]: ['cyan'],
   [ThemeItem.StepMessage]: [],
