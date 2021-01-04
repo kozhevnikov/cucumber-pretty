@@ -110,6 +110,14 @@ describe('Text styling', () => {
       }).should.containEql(styleText('noop', ...stepStyles))
     })
 
+    it('styles step messages', () => {
+      const stepStyles: TextStyle[] = ['bgCyan']
+      const s = (text: string) => styleText(text, ...stepStyles)
+      runColored('step.feature', 'Failed step', {
+        [ThemeItem.StepMessage]: stepStyles,
+      }).should.containEql(`      ${s('Error: FAILED')}\n      `)
+    })
+
     it('styles DocString content and delimiters', () => {
       runColored('doc-string.feature', undefined, {
         [ThemeItem.DocStringDelimiter]: ['green', 'bgYellow'],

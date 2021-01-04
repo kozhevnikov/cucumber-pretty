@@ -55,6 +55,7 @@ The currently known theme items are:
 * `rule keyword`
 * `scenario keyword`
 * `step keyword`
+* `step message`: usually a failing step error message and stack trace
 * `step text`
 * `tag`
 

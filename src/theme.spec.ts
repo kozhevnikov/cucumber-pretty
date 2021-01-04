@@ -23,6 +23,7 @@ describe('Theme', () => {
       [ThemeItem.RuleKeyword]: ['green'],
       [ThemeItem.ScenarioKeyword]: ['blue'],
       [ThemeItem.StepKeyword]: ['magenta'],
+      [ThemeItem.StepMessage]: ['bgCyan'],
       [ThemeItem.StepText]: ['bgYellow'],
       [ThemeItem.Tag]: ['bgRed'],
     }
@@ -69,6 +70,12 @@ describe('Theme', () => {
   it('applies styles to Step text', () => {
     styleThemeItem(0, ThemeItem.StepText, 'some cucumbers').should.containEql(
       styleText('some cucumbers', 'bgYellow')
+    )
+  })
+
+  it('applies styles to Step messages', () => {
+    styleThemeItem(0, ThemeItem.StepMessage, 'step message').should.containEql(
+      styleText('step message', 'bgCyan')
     )
   })
 

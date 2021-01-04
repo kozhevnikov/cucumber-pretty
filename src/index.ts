@@ -34,6 +34,7 @@ const defaultThemeStyles: ThemeStyles = {
   [ThemeItem.RuleKeyword]: ['blue', 'bold'],
   [ThemeItem.ScenarioKeyword]: ['cyan'],
   [ThemeItem.StepKeyword]: ['cyan', 'bold'],
+  [ThemeItem.StepMessage]: [],
   [ThemeItem.StepText]: ['bold'],
   [ThemeItem.Tag]: ['cyan'],
 }
@@ -212,7 +213,10 @@ export default class PrettyFormatter extends SummaryFormatter {
         4
       )
 
-      if (message) this.logn(message, 6)
+      if (message) {
+        this.logItem(6, ThemeItem.StepMessage, message)
+        this.newline()
+      }
     }
   }
 
