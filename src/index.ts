@@ -30,12 +30,12 @@ const defaultThemeStyles: ThemeStyles = {
   [ThemeItem.DocStringContent]: ['gray', 'italic'],
   [ThemeItem.DocStringDelimiter]: ['gray'],
   [ThemeItem.FeatureDescription]: ['gray'],
-  [ThemeItem.FeatureKeyword]: ['blue', 'bold'],
-  [ThemeItem.RuleKeyword]: ['blue', 'bold'],
-  [ThemeItem.ScenarioKeyword]: ['cyan'],
-  [ThemeItem.StepKeyword]: ['cyan', 'bold'],
+  [ThemeItem.FeatureKeyword]: ['blueBright', 'bold'],
+  [ThemeItem.RuleKeyword]: ['blue', 'bold', 'underline'],
+  [ThemeItem.ScenarioKeyword]: ['cyan', 'bold'],
+  [ThemeItem.StepKeyword]: ['cyan'],
   [ThemeItem.StepMessage]: [],
-  [ThemeItem.StepText]: ['bold'],
+  [ThemeItem.StepText]: [],
   [ThemeItem.Tag]: ['cyan'],
 }
 

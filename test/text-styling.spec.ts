@@ -209,13 +209,13 @@ describe('Text styling', () => {
     before(() => (runResult = runColored('step.feature')))
 
     it('styles feature keywords', () =>
-      runResult.should.containEql(styleText('Feature:', 'blue', 'bold')))
+      runResult.should.containEql(styleText('Feature:', 'blueBright', 'bold')))
 
     it('styles feature tags', () =>
       runResult.should.containEql(styleText('@tag', 'cyan')))
 
     it('styles scenario keywords', () =>
-      runResult.should.containEql(styleText('Scenario:', 'cyan')))
+      runResult.should.containEql(styleText('Scenario:', 'cyan', 'bold')))
 
     it('styles scenario tags', () =>
       runResult.should.containEql(styleText('@stag', 'cyan')))
@@ -224,13 +224,13 @@ describe('Text styling', () => {
       runResult.should.containEql(styleText('Description', 'gray')))
 
     it('styles step keywords', () => {
-      runResult.should.containEql(styleText('Given', 'cyan', 'bold'))
-      runResult.should.containEql(styleText('When', 'cyan', 'bold'))
-      runResult.should.containEql(styleText('Then', 'cyan', 'bold'))
+      runResult.should.containEql(styleText('Given', 'cyan'))
+      runResult.should.containEql(styleText('When', 'cyan'))
+      runResult.should.containEql(styleText('Then', 'cyan'))
     })
 
-    it('styles step text', () => {
-      runResult.should.containEql(styleText('noop', 'bold'))
+    it('does not style step text', () => {
+      runResult.should.containEql(styleText('noop'))
     })
 
     it('styles DocString content and delimiters', () => {
