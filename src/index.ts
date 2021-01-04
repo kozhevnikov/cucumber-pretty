@@ -34,6 +34,7 @@ const defaultThemeStyles: ThemeStyles = {
   [ThemeItem.RuleKeyword]: ['blue', 'bold'],
   [ThemeItem.ScenarioKeyword]: ['cyan'],
   [ThemeItem.StepKeyword]: ['cyan', 'bold'],
+  [ThemeItem.StepText]: ['bold'],
 }
 
 export default class PrettyFormatter extends SummaryFormatter {
@@ -157,7 +158,9 @@ export default class PrettyFormatter extends SummaryFormatter {
       const astNodeId = pickleStep.astNodeIds[0]
       const gherkinStep = gherkinStepMap[astNodeId]
       this.logItem(4, ThemeItem.StepKeyword, gherkinStep.keyword)
-      this.log(` ${pickleStep.text}${n}`)
+      this.log(' ')
+      this.logItem(0, ThemeItem.StepText, pickleStep.text)
+      this.newline()
 
       if (gherkinStep.docString) {
         // TODO: Add generic DocString style, similar DataTable

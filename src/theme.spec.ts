@@ -23,6 +23,7 @@ describe('Theme', () => {
       [ThemeItem.RuleKeyword]: ['green'],
       [ThemeItem.ScenarioKeyword]: ['blue'],
       [ThemeItem.StepKeyword]: ['magenta'],
+      [ThemeItem.StepText]: ['bgYellow'],
     }
     styleThemeItem = makeTheme(styles).indentStyleText
   })
@@ -61,6 +62,12 @@ describe('Theme', () => {
   it('applies styles to Step keywords', () => {
     styleThemeItem(0, ThemeItem.StepKeyword, 'Etant donné').should.containEql(
       styleText('Etant donné', 'magenta')
+    )
+  })
+
+  it('applies styles to Step text', () => {
+    styleThemeItem(0, ThemeItem.StepText, 'some cucumbers').should.containEql(
+      styleText('some cucumbers', 'bgYellow')
     )
   })
 

@@ -87,6 +87,13 @@ describe('Text styling', () => {
       )
     })
 
+    it('styles step text', () => {
+      const stepStyles: TextStyle[] = ['bgYellow', 'bold']
+      runColored('step.feature', 'Step name', {
+        [ThemeItem.StepText]: stepStyles,
+      }).should.containEql(styleText('noop', ...stepStyles))
+    })
+
     it('styles DocString content and delimiters', () => {
       runColored('doc-string.feature', undefined, {
         [ThemeItem.DocStringDelimiter]: ['green', 'bgYellow'],
@@ -202,6 +209,10 @@ describe('Text styling', () => {
       runResult.should.containEql(styleText('Given', 'cyan', 'bold'))
       runResult.should.containEql(styleText('When', 'cyan', 'bold'))
       runResult.should.containEql(styleText('Then', 'cyan', 'bold'))
+    })
+
+    it('styles step text', () => {
+      runResult.should.containEql(styleText('noop', 'bold'))
     })
 
     it('styles DocString content and delimiters', () => {

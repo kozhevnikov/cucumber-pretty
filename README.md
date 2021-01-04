@@ -55,6 +55,7 @@ The currently known theme items are:
 * `rule keyword`
 * `scenario keyword`
 * `step keyword`
+* `step text`
 
 You can combine all the styles you'd like from [modifiers, foreground colors and background colors exposed by ansi-styles](https://github.com/chalk/ansi-styles#styles).
 
@@ -62,7 +63,7 @@ You can combine all the styles you'd like from [modifiers, foreground colors and
 
 _Matrix_:
 
-    --format-options '{"theme": {"feature keyword": ["green", "bold"], "feature description": ["green"], "rule keyword": ["yellow"], "scenario keyword": ["greenBright"], "step keyword": ["black", "bgGreen", "italic"], "docstring delimiter": ["green"], "docstring content": ["green", "italic"], "datatable border": ["green"], "datatable content": ["green", "italic"]}}'
+    --format-options '{"theme":{"datatable border":["green"],"datatable content":["green","italic"],"docstring content":["green","italic"],"docstring delimiter":["green"],"feature description":["green"],"feature keyword":["bold","green"],"rule keyword":["yellow"],"scenario keyword":["greenBright"],"step keyword":["bgGreen","black","italic"],"step text":["greenBright","italic"]}}'
 
 _Original pretty_:
 
@@ -71,5 +72,5 @@ This was the default theme, pre-Cucumber.js 7.x.
 <img src="https://raw.githubusercontent.com/kozhevnikov/cucumber-pretty/master/docs/homebrew.png" width="300">
 <img src="https://raw.githubusercontent.com/kozhevnikov/cucumber-pretty/master/docs/basic.png" width="300">
 
-    --format-options '{"theme": {"feature keyword": ["magenta", "bold"], "scenario keyword": ["magenta", "bold"], "step keyword": ["bold"]}}'
+    --format-options '{"theme":{"feature keyword":["magenta","bold"],"scenario keyword":["magenta","bold"],"step keyword":["bold"]}}'
 
