@@ -189,7 +189,6 @@ export default class PrettyFormatter extends SummaryFormatter {
       this.newline()
 
       if (gherkinStep.docString) {
-        // TODO: Add generic DocString style, similar DataTable
         this.logItem(
           ThemeItem.DocStringDelimiter,
           gherkinStep.docString.delimiter
