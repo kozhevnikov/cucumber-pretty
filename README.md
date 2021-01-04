@@ -45,14 +45,16 @@ Where `THEME_JSON` is in the following shape:
 
 The currently known theme items are:
 
-* `datatable`: all data table elements (border and content)
 * `datatable border`
 * `datatable content`
+* `datatable`: all data table elements (border and content)
 * `docstring content`: multiline argument content
 * `docstring delimiter`: multiline argument delimiter: `"""`
 * `feature description`
 * `feature keyword`
+* `feature name`
 * `rule keyword`
+* `rule name`
 * `scenario keyword`
 * `step keyword`
 * `step message`: usually a failing step error message and stack trace
