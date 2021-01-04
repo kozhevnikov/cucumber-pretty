@@ -255,12 +255,15 @@ export default class PrettyFormatter extends SummaryFormatter {
 
     const keyword = gherkinScenarioMap[pickle.astNodeIds[0]].keyword
     this.logItem(2, ThemeItem.ScenarioKeyword, keyword, ':')
-    this.log(` ${pickle.name}${n}`)
+    this.log(` ${pickle.name}`)
+    this.newline()
   }
 
   private renderRule(rule: messages.GherkinDocument.Feature.FeatureChild.Rule) {
     this.logItem(2, ThemeItem.RuleKeyword, rule.keyword, ':')
-    this.log(` ${rule.name}${n}${n}`)
+    this.log(` ${rule.name}`)
+    this.newline()
+    this.newline()
   }
 
   private newline() {
