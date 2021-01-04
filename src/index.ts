@@ -42,11 +42,30 @@ const defaultThemeStyles: ThemeStyles = {
   [ThemeItem.Tag]: ['cyan'],
 }
 
+const themeItemIndentations: { [key in ThemeItem]: number } = {
+  [ThemeItem.DataTable]: 6,
+  [ThemeItem.DataTableBorder]: 0,
+  [ThemeItem.DataTableContent]: 0,
+  [ThemeItem.DocStringContent]: 6,
+  [ThemeItem.DocStringDelimiter]: 6,
+  [ThemeItem.FeatureDescription]: 2,
+  [ThemeItem.FeatureKeyword]: 0,
+  [ThemeItem.FeatureName]: 0,
+  [ThemeItem.RuleKeyword]: 2,
+  [ThemeItem.RuleName]: 0,
+  [ThemeItem.ScenarioKeyword]: 2,
+  [ThemeItem.StepKeyword]: 4,
+  [ThemeItem.StepMessage]: 6,
+  [ThemeItem.StepStatus]: 4,
+  [ThemeItem.StepText]: 0,
+  [ThemeItem.Tag]: 0,
+}
+
 export default class PrettyFormatter extends SummaryFormatter {
   private uri?: string
   private lastRuleId?: string
   private indentOffset = 0
-  private logItem: (indent: number, item: ThemeItem, ...text: string[]) => void
+  private logItem: (item: ThemeItem, ...text: string[]) => void
   private styleItem: (
     indent: number,
     item: ThemeItem,
@@ -68,8 +87,8 @@ export default class PrettyFormatter extends SummaryFormatter {
       return theme.indentStyleText(indent, item, ...text)
     }
 
-    this.logItem = (indent: number, item: ThemeItem, ...text: string[]) =>
-      this.log(this.styleItem(indent, item, ...text))
+    this.logItem = (item: ThemeItem, ...text: string[]) =>
+      this.log(this.styleItem(themeItemIndentations[item], item, ...text))
 
     this.parseEnvelope = this.parseEnvelope.bind(this)
 
@@ -162,27 +181,21 @@ export default class PrettyFormatter extends SummaryFormatter {
       const pickleStep = pickleStepMap[testStep.pickleStepId]
       const astNodeId = pickleStep.astNodeIds[0]
       const gherkinStep = gherkinStepMap[astNodeId]
-      this.logItem(4, ThemeItem.StepKeyword, gherkinStep.keyword)
+      this.logItem(ThemeItem.StepKeyword, gherkinStep.keyword)
       this.log(' ')
-      this.logItem(0, ThemeItem.StepText, pickleStep.text)
+      this.logItem(ThemeItem.StepText, pickleStep.text)
       this.newline()
 
       if (gherkinStep.docString) {
         // TODO: Add generic DocString style, similar DataTable
         this.logItem(
-          6,
           ThemeItem.DocStringDelimiter,
           gherkinStep.docString.delimiter
         )
         this.newline()
-        this.logItem(
-          6,
-          ThemeItem.DocStringContent,
-          gherkinStep.docString.content
-        )
+        this.logItem(ThemeItem.DocStringContent, gherkinStep.docString.content)
         this.newline()
         this.logItem(
-          6,
           ThemeItem.DocStringDelimiter,
           gherkinStep.docString.delimiter
         )
@@ -199,7 +212,7 @@ export default class PrettyFormatter extends SummaryFormatter {
               )
           )
         )
-        this.logItem(6, ThemeItem.DataTable, datatable.toString())
+        this.logItem(ThemeItem.DataTable, datatable.toString())
         this.newline()
       }
     }
@@ -210,7 +223,6 @@ export default class PrettyFormatter extends SummaryFormatter {
 
     if (status && status !== Status.PASSED) {
       this.logItem(
-        4,
         ThemeItem.StepStatus,
         this.colorFns.forStatus(status)(
           `${marks[status]} ${Status[status].toLowerCase()}`
@@ -219,7 +231,7 @@ export default class PrettyFormatter extends SummaryFormatter {
       this.newline()
 
       if (message) {
-        this.logItem(6, ThemeItem.StepMessage, message)
+        this.logItem(ThemeItem.StepMessage, message)
         this.newline()
       }
     }
@@ -239,10 +251,10 @@ export default class PrettyFormatter extends SummaryFormatter {
     )
     if (tagStrings.length > 0) {
       const firstTag = tagStrings.shift() as string
-      this.logItem(indent, ThemeItem.Tag, firstTag)
+      this.log(this.styleItem(indent, ThemeItem.Tag, firstTag))
       tagStrings.forEach((tag) => {
         this.log(' ')
-        this.logItem(0, ThemeItem.Tag, tag)
+        this.logItem(ThemeItem.Tag, tag)
       })
       this.newline()
     }
@@ -250,20 +262,14 @@ export default class PrettyFormatter extends SummaryFormatter {
 
   private renderFeatureHead(feature: messages.GherkinDocument.IFeature) {
     this.renderTags(0, feature.tags || [])
-    this.logItem(
-      0,
-      ThemeItem.FeatureKeyword,
-      feature.keyword || '[feature]',
-      ':'
-    )
+    this.logItem(ThemeItem.FeatureKeyword, feature.keyword || '[feature]', ':')
     this.log(' ')
-    this.logItem(0, ThemeItem.FeatureName, feature.name || '')
+    this.logItem(ThemeItem.FeatureName, feature.name || '')
     this.newline()
 
     if (feature.description) {
       this.newline()
       this.logItem(
-        2,
         ThemeItem.FeatureDescription,
         dedent(feature.description.trim())
       )
@@ -282,16 +288,16 @@ export default class PrettyFormatter extends SummaryFormatter {
     if (!pickle.astNodeIds) throw new Error('Pickle AST nodes missing')
 
     const keyword = gherkinScenarioMap[pickle.astNodeIds[0]].keyword
-    this.logItem(2, ThemeItem.ScenarioKeyword, keyword, ':')
+    this.logItem(ThemeItem.ScenarioKeyword, keyword, ':')
     this.log(' ')
-    this.logItem(0, ThemeItem.StepText, pickle.name || '')
+    this.logItem(ThemeItem.StepText, pickle.name || '')
     this.newline()
   }
 
   private renderRule(rule: messages.GherkinDocument.Feature.FeatureChild.Rule) {
-    this.logItem(2, ThemeItem.RuleKeyword, rule.keyword, ':')
+    this.logItem(ThemeItem.RuleKeyword, rule.keyword, ':')
     this.log(' ')
-    this.logItem(0, ThemeItem.RuleName, rule.name || '')
+    this.logItem(ThemeItem.RuleName, rule.name || '')
     this.newline()
     this.newline()
   }
