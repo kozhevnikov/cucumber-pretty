@@ -219,9 +219,21 @@ export default class PrettyFormatter extends SummaryFormatter {
     this.newline()
   }
 
+  private renderTags(
+    indent: number,
+    tags: messages.GherkinDocument.Feature.ITag[]
+  ) {
+    const tagStrings = tags.reduce<string[]>(
+      (tags, tag) => (tag.name ? [...tags, tag.name] : tags),
+      []
+    )
+    if (tagStrings.length > 0) {
+      this.logn(this.colorFns.tag(tagStrings.join(' ')), indent)
+    }
+  }
+
   private renderFeatureHead(feature: messages.GherkinDocument.IFeature) {
-    const tags = (feature?.tags || []).map((tag) => tag.name).join(' ')
-    if (tags) this.logn(this.colorFns.tag(tags))
+    this.renderTags(0, feature.tags || [])
     this.logItem(
       0,
       ThemeItem.FeatureKeyword,
@@ -248,8 +260,7 @@ export default class PrettyFormatter extends SummaryFormatter {
     gherkinDocument: messages.IGherkinDocument,
     pickle: messages.IPickle
   ) {
-    const tags = (pickle.tags || []).map((tag) => tag.name).join(' ')
-    if (tags) this.logn(this.colorFns.tag(tags), 2)
+    this.renderTags(2, pickle.tags || [])
     const gherkinScenarioMap = getGherkinScenarioMap(gherkinDocument)
     if (!pickle.astNodeIds) throw new Error('Pickle AST nodes missing')
 
