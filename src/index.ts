@@ -306,12 +306,4 @@ export default class PrettyFormatter extends SummaryFormatter {
   private newline() {
     this.log(n)
   }
-
-  // TODO: remove logn()
-  private logn(value = '', indent = 0) {
-    let text = value.toString()
-    if (text.trim().length > 0) indent = indent + this.indentOffset
-    if (indent > 0) text = text.replace(/^/gm, ' '.repeat(indent))
-    this.log(`${text}${n}`)
-  }
 }
