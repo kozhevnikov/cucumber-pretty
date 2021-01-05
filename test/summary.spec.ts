@@ -11,9 +11,9 @@ describe('Summary', () => {
 
   it('logs summaries after a new line', () => {
     run('feature.feature', { '--name': 'Feature name' }).should.equal(
-      'Feature: The Feature\n' +
+      'Feature: The Feature # test/features/feature.feature:1\n' +
         '\n' +
-        '  Scenario: Feature name\n' +
+        '  Scenario: Feature name # test/features/feature.feature:3\n' +
         '    When noop\n' +
         '    Then noop\n' +
         '\n' +

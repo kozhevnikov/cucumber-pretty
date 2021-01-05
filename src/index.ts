@@ -1,5 +1,6 @@
 import { Status, SummaryFormatter } from '@cucumber/cucumber'
 import { IFormatterOptions } from '@cucumber/cucumber/lib/formatter'
+import { formatLocation } from '@cucumber/cucumber/lib/formatter/helpers'
 import {
   getGherkinExampleRuleMap,
   getGherkinScenarioMap,
@@ -32,6 +33,7 @@ const defaultThemeStyles: ThemeStyles = {
   [ThemeItem.FeatureDescription]: ['gray'],
   [ThemeItem.FeatureKeyword]: ['blueBright', 'bold'],
   [ThemeItem.FeatureName]: ['blueBright', 'underline'],
+  [ThemeItem.Location]: ['dim'],
   [ThemeItem.RuleKeyword]: ['blueBright', 'bold'],
   [ThemeItem.RuleName]: ['blueBright', 'underline'],
   [ThemeItem.ScenarioKeyword]: ['cyan', 'bold'],
@@ -52,6 +54,7 @@ const themeItemIndentations: { [key in ThemeItem]: number } = {
   [ThemeItem.FeatureDescription]: 2,
   [ThemeItem.FeatureKeyword]: 0,
   [ThemeItem.FeatureName]: 0,
+  [ThemeItem.Location]: 0,
   [ThemeItem.RuleKeyword]: 2,
   [ThemeItem.RuleName]: 0,
   [ThemeItem.ScenarioKeyword]: 2,
@@ -266,6 +269,10 @@ export default class PrettyFormatter extends SummaryFormatter {
     this.logItem(ThemeItem.FeatureKeyword, feature.keyword || '[feature]', ':')
     this.log(' ')
     this.logItem(ThemeItem.FeatureName, feature.name || '')
+    if (feature.location) {
+      this.log(' ')
+      this.renderLocation(feature.location?.line || -1)
+    }
     this.newline()
 
     if (feature.description) {
@@ -276,7 +283,14 @@ export default class PrettyFormatter extends SummaryFormatter {
       )
       this.newline()
     }
+    this.newline()
+  }
 
+  private renderRule(rule: messages.GherkinDocument.Feature.FeatureChild.Rule) {
+    this.logItem(ThemeItem.RuleKeyword, rule.keyword, ':')
+    this.log(' ')
+    this.logItem(ThemeItem.RuleName, rule.name || '')
+    this.newline()
     this.newline()
   }
 
@@ -288,19 +302,24 @@ export default class PrettyFormatter extends SummaryFormatter {
     const gherkinScenarioMap = getGherkinScenarioMap(gherkinDocument)
     if (!pickle.astNodeIds) throw new Error('Pickle AST nodes missing')
 
-    const keyword = gherkinScenarioMap[pickle.astNodeIds[0]].keyword
-    this.logItem(ThemeItem.ScenarioKeyword, keyword, ':')
+    const scenario: messages.GherkinDocument.Feature.IScenario =
+      gherkinScenarioMap[pickle.astNodeIds[0]]
+    this.logItem(ThemeItem.ScenarioKeyword, scenario.keyword || '???', ':')
     this.log(' ')
     this.logItem(ThemeItem.ScenarioName, pickle.name || '')
+    if (gherkinScenarioMap[pickle.astNodeIds[0]]) {
+      this.log(' ')
+      this.renderLocation(scenario.location?.line || -1)
+    }
     this.newline()
   }
 
-  private renderRule(rule: messages.GherkinDocument.Feature.FeatureChild.Rule) {
-    this.logItem(ThemeItem.RuleKeyword, rule.keyword, ':')
-    this.log(' ')
-    this.logItem(ThemeItem.RuleName, rule.name || '')
-    this.newline()
-    this.newline()
+  private renderLocation(line: number) {
+    this.logItem(
+      ThemeItem.Location,
+      '# ',
+      formatLocation({ uri: this.uri || '', line }, process.cwd())
+    )
   }
 
   private newline() {

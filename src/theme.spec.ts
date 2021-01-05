@@ -21,6 +21,7 @@ describe('Theme', () => {
       [ThemeItem.FeatureDescription]: ['white'],
       [ThemeItem.FeatureKeyword]: ['red'],
       [ThemeItem.FeatureName]: ['yellow'],
+      [ThemeItem.Location]: ['bgWhite', 'black'],
       [ThemeItem.RuleKeyword]: ['green'],
       [ThemeItem.RuleName]: ['bgRed'],
       [ThemeItem.ScenarioKeyword]: ['blue'],
@@ -56,6 +57,16 @@ describe('Theme', () => {
     ).should.containEql(
       `  ${styleText('This is some', 'white')}\n` +
         `  ${styleText('description...', 'white')}`
+    )
+  })
+
+  it('applies styles to locations', () => {
+    styleThemeItem(
+      0,
+      ThemeItem.Location,
+      '# path/to/file.feature:12'
+    ).should.containEql(
+      styleText('# path/to/file.feature:12', 'bgWhite', 'black')
     )
   })
 

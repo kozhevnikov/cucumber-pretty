@@ -75,6 +75,13 @@ describe('Text styling', () => {
       }).should.containEql(`${s('@feature')} ${s('@tag')}\n`)
     })
 
+    it('styles feature locations', () => {
+      const s = (tag: string) => styleText(tag, 'bgYellow')
+      runColored('feature.feature', undefined, {
+        [ThemeItem.Location]: ['bgYellow'],
+      }).should.containEql(`${s('# test/features/feature.feature:1')}\n`)
+    })
+
     it('styles rule keywords', () => {
       runColored('rule.feature', undefined, {
         [ThemeItem.RuleKeyword]: ['yellow'],
@@ -91,7 +98,7 @@ describe('Text styling', () => {
       runColored('scenario.feature', 'Scenario name', {
         [ThemeItem.ScenarioKeyword]: ['bgYellow'],
       }).should.containEql(
-        `${styleText('Scenario:', 'bgYellow')} Scenario name\n`
+        `${styleText('Scenario:', 'bgYellow')} Scenario name`
       )
     })
 
@@ -99,7 +106,16 @@ describe('Text styling', () => {
       runColored('scenario.feature', 'Scenario name', {
         [ThemeItem.ScenarioName]: ['bgMagenta'],
       }).should.containEql(
-        `  Scenario: ${styleText('Scenario name', 'bgMagenta')}\n`
+        `  Scenario: ${styleText('Scenario name', 'bgMagenta')}`
+      )
+    })
+
+    it('styles scenario locations', () => {
+      const s = (tag: string) => styleText(tag, 'bgYellow')
+      runColored('scenario.feature', 'Scenario name', {
+        [ThemeItem.Location]: ['bgYellow'],
+      }).should.containEql(
+        `Scenario: Scenario name ${s('# test/features/scenario.feature:3')}\n`
       )
     })
 
@@ -261,6 +277,11 @@ describe('Text styling', () => {
 
     it('styles scenario tags', () =>
       runResult.should.containEql(styleText('@stag', 'cyan')))
+
+    it('styles locations', () =>
+      runResult.should.containEql(
+        styleText('# test/features/step.feature:2', 'dim')
+      ))
 
     it('styles descriptions', () =>
       runResult.should.containEql(styleText('Description', 'gray')))
