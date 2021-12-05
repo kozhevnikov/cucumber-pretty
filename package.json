@@ -19,7 +19,7 @@
     "figures": "^3.2.0"
   },
   "peerDependencies": {
-    "cucumber": ">=6.0.0"
+    "cucumber": ">=6.0.0 <7.0.0"
   },
   "devDependencies": {
     "cucumber": "^6.0.5",
